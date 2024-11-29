@@ -7,9 +7,19 @@ const addDates = (dates) => {
     dates.map((oneFoundDate) => {
         const formatedDate = formatFoundDate(oneFoundDate)
         const dateInput = document.createElement('input');
-        dateInput.type = 'date';
 
-        dateInput.value = `${formatedDate.year}-${formatedDate.month}-${formatedDate.day}`
+        let oneDateChoice = `${formatedDate.year}-${formatedDate.month}-${formatedDate.day}`
+        let dateInputTye = 'date';
+
+        if (formatedDate.hours) {
+            oneDateChoice += ` ${formatedDate.hours}:${formatedDate.minutes}`
+            dateInputTye = 'datetime-local';
+        }
+        console.log(formatedDate)
+        console.log(oneDateChoice)
+
+        dateInput.type = dateInputTye;
+        dateInput.value = oneDateChoice
 
         datesContainer.appendChild(dateInput);
     })
