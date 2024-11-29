@@ -1,11 +1,16 @@
 const mmddyyyyPattern = /\b(?<month>0[1-9]|1[0-2])[/-](?<day>0[1-9]|[12][0-9]|3[01])[/-](?<year>\d{4})\b/g;
 const ddmmyyyyPattern = /\b(?<day>0[1-9]|[12][0-9]|3[01])[/-](?<month>0[1-9]|1[0-2])[/-](?<year>\d{4})\b/g;
 const yyyymmddPattern = /\b(?<year>\d{4})[/-](?<month>0[1-9]|1[0-2])[/-](?<day>0[1-9]|[12][0-9]|3[01])\b/g;
+const mmddPattern = /\b(?<month>0[1-9]|1[0-2])[/-](?<day>0[1-9]|[12][0-9]|3[01])\b/g;
+const ddmmPattern = /\b(?<day>0[1-9]|[12][0-9]|3[01])[/-](?<month>0[1-9]|1[0-2])\b/g;
+
 
 const allDatesPatternByImportance = [
     ddmmyyyyPattern,
     mmddyyyyPattern,
-    yyyymmddPattern
+    yyyymmddPattern,
+    ddmmPattern,
+    mmddPattern
 ]
 
 function findDatesByPattern(text, pattern, extraData) {
@@ -60,3 +65,5 @@ export function findDates(subjectContent, mailContent) {
     console.log(filteredDates)
     return filteredDates;
 }
+
+console.log(messenger.calendar)

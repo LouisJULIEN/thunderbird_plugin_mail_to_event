@@ -1,9 +1,14 @@
 {
-  "manifest_version": 2,
-  "name": "Hello World Example",
-  "description": "A basic Hello World example extension!",
+  "manifest_version": 3,
+  "name": "Create Calendar events from mail content",
+  "short_name": "Mail content to Calendar event",
+  "description": "This plugin offers to create new events based on the email subject and content",
   "version": "1.0",
   "author": "Louis JULIEN",
+  "developer": {
+    "name": "Louis JULIEN",
+    "url": "https://github.com/LouisJULIEN"
+  },
   "browser_specific_settings": {
     "gecko": {
       "id": "louisjulien.mail_to_event@addons.thunderbird.net"
@@ -21,5 +26,78 @@
   },
   "permissions": [
     "messagesRead"
-  ]
+  ],
+
+  "experiment_apis": {
+    "calendar_calendars": {
+      "schema": "experiments/calendar/schema/calendar-calendars.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "experiments/calendar/parent/ext-calendar-calendars.js",
+        "paths": [
+          ["calendar", "calendars"]
+        ]
+      }
+    },
+    "calendar_items": {
+      "schema": "experiments/calendar/schema/calendar-items.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "experiments/calendar/parent/ext-calendar-items.js",
+        "paths": [
+          ["calendar", "items"]
+        ]
+      }
+    },
+    "calendar_provider": {
+      "schema": "experiments/calendar/schema/calendar-provider.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "experiments/calendar/parent/ext-calendar-provider.js",
+        "events": ["startup"],
+        "paths": [
+          ["calendar", "provider"]
+        ]
+      }
+    },
+    "calendar_timezones": {
+      "schema": "experiments/calendar/schema/calendar-timezones.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "experiments/calendar/parent/ext-calendar-timezones.js",
+        "paths": [
+          ["calendar", "timezones"]
+        ]
+      },
+      "child": {
+        "scopes": ["addon_child"],
+        "script": "experiments/calendar/child/ext-calendar-timezones.js",
+        "paths": [
+          ["calendar", "timezones"]
+        ]
+      }
+    },
+    "calendarItemAction": {
+      "schema": "experiments/calendar/schema/calendarItemAction.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "experiments/calendar/parent/ext-calendarItemAction.js",
+        "events": ["startup"],
+        "paths": [
+          ["calendarItemAction"]
+        ]
+      }
+    },
+    "calendarItemDetails": {
+      "schema": "experiments/calendar/schema/calendarItemDetails.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "experiments/calendar/parent/ext-calendarItemDetails.js",
+        "events": ["startup"],
+        "paths": [
+          ["calendarItemDetails"]
+        ]
+      }
+    }
+  }
 }
