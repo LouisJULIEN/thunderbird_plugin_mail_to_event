@@ -24,7 +24,8 @@ This is a new sentence on a new line.A last one`;
     })
 
     it('should find all dates in this email', () => {
-        const emailContent = 'This is 01/24/2021. This 28 November. This number is alone 2024. 12\n11.'
+        const emailContent = 'This is 01/24/2021. This 28 November. This number is alone 2024. 12\n11.' +
+            "Let's meet the 19/12 at 12 PM or 1 AM"
         const result = findDates(emailContent, '')
         expect(result).to.deep.equal([{
             patternIndex: 1,
@@ -42,6 +43,15 @@ This is a new sentence on a new line.A last one`;
             day: '28',
             month: 'Nove',
             year: undefined
+        }, {
+            ampm: "PM",
+            day: "19",
+            hourminute: "12",
+            month: "12",
+            originalText: "19/12",
+            patternIndex: 5,
+            regexIndex: 15,
+            textSourceIndex: 0
         }])
     })
 });

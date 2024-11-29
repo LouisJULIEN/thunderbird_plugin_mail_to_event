@@ -5,6 +5,14 @@ const ddmmPattern = /\b(?<day>0[1-9]|[12][0-9]|3[01])[/-](?<month>0[1-9]|1[0-2])
 const mmddPattern = /\b(?<month>0[1-9]|1[0-2])[/-](?<day>0[1-9]|[12][0-9]|3[01])\b/gm;
 
 const punctuationOrSpace = '\.|,|\\s|!'
+
+const hhmmPattern = new RegExp(
+    '(?<hourminute>([0|1|2]?[0-9]:[0-9]{1,2}))(?<ampm>( (AM|PM)))?',
+    'i')
+const hhampmPattern = new RegExp(
+    `[${punctuationOrSpace}](?<hourminute>([0|1|2]?[0-9])) (?<ampm>(AM|PM))`,
+    'i')
+
 const naturalMonthsRegex = `` +
     `jan[u|${punctuationOrSpace}]|` +
     `feb[r|${punctuationOrSpace}]|` +
@@ -40,6 +48,8 @@ const allDatesPatternByImportance = [
     mmddPattern
 ]
 
+const allHourPatterns = [hhmmPattern, hhampmPattern]
+
 export const splitTextIntoSentences = (text) => {
     return text.split(/(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|!|\n)\s*/);
 
@@ -47,17 +57,35 @@ export const splitTextIntoSentences = (text) => {
 
 function findDatesByPattern(text, pattern, extraData) {
     let matches = [];
-    let match;
+    let matchAgainstDate, matchAgainstTime;
     const sentences = splitTextIntoSentences(text)
 
-    sentences.map((text) => {
-        while ((match = pattern.exec(text)) !== null) {
-            matches.push({
+    sentences.map((oneSentence) => {
+        while ((matchAgainstDate = pattern.exec(oneSentence)) !== null) {
+            const dateMatch = {
                 ...extraData,
-                originalText: match[0],
-                regexIndex: match.index,
-                ...match.groups
-            });
+                originalText: matchAgainstDate[0],
+                regexIndex: matchAgainstDate.index,
+                ...matchAgainstDate.groups
+            }
+            let matchesToAdd = []
+
+            allHourPatterns.map(oneHourPattern => {
+                matchAgainstTime = oneSentence.match(oneHourPattern)
+
+                if (matchAgainstTime !== null) {
+                    const timeGroup = matchAgainstTime.groups
+                    matchesToAdd.push({
+                        ...timeGroup,
+                        ...dateMatch
+                    })
+                }
+            })
+
+            if (matchesToAdd.length === 0) {
+                matchesToAdd.push(dateMatch)
+            }
+            matches = [].concat(matches, matchesToAdd)
         }
     })
     return matches;
