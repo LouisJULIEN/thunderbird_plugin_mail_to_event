@@ -11,11 +11,12 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "louisjulien.mail_to_event@addons.thunderbird.net"
+      "id": "louisjulien.mail_to_event@addons.thunderbird.net",
+      "strict_min_version": "128.0"
     }
   },
   "message_display_action": {
-    "default_popup": "create_event_button/create_event.html",
+    "default_popup": "create_event_button/button_pop_up.html",
     "default_title": "Create event",
     "default_icon": "images/internet-32px.png"
   },
@@ -27,75 +28,113 @@
   "permissions": [
     "messagesRead"
   ],
-
   "experiment_apis": {
     "calendar_calendars": {
       "schema": "experiments/calendar/schema/calendar-calendars.json",
       "parent": {
-        "scopes": ["addon_parent"],
+        "scopes": [
+          "addon_parent"
+        ],
         "script": "experiments/calendar/parent/ext-calendar-calendars.js",
         "paths": [
-          ["calendar", "calendars"]
+          [
+            "calendar",
+            "calendars"
+          ]
         ]
       }
     },
     "calendar_items": {
       "schema": "experiments/calendar/schema/calendar-items.json",
       "parent": {
-        "scopes": ["addon_parent"],
+        "scopes": [
+          "addon_parent"
+        ],
         "script": "experiments/calendar/parent/ext-calendar-items.js",
         "paths": [
-          ["calendar", "items"]
+          [
+            "calendar",
+            "items"
+          ]
         ]
       }
     },
     "calendar_provider": {
       "schema": "experiments/calendar/schema/calendar-provider.json",
       "parent": {
-        "scopes": ["addon_parent"],
+        "scopes": [
+          "addon_parent"
+        ],
         "script": "experiments/calendar/parent/ext-calendar-provider.js",
-        "events": ["startup"],
+        "events": [
+          "startup"
+        ],
         "paths": [
-          ["calendar", "provider"]
+          [
+            "calendar",
+            "provider"
+          ]
         ]
       }
     },
     "calendar_timezones": {
       "schema": "experiments/calendar/schema/calendar-timezones.json",
       "parent": {
-        "scopes": ["addon_parent"],
+        "scopes": [
+          "addon_parent"
+        ],
         "script": "experiments/calendar/parent/ext-calendar-timezones.js",
         "paths": [
-          ["calendar", "timezones"]
+          [
+            "calendar",
+            "timezones"
+          ]
         ]
       },
       "child": {
-        "scopes": ["addon_child"],
+        "scopes": [
+          "addon_child"
+        ],
         "script": "experiments/calendar/child/ext-calendar-timezones.js",
         "paths": [
-          ["calendar", "timezones"]
+          [
+            "calendar",
+            "timezones"
+          ]
         ]
       }
     },
     "calendarItemAction": {
       "schema": "experiments/calendar/schema/calendarItemAction.json",
       "parent": {
-        "scopes": ["addon_parent"],
+        "scopes": [
+          "addon_parent"
+        ],
         "script": "experiments/calendar/parent/ext-calendarItemAction.js",
-        "events": ["startup"],
+        "events": [
+          "startup"
+        ],
         "paths": [
-          ["calendarItemAction"]
+          [
+            "calendarItemAction"
+          ]
         ]
       }
     },
     "calendarItemDetails": {
       "schema": "experiments/calendar/schema/calendarItemDetails.json",
       "parent": {
-        "scopes": ["addon_parent"],
+        "scopes": [
+          "addon_parent"
+        ],
         "script": "experiments/calendar/parent/ext-calendarItemDetails.js",
-        "events": ["startup"],
+        "events": [
+          "startup"
+        ],
         "paths": [
-          ["calendarItemDetails"]
+          [
+            "calendarItemDetails"
+          ]
         ]
       }
     }

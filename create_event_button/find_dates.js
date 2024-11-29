@@ -65,5 +65,3 @@ export function findDates(subjectContent, mailContent) {
     console.log(filteredDates)
     return filteredDates;
 }
-
-console.log(messenger.calendar)
