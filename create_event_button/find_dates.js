@@ -51,7 +51,6 @@ const allDatesPatternByImportance = [
 const allHourPatterns = [hhmmPattern, hhampmPattern]
 
 export const splitTextIntoSentences = (text) => {
-    console.log(text)
     return text.split(/(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|!|\n)\s*/);
 
 }

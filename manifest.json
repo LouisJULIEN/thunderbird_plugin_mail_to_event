@@ -16,7 +16,7 @@
     }
   },
   "message_display_action": {
-    "default_popup": "create_event_button/button_pop_up.html",
+    "default_popup": "create_event_button/pop_up_button.html",
     "default_title": "Create event",
     "default_icon": "images/internet-32px.png"
   },

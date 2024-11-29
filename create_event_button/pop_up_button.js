@@ -1,5 +1,6 @@
 import {findDates} from "./find_dates.js";
 import {formatFoundDate} from "./format_dates.js";
+import * as f from "./pop_up_interaction.js";
 
 const addDates = (dates) => {
     const datesContainer = document.getElementById('dates-container');
@@ -15,8 +16,6 @@ const addDates = (dates) => {
             oneDateChoice += ` ${formatedDate.hours}:${formatedDate.minutes}`
             dateInputTye = 'datetime-local';
         }
-        console.log(formatedDate)
-        console.log(oneDateChoice)
 
         dateInput.type = dateInputTye;
         dateInput.value = oneDateChoice

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Create event</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="pop_up_button.css">
+</head>
+
+<body>
+
+<textarea rows="1" cols="35" id="event-title"></textarea>
+
+<div id="dates-selector">
+    <div class="one-date-selector">
+        <input  type="datetime-local" class="start-date-input" value="1995-12-19 19:34">
+        <input type="submit" class="submit-start-date" value="select">
+    </div>
+    <div class="one-date-selector">
+        <input class="start-date-input" type="datetime-local" value="1995-12-19 19:34">
+        <input type="submit" class="submit-start-date" value="select">
+    </div>
+    <div class="one-date-selector">
+        <input class="start-date-input" type="datetime-local" value="1995-12-19 19:34">
+        <input type="submit" class="submit-start-date" value="select">
+    </div>
+</div>
+
+<div class="end-date-selector one-date-selector">
+    <label for="end-date-input">End date</label><br/>
+    <input id="end-date-input" type="datetime-local" value="1995-12-19 19:34">
+    <input type="submit" value="validate">
+</div>
+
+<textarea rows="2" cols="35" id="event-description"  placeholder="Optional description"></textarea>
+<input type="submit" id="create-event" value="Create event">
+
+
+<script type="module" src="pop_up_button.js"></script>
+</body>
+
+</html>

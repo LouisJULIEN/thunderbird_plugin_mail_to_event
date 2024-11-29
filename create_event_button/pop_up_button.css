@@ -1,0 +1,25 @@
+body {
+    padding: 1ex;
+}
+
+
+.one-date-selector {
+    margin: 1ex 0;
+    display: block;
+}
+
+.end-date-selector {
+    padding: 1ex 0;
+}
+
+#create-event {
+    margin: 1ex 0;
+    padding: 1ex 1ex;
+    width: 100%;
+    font-size: 1.5em;
+}
+
+input[aria-selected=true] {
+    box-sizing: border-box;
+    border: solid green 5px;
+}
