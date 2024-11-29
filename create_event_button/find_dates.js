@@ -41,13 +41,13 @@ const sortDates = (dates) => {
 
 export function findDates(subjectContent, mailContent) {
     const subjectContentDates = allDatesPatternByImportance.map(
-        (aPattern, aPatternIndex) => findDatesByPattern(subjectContent, aPattern, {
-            aPatternIndex,
+        (aPattern, patternIndex) => findDatesByPattern(subjectContent, aPattern, {
+            patternIndex,
             textSourceIndex: 0
         }))
     const mailContentDates = allDatesPatternByImportance.map(
-        (aPattern, aPatternIndex) => findDatesByPattern(mailContent, aPattern, {
-            aPatternIndex,
+        (aPattern, patternIndex) => findDatesByPattern(mailContent, aPattern, {
+            patternIndex,
             textSourceIndex: 1
         }))
 
