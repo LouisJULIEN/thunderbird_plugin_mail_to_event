@@ -46,7 +46,7 @@ This is a new sentence on a new line.A last one`;
         }, {
             ampm: "PM",
             day: "19",
-            hourminute: "12",
+            hours: "12",
             month: "12",
             originalText: "19/12",
             patternIndex: 5,

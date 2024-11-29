@@ -7,10 +7,10 @@ const mmddPattern = /\b(?<month>0[1-9]|1[0-2])[/-](?<day>0[1-9]|[12][0-9]|3[01])
 const punctuationOrSpace = '\.|,|\\s|!'
 
 const hhmmPattern = new RegExp(
-    '(?<hourminute>([0|1|2]?[0-9]:[0-9]{1,2}))(?<ampm>( (AM|PM)))?',
+    '(?<hours>([0|1|2]?[0-9])):(?<minutes>([0-9]{1,2}))(?<ampm>( (AM|PM)))?',
     'i')
 const hhampmPattern = new RegExp(
-    `[${punctuationOrSpace}](?<hourminute>([0|1|2]?[0-9])) (?<ampm>(AM|PM))`,
+    `[${punctuationOrSpace}](?<hours>([0|1|2]?[0-9])) (?<ampm>(AM|PM))`,
     'i')
 
 const naturalMonthsRegex = `` +
@@ -51,6 +51,7 @@ const allDatesPatternByImportance = [
 const allHourPatterns = [hhmmPattern, hhampmPattern]
 
 export const splitTextIntoSentences = (text) => {
+    console.log(text)
     return text.split(/(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|!|\n)\s*/);
 
 }
