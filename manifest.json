@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Hello World Example",
+  "description": "A basic Hello World example extension!",
+  "version": "1.0",
+  "author": "Louis JULIEN",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "louisjulien.mail_to_event@addons.thunderbird.net"
+    }
+  },
+  "message_display_action": {
+    "default_popup": "create_event_button/create_event.html",
+    "default_title": "Create event",
+    "default_icon": "images/internet-32px.png"
+  },
+  "icons": {
+    "64": "images/internet.png",
+    "32": "images/internet-32px.png",
+    "16": "images/internet-16px.png"
+  },
+  "permissions": [
+    "messagesRead"
+  ]
+}
