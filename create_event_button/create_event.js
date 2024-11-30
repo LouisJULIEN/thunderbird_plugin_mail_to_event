@@ -8,11 +8,6 @@ function generateUID() {
 }
 
 export async function createEvent(calendarId, eventStartDate, eventEndDate, eventSummary, eventComment) {
-    console.log({
-        eventSummary,
-        eventStartDate,
-        eventEndDate,
-    })
     const uid = generateUID()
     try {
         await calendarItems.create(calendarId, {

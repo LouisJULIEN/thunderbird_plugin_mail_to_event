@@ -2,32 +2,26 @@ import {findDates} from "./find_dates.js";
 import {formatFoundDate} from "./format_dates.js";
 import "./pop_up_interaction.js";
 
+
 const showFoundDates = (dates) => {
     const datesContainer = document.getElementById('dates-selector');
 
     dates.map((oneFoundDate) => {
         const formatedDate = formatFoundDate(oneFoundDate)
-        let container = document.createElement("div", )
-        container.className  = "one-date-selector"
+        let container = document.createElement("div",)
+        container.className = "one-date-selector"
 
         const dateInput = document.createElement('input');
+
         dateInput.className = "start-date-input"
-
-        let oneDateChoice = `${formatedDate.year}-${formatedDate.month}-${formatedDate.day}`
-        let dateInputTye = 'date';
-
-        if (formatedDate.hours) {
-            oneDateChoice += ` ${formatedDate.hours}:${formatedDate.minutes}`
-            dateInputTye = 'datetime-local';
-        }
-
-        dateInput.type = dateInputTye;
-        dateInput.value = oneDateChoice
+        dateInput.type = 'datetime-local';
+        dateInput.value = formatedDate.dateISO.slice(0,16)
+        dateInput.fullValue = formatedDate.dateISO
 
         let selectOneDateInput = document.createElement('input');
-        selectOneDateInput.type="submit"
-        selectOneDateInput.value="select"
-        selectOneDateInput.className="submit-start-date"
+        selectOneDateInput.type = "submit"
+        selectOneDateInput.value = "select"
+        selectOneDateInput.className = "submit-start-date"
 
         container.append(dateInput)
         container.append(selectOneDateInput)

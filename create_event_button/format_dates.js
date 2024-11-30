@@ -28,21 +28,38 @@ const formatMonth = (month) => {
     return monthToNumber[threeFirstLetters] || null
 }
 const formatHourMinutes = (hours, minutes, ampm) => {
-    if(hours) {
-        if (ampm === 'pm') {
-            hours += 12
-        }
-        minutes = minutes || 0
+    if (hours && ampm === 'pm') {
+        hours += 12
     }
+
+    const now = new Date()
+    hours = hours || now.getHours()
+    minutes = minutes || (now.getMinutes() - (now.getMinutes() % 30))
+
     return {hours, minutes}
 }
 
 export const formatFoundDate = (aFoundDate) => {
-    return {
+    const dateData = {
         year: formatYear(aFoundDate.year),
         month: formatMonth(aFoundDate.month),
         day: formatDay(aFoundDate.day),
         ...formatHourMinutes(aFoundDate.hours, aFoundDate.minutes, aFoundDate.ampm)
+    }
+    const dateJs = new Date(
+        +dateData.year,
+        (+dateData.month) - 1, // monthIndex starts at 0, January is 0
+        +dateData.day,
+        +dateData.hours,
+        +dateData.minutes)
+
+    // Sets time to local timezone
+    dateJs.setTime(dateJs.getTime() - dateJs.getTimezoneOffset() * 60 * 1000);
+
+    const dateISO = dateJs.toISOString()
+    return {
+        dateJs,
+        dateISO
     }
 
 }
