@@ -37,9 +37,6 @@ const showFoundDates = (dates) => {
 }
 
 
-const calendars = await messenger.calendar.calendars.query({visible: true, readOnly: false, enabled: true})
-const currentCalendar = calendars[0]
-
 let tabs = await messenger.tabs.query({active: true, currentWindow: true});
 const currentTabId = tabs[0].id;
 

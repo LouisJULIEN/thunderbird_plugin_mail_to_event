@@ -1,4 +1,9 @@
+import {createEvent} from "./create_event.js";
+
 let differenceStartDateEndDate = 1000 * 60 * 30 // 30 minutes
+
+const calendars = await messenger.calendar.calendars.query({visible: true, readOnly: false, enabled: true})
+const currentCalendar = calendars[0]
 
 const resetAriaSelected = () => {
     Array.from(document.getElementsByClassName('start-date-input')).forEach((e) => {
@@ -30,12 +35,22 @@ document.getElementById("dates-selector").addEventListener('click',
 
 
 document.getElementById("create-calendar-event").addEventListener('click',
-    () => {
-        const selectedStartDate = document.querySelector(".start-date-input[aria-selected='true']").value
+    async () => {
+        const selectedStartDate = document.querySelector(".start-date-input[aria-selected='true']")?.value
         const selectedEndDate = document.getElementById('end-date-input').value
         const title = document.getElementById('event-title').value
+        const comment = document.getElementById('event-comment').value || ""
 
         if (selectedStartDate && selectedEndDate && title) {
 
+            const formatedStartDate = (new Date(selectedStartDate)).toISOString()
+            const formatedEndDate = (new Date(selectedEndDate)).toISOString()
+
+            const result = await createEvent(currentCalendar.id, formatedStartDate, formatedEndDate, title, comment)
+            if (result.error) {
+                document.getElementById("creation-result-display").innerText = result.error?.message
+            } else {
+                document.getElementById("creation-result-display").innerText = "Event creation successful"
+            }
         }
     })

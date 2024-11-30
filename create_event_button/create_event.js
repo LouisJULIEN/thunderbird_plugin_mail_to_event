@@ -1,21 +1,39 @@
 const calendarItems = messenger.calendar.items
 
-export function createEvent(calendarId, eventData) {
-    calendarItems.create(calendarId, {
-        format: "jcal",
-        type: 'event',
-        id: 'ervg65re4vre6v4er6b4re6b4er6',
+function generateUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
 
-        item: [
-            'vevent',
-            [
-                ['dtstart', {}, 'date', '2024-11-29'],
-                ['dtend', {}, 'date', '2024-11-30'],
-                ['summary', {}, 'text', 'coucou'],
-                ['status', {}, 'text', 'confirmed'],
-                ['uid', {}, 'text', 'ervg65re4vre6v4er6b4re6b4er6'],
-            ],
-            []
-        ]
+export async function createEvent(calendarId, eventStartDate, eventEndDate, eventSummary, eventComment) {
+    console.log({
+        eventSummary,
+        eventStartDate,
+        eventEndDate,
     })
+    const uid = generateUID()
+    try {
+        await calendarItems.create(calendarId, {
+            format: "jcal",
+            type: 'event',
+            id: uid,
+
+            item: [
+                'vevent',
+                [
+                    ['dtstart', {}, 'date-time', eventStartDate],
+                    ['dtend', {}, 'date-time', eventEndDate],
+                    ['summary', {}, 'text', eventSummary],
+                    ['comment', {}, 'text', eventComment],
+                    ['uid', {}, 'text', uid],
+                ],
+                []
+            ]
+        })
+    } catch (e) {
+        return {error: e}
+    }
+    return {uid}
 }
