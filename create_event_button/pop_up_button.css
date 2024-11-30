@@ -12,7 +12,7 @@ body {
     padding: 1ex 0;
 }
 
-#create-event {
+#create-calendar-event {
     margin: 1ex 0;
     padding: 1ex 1ex;
     width: 100%;
@@ -22,4 +22,8 @@ body {
 input[aria-selected=true] {
     box-sizing: border-box;
     border: solid green 5px;
+}
+
+#selected-date-iso{
+    font-size: 10px;
 }

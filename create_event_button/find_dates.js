@@ -34,7 +34,7 @@ export const ddmonthPattern = new RegExp(
     'gim'
 )
 const monthddPattern = new RegExp(
-    `(?<month>(${naturalMonthsRegex})).*(?<day>0[1-9]|[12][0-9]|3[01]).*(?<year>\\d{4})?.*`,
+    `(?<month>(${naturalMonthsRegex})).*(?<day>0[1-9]|[12][0-9]|3[01])[^0-9].*(?<year>\\d{4})?.*`,
     'gim'
 )
 

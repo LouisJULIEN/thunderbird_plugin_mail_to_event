@@ -1,13 +1,17 @@
 import {findDates} from "./find_dates.js";
 import {formatFoundDate} from "./format_dates.js";
-import * as f from "./pop_up_interaction.js";
+import "./pop_up_interaction.js";
 
-const addDates = (dates) => {
-    const datesContainer = document.getElementById('dates-container');
+const showFoundDates = (dates) => {
+    const datesContainer = document.getElementById('dates-selector');
 
     dates.map((oneFoundDate) => {
         const formatedDate = formatFoundDate(oneFoundDate)
+        let container = document.createElement("div", )
+        container.className  = "one-date-selector"
+
         const dateInput = document.createElement('input');
+        dateInput.className = "start-date-input"
 
         let oneDateChoice = `${formatedDate.year}-${formatedDate.month}-${formatedDate.day}`
         let dateInputTye = 'date';
@@ -20,7 +24,15 @@ const addDates = (dates) => {
         dateInput.type = dateInputTye;
         dateInput.value = oneDateChoice
 
-        datesContainer.appendChild(dateInput);
+        let selectOneDateInput = document.createElement('input');
+        selectOneDateInput.type="submit"
+        selectOneDateInput.value="select"
+        selectOneDateInput.className="submit-start-date"
+
+        container.append(dateInput)
+        container.append(selectOneDateInput)
+
+        datesContainer.appendChild(container);
     })
 }
 
@@ -41,6 +53,5 @@ if (message) {
     const emailBodyText = await messenger.messengerUtilities.convertToPlainText(emailBodyTextInline[0].content)
 
     const dates = findDates(subject, emailBodyText);
-
-    addDates(dates)
+    showFoundDates(dates)
 }
