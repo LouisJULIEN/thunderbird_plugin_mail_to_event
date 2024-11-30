@@ -1,5 +1,4 @@
 import {findDates} from "./find_dates.js";
-import {formatFoundDate} from "./format_dates.js";
 import "./pop_up_interaction.js";
 
 
@@ -7,7 +6,6 @@ const showFoundDates = (dates) => {
     const datesContainer = document.getElementById('dates-selector');
 
     dates.map((oneFoundDate) => {
-        const formatedDate = formatFoundDate(oneFoundDate)
         let container = document.createElement("div",)
         container.className = "one-date-selector"
 
@@ -15,8 +13,8 @@ const showFoundDates = (dates) => {
 
         dateInput.className = "start-date-input"
         dateInput.type = 'datetime-local';
-        dateInput.value = formatedDate.dateISO.slice(0,16)
-        dateInput.fullValue = formatedDate.dateISO
+        dateInput.value = oneFoundDate.dateISO.slice(0,16)
+        dateInput.fullValue = oneFoundDate.dateISO
 
         let selectOneDateInput = document.createElement('input');
         selectOneDateInput.type = "submit"

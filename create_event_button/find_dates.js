@@ -1,3 +1,5 @@
+import {formatFoundDate} from "./format_dates.js";
+
 const ddmmyyyyPattern = /\b(?<day>0[1-9]|[12][0-9]|3[01])[/-](?<month>0[1-9]|1[0-2])[/-](?<year>\d{4})\b/gm;
 const mmddyyyyPattern = /\b(?<month>0[1-9]|1[0-2])[/-](?<day>0[1-9]|[12][0-9]|3[01])[/-](?<year>\d{4})\b/gm;
 const yyyymmddPattern = /\b(?<year>\d{4})[/-](?<month>0[1-9]|1[0-2])[/-](?<day>0[1-9]|[12][0-9]|3[01])\b/gm;
@@ -99,6 +101,14 @@ const removeDuplicateRegexIndex = (arrayOfObjects) => arrayOfObjects.reduce((acc
 }, []);
 
 
+const removeDuplicatesDateISO = (arrayOfObjects) => arrayOfObjects.reduce((acc, obj) => {
+    if (!acc.some(item => (item.dateISO === obj.dateISO))) {
+        acc.push(obj);
+    }
+    return acc;
+}, []);
+
+
 const sortDates = (dates) => {
     return dates.sort((a, b) => {
         return (a.textSourceIndex - b.textSourceIndex) ||
@@ -123,5 +133,10 @@ export function findDates(subjectContent, mailContent) {
     const allFoundDates = [].concat(subjectContentDates, mailContentDates)
     const flatFoundDates = [].concat(...allFoundDates);
     const sortedFlatFoundDates = sortDates(flatFoundDates);
-    return removeDuplicateRegexIndex(sortedFlatFoundDates)
+    const nonRegexDuplicated = removeDuplicateRegexIndex(sortedFlatFoundDates)
+
+    const formatedDates = nonRegexDuplicated.map(formatFoundDate)
+    const nonDuplicatedDates = removeDuplicatesDateISO(formatedDates)
+
+    return nonDuplicatedDates
 }

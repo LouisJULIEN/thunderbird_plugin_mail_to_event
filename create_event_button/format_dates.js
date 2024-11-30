@@ -58,6 +58,7 @@ export const formatFoundDate = (aFoundDate) => {
 
     const dateISO = dateJs.toISOString()
     return {
+        originalData: aFoundDate,
         dateJs,
         dateISO
     }
