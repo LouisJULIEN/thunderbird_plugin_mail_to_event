@@ -3,7 +3,7 @@
   "name": "Create Calendar events from mail content",
   "short_name": "Mail content to Calendar event",
   "description": "This plugin offers to create new events based on the email subject and content",
-  "version": "1.0",
+  "version": "0.1",
   "author": "Louis JULIEN",
   "developer": {
     "name": "Louis JULIEN",
