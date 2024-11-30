@@ -20,7 +20,7 @@ document.getElementById("dates-selector").addEventListener('click',
             startDatePicker.ariaSelected = "true"
 
             const startDateValue = new Date(startDatePicker.value)
-            document.getElementById('selected-date-iso').innerText = startDateValue.toISOString()
+            document.getElementById('selected-date-readable').innerText = startDateValue.toString()
 
             const endDateValue = new Date((startDateValue).getTime() + differenceStartDateEndDate)
 
@@ -30,6 +30,7 @@ document.getElementById("dates-selector").addEventListener('click',
             const minutes = ("0" + endDateValue.getMinutes()).slice(-2)
             const endDateValueFormated = `${endDateValue.getFullYear()}-${month}-${day} ${hours}:${minutes}`
             document.getElementById('end-date-input').value = endDateValueFormated
+            document.getElementById('create-calendar-event').disabled = false
         }
     })
 

@@ -24,6 +24,6 @@ input[aria-selected=true] {
     border: solid green 5px;
 }
 
-#selected-date-iso{
+#selected-date-readable{
     font-size: 10px;
 }
