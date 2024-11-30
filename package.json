@@ -1,9 +1,8 @@
 {
-  "dependencies": {
-    "@types/thunderbird-webext-browser": "^127.0.0",
-    "web-ext": "^8.3.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@types/thunderbird-webext-browser": "^127.0.0",
+    "web-ext": "^8.3.0",
     "chai": "^5.1.2",
     "mocha": "^10.8.2"
   },
