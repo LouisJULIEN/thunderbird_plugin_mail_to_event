@@ -3,9 +3,10 @@
   "devDependencies": {
     "@types/thunderbird-webext-browser": "^127.0.0",
     "chai": "^5.1.2",
+    "jsdom": "^25.0.1",
     "mocha": "^10.8.2",
-    "web-ext": "^8.3.0",
-    "mockdate": "^3.0.5"
+    "mockdate": "^3.0.5",
+    "web-ext": "^8.3.0"
   },
   "type": "module"
 }

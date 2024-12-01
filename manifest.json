@@ -33,7 +33,9 @@
   },
   "permissions": [
     "messagesRead",
-    "scripting"
+    "messagesUpdate",
+    "scripting",
+    "nativeMessaging"
   ],
   "experiment_apis": {
     "calendar_calendars": {

@@ -1,5 +1,5 @@
 import "./pop_up_interaction.js";
-import {getCurrentMailDates} from "./mail_to_date.js";
+import {getCurrentMailDates} from "../common/mail_to_date.js";
 
 
 const showFoundDates = (dates) => {
@@ -28,7 +28,8 @@ const showFoundDates = (dates) => {
     })
 }
 
-const dates = await getCurrentMailDates()
+const {dates, subject} = await getCurrentMailDates()
+document.getElementById("event-title").value = subject
 if (dates) {
     showFoundDates(dates)
 }

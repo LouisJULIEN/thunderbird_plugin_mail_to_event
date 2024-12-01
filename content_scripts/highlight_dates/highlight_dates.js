@@ -1,5 +1,11 @@
-async function highlightDates() {
-    console.log('youpi')
-}
+export async function highlightEmailDates() {
+    console.log('ok')
 
-highlightDates();
+    console.log(document.body)
+    const res = await browser.runtime.sendMessage({
+        action: 'findDOMDates',
+        HTMLBody: document
+    })
+    console.log(res)
+    return null;
+}

@@ -32,12 +32,12 @@ const naturalMonthsRegex = `` +
     ``
 
 export const ddmonthPattern = new RegExp(
-    `(?<day>0[1-9]|[12][0-9]|3[01]).*(?<month>(${naturalMonthsRegex})).*(?<year>\\d{4})?.*`,
-    'gim'
+    `(?<day>0[1-9]|[12][0-9]|3[01]).+(?<month>(${naturalMonthsRegex})).+(?<year>\\d{4})?`,
+    'gimd'
 )
 const monthddPattern = new RegExp(
-    `(?<month>(${naturalMonthsRegex})).*(?<day>0[1-9]|[12][0-9]|3[01])[^0-9].*(?<year>\\d{4})?.*`,
-    'gim'
+    `(?<month>(${naturalMonthsRegex})).+(?<day>0[1-9]|[12][0-9]|3[01])[^0-9].+(?<year>\\d{4})?`,
+    'gimd'
 )
 
 const allDatesPatternByImportance = [
@@ -62,12 +62,13 @@ function findDatesByPattern(text, pattern, extraData) {
     let matchAgainstDate, matchAgainstTime;
     const sentences = splitTextIntoSentences(text)
 
-    sentences.map((oneSentence) => {
+    let totalIndices = 0
+    for (const oneSentence of sentences) {
         while ((matchAgainstDate = pattern.exec(oneSentence)) !== null) {
             const dateMatch = {
                 ...extraData,
                 originalText: matchAgainstDate[0],
-                regexIndex: matchAgainstDate.index,
+                regexIndex: totalIndices + matchAgainstDate.index,
                 ...matchAgainstDate.groups
             }
             let matchesToAdd = []
@@ -89,7 +90,8 @@ function findDatesByPattern(text, pattern, extraData) {
             }
             matches = [].concat(matches, matchesToAdd)
         }
-    })
+        totalIndices += oneSentence.length
+    }
     return matches;
 }
 
@@ -118,9 +120,9 @@ const sortDates = (dates) => {
     })
 }
 
-export function findDates(subjectContent, mailContent) {
+export function findDates(mailSubject, mailContent, removeDuplicatesDates = true) {
     const subjectContentDates = allDatesPatternByImportance.map(
-        (aPattern, patternIndex) => findDatesByPattern(subjectContent, aPattern, {
+        (aPattern, patternIndex) => findDatesByPattern(mailSubject, aPattern, {
             patternIndex,
             textSourceIndex: 0
         }))
@@ -136,7 +138,9 @@ export function findDates(subjectContent, mailContent) {
     const nonRegexDuplicated = removeDuplicateRegexIndex(sortedFlatFoundDates)
 
     const formatedDates = nonRegexDuplicated.map(formatFoundDate)
-    const nonDuplicatedDates = removeDuplicatesDateISO(formatedDates)
-
-    return nonDuplicatedDates
+    if (removeDuplicatesDates) {
+        return removeDuplicatesDateISO(formatedDates)
+    } else {
+        return formatedDates
+    }
 }

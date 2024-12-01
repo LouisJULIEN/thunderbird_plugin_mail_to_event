@@ -1,4 +1,4 @@
-import {createEvent} from "./create_event.js";
+import {createEvent} from "./create_calendar_event.js";
 
 const calendars = await messenger.calendar.calendars.query({visible: true, readOnly: false, enabled: true})
 const currentCalendar = calendars[0]

@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {ddmonthPattern, findDates, splitTextIntoSentences} from "../create_event_button/find_dates.js";
+import {ddmonthPattern, findDates, splitTextIntoSentences} from "../common/find_dates.js";
 import { set, reset } from 'mockdate'
 
 describe('find dates', function () {
@@ -57,7 +57,7 @@ This is a new sentence on a new line.A last one`;
                 "month": "Nove",
                 "originalText": "28 November.",
                 "patternIndex": 3,
-                "regexIndex": 5,
+                "regexIndex": 24,
                 "textSourceIndex": 1,
                 "year": undefined,
             }
@@ -71,7 +71,7 @@ This is a new sentence on a new line.A last one`;
                 "month": "12",
                 "originalText": "19/12",
                 "patternIndex": 5,
-                "regexIndex": 15,
+                "regexIndex": 83,
                 "textSourceIndex": 1,
             }
         }])
