@@ -7,4 +7,5 @@ async function highlightEmailDates() {
     document.body.innerHTML = res.modifiedMailInnerHTML
     return null;
 }
+
 highlightEmailDates()
