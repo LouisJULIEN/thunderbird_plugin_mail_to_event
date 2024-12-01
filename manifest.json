@@ -24,8 +24,8 @@
   },
   "background": {
     "scripts": [
-      "background/register_content_script.js",
-      "background/register_tag_dates.js"
+      "background/register_content_script_injector.js",
+      "background/register_tag_dates_listener.js"
     ],
     "type": "module"
   },
