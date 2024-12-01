@@ -23,7 +23,10 @@
     "default_icon": "images/calendar.svg"
   },
   "background": {
-    "scripts": ["background/register_content_script.js"],
+    "scripts": [
+      "background/register_content_script.js",
+      "background/register_tag_dates.js"
+    ],
     "type": "module"
   },
   "icons": {

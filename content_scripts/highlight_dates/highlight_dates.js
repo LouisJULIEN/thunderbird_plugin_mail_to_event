@@ -1,11 +1,10 @@
-export async function highlightEmailDates() {
-    console.log('ok')
-
-    console.log(document.body)
+async function highlightEmailDates() {
     const res = await browser.runtime.sendMessage({
-        action: 'findDOMDates',
-        HTMLBody: document
+        action: 'tagDates',
+        innerHTML: document.body.innerHTML,
+        textContent: document.body.textContent,
     })
-    console.log(res)
+    document.body.innerHTML = res.modifiedMailInnerHTML
     return null;
 }
+highlightEmailDates()
