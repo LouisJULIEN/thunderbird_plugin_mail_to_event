@@ -22,13 +22,18 @@
     "default_title": "Create event",
     "default_icon": "images/calendar.svg"
   },
+  "background": {
+    "scripts": ["background/register_content_script.js"],
+    "type": "module"
+  },
   "icons": {
     "64": "images/calendar.svg",
     "32": "images/calendar.svg",
     "16": "images/calendar.svg"
   },
   "permissions": [
-    "messagesRead"
+    "messagesRead",
+    "scripting"
   ],
   "experiment_apis": {
     "calendar_calendars": {

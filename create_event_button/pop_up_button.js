@@ -1,5 +1,5 @@
-import {findDates} from "./find_dates.js";
 import "./pop_up_interaction.js";
+import {getCurrentMailDates} from "./mail_to_date.js";
 
 
 const showFoundDates = (dates) => {
@@ -13,7 +13,7 @@ const showFoundDates = (dates) => {
 
         dateInput.className = "start-date-input"
         dateInput.type = 'datetime-local';
-        dateInput.value = oneFoundDate.dateISO.slice(0,16)
+        dateInput.value = oneFoundDate.dateISO.slice(0, 16)
         dateInput.fullValue = oneFoundDate.dateISO
 
         let selectOneDateInput = document.createElement('input');
@@ -28,19 +28,7 @@ const showFoundDates = (dates) => {
     })
 }
 
-
-let tabs = await messenger.tabs.query({active: true, currentWindow: true});
-const currentTabId = tabs[0].id;
-
-const messages = await messenger.messageDisplay.getDisplayedMessages(currentTabId);
-const message = messages.messages?.[0]
-
-if (message) {
-    const subject = message.subject;
-    document.getElementById("event-title").value = subject
-    const emailBodyTextInline = await messenger.messages.listInlineTextParts(message.id)
-    const emailBodyText = await messenger.messengerUtilities.convertToPlainText(emailBodyTextInline[0].content)
-
-    const dates = findDates(subject, emailBodyText);
+const dates = await getCurrentMailDates()
+if (dates) {
     showFoundDates(dates)
 }
