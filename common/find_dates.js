@@ -32,12 +32,12 @@ const naturalMonthsRegex = `` +
     ``
 
 export const ddmonthPattern = new RegExp(
-    `(?<day>0[1-9]|[12][0-9]|3[01]).+(?<month>(${naturalMonthsRegex})).+(?<year>\\d{4})?`,
-    'gimd'
+    `(?<day>0[1-9]|[12][0-9]|3[01])[^0-9]+(?<month>(${naturalMonthsRegex}))[^0-9]+?(?<year>\\d{4})?`,
+    'gim'
 )
 const monthddPattern = new RegExp(
-    `(?<month>(${naturalMonthsRegex})).+(?<day>0[1-9]|[12][0-9]|3[01])[^0-9].+(?<year>\\d{4})?`,
-    'gimd'
+    `(?<month>(${naturalMonthsRegex}))[^0-9]+(?<day>0[1-9]|[12][0-9]|3[01])[^0-9]+?(?<year>\\d{4})?`,
+    'gim'
 )
 
 const allDatesPatternByImportance = [
