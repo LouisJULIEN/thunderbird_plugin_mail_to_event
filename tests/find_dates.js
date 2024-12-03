@@ -1,13 +1,13 @@
 import {expect} from "chai";
 import {ddmonthPattern, findDates, splitTextIntoSentences} from "../common/find_dates.js";
-import { set, reset } from 'mockdate'
+import {set, reset} from 'mockdate'
 
 describe('find dates', function () {
 
-    before(()=>{
+    before(() => {
         set('2024-12-19T18:09:00.000Z')
     })
-    after(()=>{
+    after(() => {
         reset('2024-12-19T18:09:00.000Z')
     })
 
@@ -21,14 +21,46 @@ This is a new sentence on a new line.A last one`;
         expect(sentences.length).to.equal(6);
     });
 
-    it('should find natural language dates', () => {
+    it('should find natural language without year dates', () => {
         let result;
+        result = ddmonthPattern.test('12 jan')
+        expect(result).to.be.true
+        ddmonthPattern.lastIndex = 0
+
+        result = ddmonthPattern.test('12 jan')
+        expect(result).to.be.true
+        ddmonthPattern.lastIndex = 0
+
+        result = ddmonthPattern.test('12 janu')
+        expect(result).to.be.true
+        ddmonthPattern.lastIndex = 0
+
+        result = ddmonthPattern.test('12 janu ')
+        expect(result).to.be.true
+        ddmonthPattern.lastIndex = 0
+
+        result = ddmonthPattern.test('oeoeoe 12 coucou jan salut')
+        expect(result).to.be.false
+        ddmonthPattern.lastIndex = 0
+    })
+
+    it('should find natural language with year dates', () => {
+        let result;
+        result = ddmonthPattern.test('12 jan 2024')
+        expect(result).to.be.true
+        ddmonthPattern.lastIndex = 0
+
         result = ddmonthPattern.test('12 janu 2024')
         expect(result).to.be.true
+        ddmonthPattern.lastIndex = 0
+
+        result = ddmonthPattern.test('12 january 2024')
+        expect(result).to.be.true
+        ddmonthPattern.lastIndex = 0
+
         result = ddmonthPattern.test('12 janvier 2024')
         expect(result).to.be.false
-        result = ddmonthPattern.test('oeoeoe 12 coucou jan salut')
-        expect(result).to.be.true
+        ddmonthPattern.lastIndex = 0
     })
 
     it('should find all dates in this email', () => {
@@ -55,7 +87,7 @@ This is a new sentence on a new line.A last one`;
             "originalData": {
                 "day": "28",
                 "month": "November",
-                "originalText": "28 November",
+                "originalText": "28 November.",
                 "patternIndex": 3,
                 "regexIndex": 24,
                 "textSourceIndex": 1,

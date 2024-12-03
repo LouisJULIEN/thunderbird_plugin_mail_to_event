@@ -66,6 +66,19 @@ describe('find dates', function () {
                     originalData: {
                         patternIndex: 4,
                         textSourceIndex: 1,
+                        originalText: 'December 5, 2024',
+                        regexIndex: 133,
+                        month: 'December',
+                        day: '5',
+                        year: "2024"
+                    },
+                    dateJs: new Date('2024-12-05T19:00:00.000Z'),
+                    dateISO: '2024-12-05T19:00:00.000Z',
+                    htmlContainerIdValue: 'plugin-date-index-0'
+                }, {
+                    originalData: {
+                        patternIndex: 4,
+                        textSourceIndex: 1,
                         originalText: 'December 10, 2024',
                         regexIndex: 254,
                         month: 'December',
@@ -74,7 +87,7 @@ describe('find dates', function () {
                     },
                     dateJs: new Date('2024-12-10T19:00:00.000Z'),
                     dateISO: '2024-12-10T19:00:00.000Z',
-                    htmlContainerIdValue: 'plugin-date-index-0'
+                    htmlContainerIdValue: 'plugin-date-index-1'
                 }, {
                     originalData: {
                         patternIndex: 4,
@@ -87,7 +100,7 @@ describe('find dates', function () {
                     },
                     dateJs: new Date('2024-12-15T19:00:00.000Z'),
                     dateISO: '2024-12-15T19:00:00.000Z',
-                    htmlContainerIdValue: 'plugin-date-index-1'
+                    htmlContainerIdValue: 'plugin-date-index-2'
                 }, {
                     originalData: {
                         patternIndex: 4,
@@ -100,9 +113,9 @@ describe('find dates', function () {
                     },
                     dateJs: new Date('2024-12-20T19:00:00.000Z'),
                     dateISO: '2024-12-20T19:00:00.000Z',
-                    htmlContainerIdValue: 'plugin-date-index-2'
+                    htmlContainerIdValue: 'plugin-date-index-3'
                 }],
-            modifiedMailInnerHTML: "\n    <div class=\"container\">\n        <h1>Upcoming Events</h1>\n        <p>Dear [Recipient's Name],</p>\n        <p>We are excited to announce the following upcoming events:</p>\n\n        <h2>Event 1: Annual Conference</h2>\n        <p>Date: <span class=\"date\">December 5, 2024</span></p>\n        <p>Time: <span class=\"date\">10:00 AM - 5:00 PM</span></p>\n        <p>Location: Conference Hall, Main Building</p>\n\n        <h2>Event 2: Team Building Workshop</h2>\n        <p>Date: <span class=\"date\"><span id=\"plugin-date-index-0\" class=\"pluginMailToEvent-highlightDate\">December 10, 2024</span></span></p>\n        <p>Time: <span class=\"date\">9:00 AM - 12:00 PM</span></p>\n        <p>Location: Training Room, Second Floor</p>\n\n        <h2>Event 3: Holiday Party</h2>\n        <p>Date: <span class=\"date\"><span id=\"plugin-date-index-1\" class=\"pluginMailToEvent-highlightDate\">December 15, 2024</span></span></p>\n        <p>Time: <span class=\"date\">6:00 PM - 9:00 PM</span></p>\n        <p>Location: Banquet Hall, Downtown</p>\n\n        <h2>Event 4: Year-End Review Meeting</h2>\n        <p>Date: <span class=\"date\"><span id=\"plugin-date-index-2\" class=\"pluginMailToEvent-highlightDate\">December 20</span></span></p>\n        <p>Time: <span class=\"date\">2:00 PM - 4:00 PM</span></p>\n        <p>Location: Board Room, Executive Wing</p>\n\n        <p>Please mark your calendars and join us for these exciting events!</p>\n\n        <p>Best regards,</p>\n        <p>[Your Name]<br>\n        [Your Position]<br>\n        [Your Contact Information]</p>\n    </div>\n\n\n"
+            modifiedMailInnerHTML: "\n    <div class=\"container\">\n        <h1>Upcoming Events</h1>\n        <p>Dear [Recipient's Name],</p>\n        <p>We are excited to announce the following upcoming events:</p>\n\n        <h2>Event 1: Annual Conference</h2>\n        <p>Date: <span class=\"date\"><span id=\"plugin-date-index-0\" class=\"pluginMailToEvent-highlightDate\">December 5, 2024</span></span></p>\n        <p>Time: <span class=\"date\">10:00 AM - 5:00 PM</span></p>\n        <p>Location: Conference Hall, Main Building</p>\n\n        <h2>Event 2: Team Building Workshop</h2>\n        <p>Date: <span class=\"date\"><span id=\"plugin-date-index-1\" class=\"pluginMailToEvent-highlightDate\">December 10, 2024</span></span></p>\n        <p>Time: <span class=\"date\">9:00 AM - 12:00 PM</span></p>\n        <p>Location: Training Room, Second Floor</p>\n\n        <h2>Event 3: Holiday Party</h2>\n        <p>Date: <span class=\"date\"><span id=\"plugin-date-index-2\" class=\"pluginMailToEvent-highlightDate\">December 15, 2024</span></span></p>\n        <p>Time: <span class=\"date\">6:00 PM - 9:00 PM</span></p>\n        <p>Location: Banquet Hall, Downtown</p>\n\n        <h2>Event 4: Year-End Review Meeting</h2>\n        <p>Date: <span class=\"date\"><span id=\"plugin-date-index-3\" class=\"pluginMailToEvent-highlightDate\">December 20</span></span></p>\n        <p>Time: <span class=\"date\">2:00 PM - 4:00 PM</span></p>\n        <p>Location: Board Room, Executive Wing</p>\n\n        <p>Please mark your calendars and join us for these exciting events!</p>\n\n        <p>Best regards,</p>\n        <p>[Your Name]<br>\n        [Your Position]<br>\n        [Your Contact Information]</p>\n    </div>\n\n\n"
         })
     })
 })
