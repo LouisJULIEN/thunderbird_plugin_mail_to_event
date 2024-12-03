@@ -16,27 +16,27 @@ const hhampmPattern = new RegExp(
     'i')
 
 const naturalMonthsRegex = `` +
-    `jan[u|${punctuationOrSpace}]|` +
-    `feb[r|${punctuationOrSpace}]|` +
-    `mar[c|${punctuationOrSpace}]|` +
-    `apr[i|${punctuationOrSpace}]|` +
-    `apr[i|${punctuationOrSpace}]|` +
+    `jan(u[a-z]*|${punctuationOrSpace})|` +
+    `feb(r[a-z]*|${punctuationOrSpace})|` +
+    `mar(c[a-z]*|${punctuationOrSpace})|` +
+    `apr(i[a-z]*|${punctuationOrSpace})|` +
+    `apr(i[a-z]*|${punctuationOrSpace})|` +
     `may[${punctuationOrSpace}]|` +
-    `jun[e|${punctuationOrSpace}]|` +
-    `jul[y|${punctuationOrSpace}]|` +
-    `aug[u|${punctuationOrSpace}]|` +
-    `sep[t|${punctuationOrSpace}]|` +
-    `oct[o|${punctuationOrSpace}]|` +
-    `nov[e|${punctuationOrSpace}]|` +
-    `dec[e|${punctuationOrSpace}]` +
+    `jun(e[a-z]*|${punctuationOrSpace})|` +
+    `jul(y[a-z]*|${punctuationOrSpace})|` +
+    `aug(u[a-z]*|${punctuationOrSpace})|` +
+    `sep(t[a-z]*|${punctuationOrSpace})|` +
+    `oct(o[a-z]*|${punctuationOrSpace})|` +
+    `nov(e[a-z]*|${punctuationOrSpace})|` +
+    `dec(e[a-z]*|${punctuationOrSpace})` +
     ``
 
 export const ddmonthPattern = new RegExp(
-    `(?<day>0[1-9]|[12][0-9]|3[01])[^0-9]+(?<month>(${naturalMonthsRegex}))[^0-9]+?(?<year>\\d{4})?`,
+    `(?<day>0[1-9]|[12][0-9]|3[01])[^0-9]+(?<month>(${naturalMonthsRegex}))([^0-9]+(?<year>\\d{4}))?`,
     'gim'
 )
 const monthddPattern = new RegExp(
-    `(?<month>(${naturalMonthsRegex}))[^0-9]+(?<day>0[1-9]|[12][0-9]|3[01])[^0-9]+?(?<year>\\d{4})?`,
+    `(?<month>(${naturalMonthsRegex}))[^0-9]+(?<day>0[1-9]|[12][0-9]|3[01])([^0-9]+(?<year>\\d{4}))?`,
     'gim'
 )
 

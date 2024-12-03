@@ -54,8 +54,8 @@ This is a new sentence on a new line.A last one`;
             "dateJs": new Date('2024-11-28T19:00:00.000Z'),
             "originalData": {
                 "day": "28",
-                "month": "Nove",
-                "originalText": "28 November.",
+                "month": "November",
+                "originalText": "28 November",
                 "patternIndex": 3,
                 "regexIndex": 24,
                 "textSourceIndex": 1,
