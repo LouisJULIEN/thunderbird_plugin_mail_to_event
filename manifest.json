@@ -36,7 +36,7 @@
   },
   "permissions": [
     "messagesRead",
-    "messagesModify",
+    "messagesUpdate",
     "scripting",
     "nativeMessaging"
   ],
