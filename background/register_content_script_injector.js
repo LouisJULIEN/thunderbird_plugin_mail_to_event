@@ -1,9 +1,7 @@
-await messenger.scripting.registerContentScripts([{
-    allFrames: true,
+await messenger.scripting.messageDisplay.registerScripts([{
     id: "highlightDates-1025",
     js: ["content_scripts/highlight_dates/highlight_dates.js"],
     css: ["content_scripts/highlight_dates/highlight_dates.css"],
-    matches: ["<all_urls>", "*://*/*"]
 }]);
 
 
@@ -17,7 +15,7 @@ for (let messageTab of messageTabs) {
         target: {tabId: messageTab.id},
         files: ["content_scripts/highlight_dates/highlight_dates.css"]
     })
-    const a = await messenger.scripting.executeScript({
+    await messenger.scripting.executeScript({
         target: {tabId: messageTab.id},
         files: [
             "content_scripts/highlight_dates/highlight_dates.js",

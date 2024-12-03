@@ -1,3 +1,92 @@
+function generateUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+const createEventHTML = (uniqueID) => {
+    const tagsId = {
+        startDate: `pluginMailToEvent-start-date-input-${uniqueID}`,
+        endDate: `pluginMailToEvent-end-date-input-${uniqueID}`,
+        eventComment: `pluginMailToEvent-event-comment-${uniqueID}`,
+        eventTitle: `pluginMailToEvent-event-title-${uniqueID}`,
+        resultDisplay: `pluginMailToEvent-creation-result-display-${uniqueID}`,
+        submitEventCreation: `pluginMailToEvent-create-calendar-event-${uniqueID}`,
+    }
+
+    const html = `
+<div class="pluginMailToEvent-createEvent">
+<textarea rows="1" cols="35" id="${tagsId.eventTitle}"></textarea>
+
+<div class="start-date-selector one-date-selector">
+    <label for="start-date-input">Start date</label><br/>
+    <input id="${tagsId.startDate}" type="datetime-local" value="">
+</div>
+
+<div class="end-date-selector one-date-selector">
+    <label for="end-date-input">End date</label><br/>
+    <input id="${tagsId.endDate}" type="datetime-local" value="">
+</div>
+
+<textarea rows="2" cols="35" id="${tagsId.eventComment}" placeholder="Optional description"></textarea>
+
+
+<div id="${tagsId.resultDisplay}"></div>
+<input type="submit" id="${tagsId.submitEventCreation}" value="Create event">
+</div>
+`
+    return {tagsId, html}
+}
+
+const submitEventCreation = async (tagsId) => {
+    const selectedStartDate = document.getElementById(tagsId.startDate)?.fullValue
+    const selectedEndDate = document.getElementById(tagsId.endDate)?.fullValue
+    const title = document.getElementById(tagsId.eventTitle).value
+    const comment = document.getElementById(tagsId.eventComment).value || ""
+    if (selectedStartDate && selectedEndDate && title) {
+        const result = await browser.runtime.sendMessage({
+            action: 'createCalendarEvent',
+            args: [
+                selectedStartDate,
+                selectedEndDate,
+                title,
+                comment]
+        })
+
+        if (result.error) {
+            document.getElementById(tagsId.resultDisplay).innerText = result.error?.message
+            console.log(result)
+        } else {
+            document.getElementById(tagsId.resultDisplay).innerText = "Event creation successful"
+        }
+    }
+}
+
+async function eventCreatorPopup(oneFoundElement) {
+    const uid = generateUID()
+    const {htmlContainerIdValue, dateISO: startDateISO, dateJs: startDateJs} = oneFoundElement
+    document.getElementById(htmlContainerIdValue).addEventListener('click', (clickEvent) => {
+        const eventCreator = document.createElement('div')
+        const {html, tagsId} = createEventHTML(uid)
+        eventCreator.innerHTML = html
+        eventCreator.style = `position: absolute; top: ${clickEvent.y}px; left: ${clickEvent.x}px`
+        document.body.appendChild(eventCreator)
+
+        document.getElementById(tagsId.eventTitle).value = document.title
+
+        document.getElementById(tagsId.startDate).value = startDateISO.slice(0, 16)
+        document.getElementById(tagsId.startDate).fullValue = startDateISO
+
+        let endDateValue = startDateJs
+        endDateValue.setMinutes(endDateValue.getMinutes() + 30)
+        document.getElementById(tagsId.endDate).value = endDateValue.toISOString().slice(0, 16)
+        document.getElementById(tagsId.endDate).fullValue = endDateValue.toISOString()
+
+        document.getElementById(tagsId.submitEventCreation).addEventListener('click', () => submitEventCreation(tagsId))
+    })
+}
+
 async function highlightEmailDates() {
     const res = await browser.runtime.sendMessage({
         action: 'tagDates',
@@ -5,7 +94,8 @@ async function highlightEmailDates() {
         textContent: document.body.textContent,
     })
     document.body.innerHTML = res.modifiedMailInnerHTML
-    return null;
+    res.foundHtmlElements.map(eventCreatorPopup)
 }
+
 
 highlightEmailDates()
