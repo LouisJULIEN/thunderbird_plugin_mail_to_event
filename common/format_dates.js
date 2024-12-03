@@ -1,29 +1,36 @@
 const isDigit = (aString) => /^[0-9]+$/.test(aString)
 
 const formatYear = (year) => {
-    return year || new Date().getFullYear();
-};
+    if (isDigit(year)) {
+        return +year
+    }
+    return (new Date()).getFullYear();
+
+}
 const formatDay = (day) => {
-    return ("0" + `${day}`).slice(-2)
+    if (isDigit(day)) {
+        return +day
+    }
+    return null
 }
 const formatMonth = (month) => {
     if (isDigit(month)) {
-        return ("0" + `${month}`).slice(-2)
+        return +month
     }
     const threeFirstLetters = month.slice(0, 3).toLowerCase()
     const monthToNumber = {
-        'jan': "01",
-        'feb': "02",
-        'mar': "03",
-        'apr': "04",
-        'may': "05",
-        'jun': "06",
-        'jui': "07",
-        'aug': "08",
-        'sep': "09",
-        'oct': "10",
-        'nov': "11",
-        'dec': "12",
+        'jan': 1,
+        'feb': 2,
+        'mar': 3,
+        'apr': 4,
+        'may': 5,
+        'jun': 6,
+        'jul': 7,
+        'aug': 8,
+        'sep': 9,
+        'oct': 10,
+        'nov': 11,
+        'dec': 12,
     }
     return monthToNumber[threeFirstLetters] || null
 }
@@ -47,13 +54,12 @@ export const formatFoundDate = (aFoundDate) => {
         ...formatHourMinutes(aFoundDate.hours, aFoundDate.minutes, aFoundDate.ampm)
     }
     const dateJs = new Date(
-        +dateData.year,
-        (+dateData.month) - 1, // monthIndex starts at 0, January is 0
-        +dateData.day,
-        +dateData.hours,
-        +dateData.minutes)
+        dateData.year,
+        (dateData.month || 1) - 1, // monthIndex starts at 0 e.g. January is 0
+        dateData.day,
+        dateData.hours,
+        dateData.minutes)
 
-    // Sets time to local timezone
     dateJs.setTime(dateJs.getTime() - dateJs.getTimezoneOffset() * 60 * 1000);
 
     const dateISO = dateJs.toISOString()
