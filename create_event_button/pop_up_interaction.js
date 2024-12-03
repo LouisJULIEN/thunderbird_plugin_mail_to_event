@@ -48,7 +48,7 @@ document.getElementById("create-calendar-event").addEventListener('click',
 
             if (result.error) {
                 document.getElementById("creation-result-display").innerText = result.error?.message
-                console.log(result)
+                console.error(result)
             } else {
                 document.getElementById("creation-result-display").innerText = "Event creation successful"
             }

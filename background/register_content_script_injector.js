@@ -1,5 +1,5 @@
 await messenger.scripting.messageDisplay.registerScripts([{
-    id: "highlightDates-1025",
+    id: "pluginMailToEvent-highlightDates",
     js: ["content_scripts/highlight_dates/highlight_dates.js"],
     css: ["content_scripts/highlight_dates/highlight_dates.css"],
 }]);

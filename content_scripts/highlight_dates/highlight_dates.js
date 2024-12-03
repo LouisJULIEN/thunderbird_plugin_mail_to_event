@@ -1,3 +1,5 @@
+let createdDivIds = []
+
 function generateUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
         const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -56,7 +58,7 @@ const submitEventCreation = async (tagsId) => {
 
         if (result.error) {
             document.getElementById(tagsId.resultDisplay).innerText = result.error?.message
-            console.log(result)
+            console.error(result)
         } else {
             document.getElementById(tagsId.resultDisplay).innerText = "Event creation successful"
         }
@@ -64,14 +66,18 @@ const submitEventCreation = async (tagsId) => {
 }
 
 async function eventCreatorPopup(oneFoundElement) {
-    const uid = generateUID()
     const {htmlContainerIdValue, dateISO: startDateISO, dateJs: startDateJs} = oneFoundElement
     document.getElementById(htmlContainerIdValue).addEventListener('click', (clickEvent) => {
+        const uid = generateUID()
         const eventCreator = document.createElement('div')
+        eventCreator.id = `pluginMailToEvent-event-creator-${uid}`
+        eventCreator.className = `pluginMailToEvent-event-creator`
+
         const {html, tagsId} = createEventHTML(uid)
         eventCreator.innerHTML = html
         eventCreator.style = `position: absolute; top: ${clickEvent.y}px; left: ${clickEvent.x}px`
         document.body.appendChild(eventCreator)
+        createdDivIds.push(eventCreator.id)
 
         document.getElementById(tagsId.eventTitle).value = document.title
 
@@ -99,3 +105,16 @@ async function highlightEmailDates() {
 
 
 highlightEmailDates()
+
+document.addEventListener('click', function (clickEvent) {
+    const clickedOnAnEventCreator = clickEvent.target.closest('.pluginMailToEvent-event-creator') ||
+        clickEvent.target.closest('.pluginMailToEvent-highlightDate')
+
+    if (!clickedOnAnEventCreator) {
+        while (createdDivIds.length > 0) {
+            const oneEventCreatorId = createdDivIds.pop()
+            document.getElementById(oneEventCreatorId).remove()
+        }
+    }
+})
+
