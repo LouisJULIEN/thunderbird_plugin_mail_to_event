@@ -2,6 +2,24 @@
     background: aqua;
 }
 
-.pluginMailToEvent-createEvent{
+.pluginMailToEvent-createEvent {
     background: white;
+    border: black 1px solid;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+label {
+    font-size: 12px;
+}
+
+textarea {
+    font-size: 15px;
+}
+
+input[type="submit"] {
+    margin: 1ex 0;
+    padding: 1ex 1ex;
+    width: 100%;
+    font-size: 15px;
 }

@@ -17,14 +17,13 @@ document.getElementById("dates-selector").addEventListener('click',
             const startDatePicker = clickedElement.target.parentElement.getElementsByClassName('start-date-input')?.[0];
             startDatePicker.ariaSelected = "true"
 
-            const startDateValue = new Date(startDatePicker.fullValue)
+            const startDateValue = new Date(startDatePicker.value + ':00.000Z')
             document.getElementById('selected-date-readable').innerText = startDateValue.toString()
 
             let endDateValue = new Date(Number(startDateValue))
             endDateValue.setMinutes(startDateValue.getMinutes() + 30)
 
             document.getElementById('end-date-input').value = endDateValue.toISOString().slice(0, 16)
-            document.getElementById('end-date-input').fullValue = endDateValue.toISOString()
             document.getElementById('create-calendar-event').disabled = false
         }
     })
@@ -32,16 +31,16 @@ document.getElementById("dates-selector").addEventListener('click',
 
 document.getElementById("create-calendar-event").addEventListener('click',
     async () => {
-        const selectedStartDate = document.querySelector(".start-date-input[aria-selected='true']")?.fullValue
-        const selectedEndDate = document.getElementById('end-date-input')?.fullValue
+        const selectedStartDate = document.querySelector(".start-date-input[aria-selected='true']")?.value
+        const selectedEndDate = document.getElementById('end-date-input')?.value
         const title = document.getElementById('event-title').value
         const comment = document.getElementById('event-comment').value || ""
 
         if (selectedStartDate && selectedEndDate && title) {
             const result = await createEvent(
                 currentCalendar.id,
-                selectedStartDate,
-                selectedEndDate,
+                selectedStartDate + ':00.000Z',
+                selectedEndDate + ':00.000Z',
                 title,
                 comment
             )

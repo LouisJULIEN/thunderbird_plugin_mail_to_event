@@ -19,7 +19,7 @@ const createEventHTML = (uniqueID) => {
 
     const html = `
 <div class="pluginMailToEvent-createEvent">
-<textarea rows="1" cols="35" id="${tagsId.eventTitle}"></textarea>
+<textarea rows="1" cols="30" id="${tagsId.eventTitle}"></textarea>
 
 <div class="start-date-selector one-date-selector">
     <label for="start-date-input">Start date</label><br/>
@@ -30,8 +30,9 @@ const createEventHTML = (uniqueID) => {
     <label for="end-date-input">End date</label><br/>
     <input id="${tagsId.endDate}" type="datetime-local" value="">
 </div>
+<br/>
 
-<textarea rows="2" cols="35" id="${tagsId.eventComment}" placeholder="Optional description"></textarea>
+<textarea rows="2" cols="30" id="${tagsId.eventComment}" placeholder="Optional description"></textarea>
 
 
 <div id="${tagsId.resultDisplay}"></div>
@@ -42,16 +43,16 @@ const createEventHTML = (uniqueID) => {
 }
 
 const submitEventCreation = async (tagsId) => {
-    const selectedStartDate = document.getElementById(tagsId.startDate)?.fullValue
-    const selectedEndDate = document.getElementById(tagsId.endDate)?.fullValue
+    const selectedStartDate = document.getElementById(tagsId.startDate)?.value
+    const selectedEndDate = document.getElementById(tagsId.endDate)?.value
     const title = document.getElementById(tagsId.eventTitle).value
     const comment = document.getElementById(tagsId.eventComment).value || ""
     if (selectedStartDate && selectedEndDate && title) {
         const result = await browser.runtime.sendMessage({
             action: 'createCalendarEvent',
             args: [
-                selectedStartDate,
-                selectedEndDate,
+                selectedStartDate + ':00.000Z',
+                selectedEndDate + ':00.000Z',
                 title,
                 comment]
         })
@@ -82,12 +83,10 @@ async function eventCreatorPopup(oneFoundElement) {
         document.getElementById(tagsId.eventTitle).value = document.title
 
         document.getElementById(tagsId.startDate).value = startDateISO.slice(0, 16)
-        document.getElementById(tagsId.startDate).fullValue = startDateISO
 
         let endDateValue = startDateJs
         endDateValue.setMinutes(endDateValue.getMinutes() + 30)
         document.getElementById(tagsId.endDate).value = endDateValue.toISOString().slice(0, 16)
-        document.getElementById(tagsId.endDate).fullValue = endDateValue.toISOString()
 
         document.getElementById(tagsId.submitEventCreation).addEventListener('click', () => submitEventCreation(tagsId))
     })

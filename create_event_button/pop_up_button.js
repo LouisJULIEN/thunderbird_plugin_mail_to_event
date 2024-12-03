@@ -14,7 +14,6 @@ const showFoundDates = (dates) => {
         dateInput.className = "start-date-input"
         dateInput.type = 'datetime-local';
         dateInput.value = oneFoundDate.dateISO.slice(0, 16)
-        dateInput.fullValue = oneFoundDate.dateISO
 
         let selectOneDateInput = document.createElement('input');
         selectOneDateInput.type = "submit"
