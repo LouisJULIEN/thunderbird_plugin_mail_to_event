@@ -84,7 +84,7 @@ async function eventCreatorPopup(oneFoundElement) {
 
         document.getElementById(tagsId.startDate).value = startDateISO.slice(0, 16)
 
-        let endDateValue = startDateJs
+        let endDateValue = new Date(Number(startDateJs)) // this trick fixes timezone
         endDateValue.setMinutes(endDateValue.getMinutes() + 30)
         document.getElementById(tagsId.endDate).value = endDateValue.toISOString().slice(0, 16)
 

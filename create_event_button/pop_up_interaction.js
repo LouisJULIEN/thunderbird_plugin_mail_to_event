@@ -20,7 +20,7 @@ document.getElementById("dates-selector").addEventListener('click',
             const startDateValue = new Date(startDatePicker.value + ':00.000Z')
             document.getElementById('selected-date-readable').innerText = startDateValue.toString()
 
-            let endDateValue = new Date(Number(startDateValue))
+            let endDateValue = new Date(Number(startDateValue)) // this trick fixes timezone
             endDateValue.setMinutes(startDateValue.getMinutes() + 30)
 
             document.getElementById('end-date-input').value = endDateValue.toISOString().slice(0, 16)

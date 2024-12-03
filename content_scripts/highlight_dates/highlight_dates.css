@@ -1,5 +1,6 @@
 .pluginMailToEvent-highlightDate {
     background: aqua;
+    cursor: pointer;
 }
 
 .pluginMailToEvent-createEvent {
