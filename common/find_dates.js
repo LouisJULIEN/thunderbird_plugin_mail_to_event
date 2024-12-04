@@ -4,7 +4,6 @@ import extractTime from "../import/default-time.js";
 
 export const splitTextIntoSentences = (text) => {
     return text.split(/(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|!|\n)\s*/);
-
 }
 
 const removeDuplicatesDateISO = (arrayOfObjects) => arrayOfObjects.reduce((acc, obj) => {
