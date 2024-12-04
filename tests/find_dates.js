@@ -44,47 +44,106 @@ This is a new sentence on a new line.A last one`;
         expect(result.length).to.equal(0)
     })
 
+    it('should find datetimes', () => {
+        let result
+        result = findDates('', '12 september from 9AM')
+        expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T09:00:00.000Z")
+        expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T09:30:00.000Z")
+
+        result = findDates('', '12 september from 10 AM')
+        expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T10:00:00.000Z")
+        expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T10:30:00.000Z")
+
+        result = findDates('', '12 september from 9 AM to 10 AM')
+        expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T09:00:00.000Z")
+        expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T10:00:00.000Z")
+
+        result = findDates('', '12 september from 11 AM to 1 PM')
+        expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T11:00:00.000Z")
+        expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T13:00:00.000Z")
+
+        result = findDates('', '12 september at 1 PM or 11 AM')
+        expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T13:00:00.000Z")
+        expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T13:30:00.000Z")
+    })
+
     it('should find all dates in this email', () => {
         const emailContent = 'This is 24/01/2021. This 28 November. This number is alone 2024. 12\n11.' +
-            "Let's meet the 19/12 at 12 PM or 1 AM"
+            "Let's meet the 19/12 at 11 PM"
         const result = findDates('', emailContent)
 
 
         expect(result).to.deep.equal([{
-            "dateISO": "2021-01-24T19:00:00.000Z",
-            "dateJs": new Date('2021-01-24T19:00:00.000Z'),
-            "originalData": {
-                "date": "2021-01-24",
-                "originalText": "24/01/2021",
+            "endDateTime": {
+                "dateISO": "2021-01-24T19:30:00.000Z",
+                "dateJs": new Date('2021-01-24T19:30:00.000Z')
+            },
+            "originalDateTimeData": {
+                "date": {
+                    "date": "2021-01-24",
+                    "originalText": "24/01/2021"
+                }
+            },
+            "startDateTime": {
+                "dateISO": "2021-01-24T19:00:00.000Z",
+                "dateJs": new Date('2021-01-24T19:00:00.000Z')
             }
         }, {
-            "dateISO": "2024-11-28T19:00:00.000Z",
-            "dateJs": new Date('2024-11-28T19:00:00.000Z'),
-            "originalData": {
-                "date": "2024-11-28",
-                "originalText": "28 November",
+            "endDateTime": {
+                "dateISO": "2024-11-28T19:30:00.000Z",
+                "dateJs": new Date('2024-11-28T19:30:00.000Z')
+            },
+            "originalDateTimeData": {
+                "date": {
+                    "date": "2024-11-28",
+                    "originalText": "28 November"
+                }
+            },
+            "startDateTime": {
+                "dateISO": "2024-11-28T19:00:00.000Z",
+                "dateJs": new Date('2024-11-28T19:00:00.000Z')
             }
         }, {
-            "dateISO": "2024-12-19T12:00:00.000Z",
-            "dateJs": new Date('2024-12-19T12:00:00.000Z'),
-            "originalData": {
-                "originalText": "19/12",
-                "date": "2024-12-19",
+            "endDateTime": {
+                "dateISO": "2024-12-19T23:30:00.000Z",
+                "dateJs": new Date('2024-12-19T23:30:00.000Z')
+            },
+            "originalDateTimeData": {
+                "date": {
+                    "date": "2024-12-19",
+                    "originalText": "19/12"
+                },
+                "startTime": {
+                    "originalText": "11 PM",
+                    "time": "23:00"
+                }
+            },
+            "startDateTime": {
+                "dateISO": "2024-12-19T23:00:00.000Z",
+                "dateJs": new Date('2024-12-19T23:00:00.000Z')
             }
         }])
     })
+
     it('should find only one dates in this email', () => {
         const emailSubject = 'This is 24/01/2021'
         const emailContent = 'This is again 24/01/2021 for duplication purpose'
         const result = findDates(emailSubject, emailContent)
         expect(result).to.deep.equal([{
-            "dateISO": "2021-01-24T00:00:00.000Z",
-            "dateJs": new Date('2021-01-24T00:00:00.000Z'),
-            "originalData": {
-                "date": "2021-01-24",
-                "originalText": "24/01/2021"
+            "endDateTime": {
+                "dateISO": "2021-01-24T19:30:00.000Z",
+                "dateJs": new Date('2021-01-24T19:30:00.000Z'),
+            },
+            "originalDateTimeData": {
+                "date": {
+                    "date": "2021-01-24",
+                    "originalText": "24/01/2021"
+                }
+            },
+            "startDateTime": {
+                "dateISO": "2021-01-24T19:00:00.000Z",
+                "dateJs": new Date('2021-01-24T19:00:00.000Z'),
             }
-
         }])
     })
 });
