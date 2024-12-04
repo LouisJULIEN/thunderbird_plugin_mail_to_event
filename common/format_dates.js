@@ -17,23 +17,9 @@ const formatMonth = (month) => {
     if (isDigit(month)) {
         return +month
     }
-    const threeFirstLetters = month.slice(0, 3).toLowerCase()
-    const monthToNumber = {
-        'jan': 1,
-        'feb': 2,
-        'mar': 3,
-        'apr': 4,
-        'may': 5,
-        'jun': 6,
-        'jul': 7,
-        'aug': 8,
-        'sep': 9,
-        'oct': 10,
-        'nov': 11,
-        'dec': 12,
-    }
-    return monthToNumber[threeFirstLetters] || null
+    return null;
 }
+
 const formatHourMinutes = (hours, minutes, ampm) => {
     if (hours && ampm === 'pm') {
         hours += 12
@@ -47,18 +33,16 @@ const formatHourMinutes = (hours, minutes, ampm) => {
 }
 
 export const formatFoundDate = (aFoundDate) => {
+    const [year, month, day] = aFoundDate.date.split('-')
     const dateData = {
-        year: formatYear(aFoundDate.year),
-        month: formatMonth(aFoundDate.month),
-        day: formatDay(aFoundDate.day),
-        ...formatHourMinutes(aFoundDate.hours, aFoundDate.minutes, aFoundDate.ampm)
+        year: formatYear(year),
+        month: formatMonth(month),
+        day: formatDay(day),
     }
     const dateJs = new Date(
         dateData.year,
         (dateData.month || 1) - 1, // monthIndex starts at 0 e.g. January is 0
-        dateData.day,
-        dateData.hours,
-        dateData.minutes)
+        dateData.day,)
 
     dateJs.setTime(dateJs.getTime() - dateJs.getTimezoneOffset() * 60 * 1000);
 
