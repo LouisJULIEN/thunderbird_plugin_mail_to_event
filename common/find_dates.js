@@ -16,11 +16,9 @@ const removeDuplicatesDateISO = (arrayOfObjects) => arrayOfObjects.reduce((acc, 
     return acc;
 }, []);
 
-const endTExtToRemove = new RegExp(/[.!#]+$/gim)
 
 const customExtractDateTimes = (text) => {
-    const formatedText = text.replace(endTExtToRemove, '')
-    const extractedDates = extractDate(formatedText, {
+    const extractedDates = extractDate(text, {
         minimumAge: 12,
         maximumAge: 12 * 20,
         direction: 'DM',
