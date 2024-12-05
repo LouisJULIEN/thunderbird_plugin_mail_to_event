@@ -7,6 +7,7 @@ export async function tagMailContentDates(mailContentInnerHTML, mailContentPlain
     let foundHtmlElements = []
 
     foundDates.map((oneFoundDate) => {
+        console.log(oneFoundDate)
         const originalText = oneFoundDate.originalDateTimeData.date.originalText
 
         const containerIdValue = `plugin-date-index-${dateIndex}`
