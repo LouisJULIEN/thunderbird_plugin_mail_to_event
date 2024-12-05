@@ -26,7 +26,7 @@ export async function tagMailContentDates(mailContentInnerHTML, mailContentPlain
             if(startTimeIndex !== -1 && startTimeIndex <= 50){
                 timeHighlightOffset = startTimeIndex + originalStartTimeText.length
             }
-            if(endTimeIndex !== -1 && endTimeIndex <= 70){
+            if(endTimeIndex !== -1 && endTimeIndex <= 100){
                 timeHighlightOffset = Math.max(timeHighlightOffset,
                     endTimeIndex + originalEndTimeText.length)
             }
