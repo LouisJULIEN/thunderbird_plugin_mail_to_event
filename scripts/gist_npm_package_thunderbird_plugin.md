@@ -15,7 +15,7 @@ I was developing a Thunderbird Plugin to easily create events based on date(s) p
 
 After shipping the first version, I realised my code wasn't so great when it came to dates. It steamed both from JavaScript management of dates and the difficulty to parse possible dates. It's possible to handle this without any packages but way suboptimal. It turned out that two packages were solving those issues: [extract-date](https://www.npmjs.com/package/extract-date) and [extract-time](https://www.npmjs.com/package/extract-time).
 
-Those two packages had to be modified to fit exactly my needs. I forked them. It turned out they had transitive dependencies. Copy/pasting the package code to my repo wasn't possible as the dependencies hole was going too far and most dependencies were relevant. Also, they were quite old (5 years since the last commit) and still relying on Babel.
+Those two packages had to be modified to fit exactly my needs. I forked them. It turned out they had transitive dependencies. Copy/pasting the package code to my repo wasn't possible as the dependencies rabbit hole was going too far and most dependencies were relevant. Also, they were quite old (5 years since the last commit) and still relying on Babel.
 
 ## Problem
 I encountered lots of difficulties when tried to integrate those packages into my Thunderbird Plugin. Lots of configuration were working when I was running my tests (with Chai) but not when I loaded my code as a Thunderbird plugin. 
@@ -49,11 +49,11 @@ More issues came from the packages being quite old and based on Babel. Babel use
 
 ## Solution
 ### esbuild
-After asking on [Mozilla chat](https://chat.mozilla.org/#/room/#tb-addon-developers:mozilla.org), I used `esbuild` as recommended. ESBuild creates a single file with all the code imported from a file, including transitive dependencies. The file is then standalone. It's not optimal in terms of size when applied to lots of packages but in my case it was ok.
+After asking on [Mozilla chat](https://chat.mozilla.org/#/room/#tb-addon-developers:mozilla.org), I used `esbuild` as recommended. ESBuild creates a single file with all the code imported from a file, including transitive dependencies. The file is then standalone and follows ES6 standard. It's not optimal in terms of size when applied to lots of packages but in my case it was ok.
 
 On each modified NPM packages repo, I added the following entry 
 ```shell
-npm install --prod ## install packages dependencies
+npm install --prod # install packages dependencies
 npm install esbuild
 ```
 
@@ -119,7 +119,7 @@ You can also find an example of the same process in a [dedicated repo here](http
 ).
 
 ## After bundling
-Keep in mind that Thunderbird guidelines for Plugin requires you to document bundled packages and give enough documentation for reviewer to reproduce each bundle. I would advise to avoid to many manual steps in the bundling process.
+Keep in mind that Thunderbird guidelines for Plugin requires you to document bundled packages and give enough documentation for reviewers to reproduce each bundle. I would advise to avoid too many manual steps in the bundling process in that regard.
 
 Otherwise, it works great, even with old packages!
 
