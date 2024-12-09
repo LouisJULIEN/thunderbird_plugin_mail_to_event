@@ -1,4 +1,4 @@
-import extractDateOrigin from '../../extract-date/dist/index.js'
+import extractDateOrigin from '../dependencies/extract-date.js'
 
 const extractDate = extractDateOrigin.default
 
