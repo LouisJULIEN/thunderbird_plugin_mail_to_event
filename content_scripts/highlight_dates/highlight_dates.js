@@ -67,7 +67,7 @@ const submitEventCreation = async (tagsId) => {
 }
 
 async function eventCreatorPopup(oneFoundElement) {
-    const {htmlContainerIdValue, dateISO: startDateISO, dateJs: startDateJs} = oneFoundElement
+    const {htmlContainerIdValue, startDateTime, endDateTime} = oneFoundElement
     document.getElementById(htmlContainerIdValue).addEventListener('click', (clickEvent) => {
         const uid = generateUID()
         const eventCreator = document.createElement('div')
@@ -76,17 +76,15 @@ async function eventCreatorPopup(oneFoundElement) {
 
         const {html, tagsId} = createEventHTML(uid)
         eventCreator.innerHTML = html
-        eventCreator.style = `position: absolute; top: ${clickEvent.y}px; left: ${clickEvent.x}px`
+        const x = window.scrollX + clickEvent.clientX
+        const y = window.scrollY + clickEvent.clientY
+        eventCreator.style = `position: absolute; top: ${y}px; left: ${x}px`
         document.body.appendChild(eventCreator)
         createdDivIds.push(eventCreator.id)
 
         document.getElementById(tagsId.eventTitle).value = document.title
-
-        document.getElementById(tagsId.startDate).value = startDateISO.slice(0, 16)
-
-        let endDateValue = new Date(Number(startDateJs)) // this trick fixes timezone
-        endDateValue.setMinutes(endDateValue.getMinutes() + 30)
-        document.getElementById(tagsId.endDate).value = endDateValue.toISOString().slice(0, 16)
+        document.getElementById(tagsId.startDate).value = startDateTime.dateISO.slice(0, 16)
+        document.getElementById(tagsId.endDate).value = endDateTime.dateISO.slice(0, 16)
 
         document.getElementById(tagsId.submitEventCreation).addEventListener('click', () => submitEventCreation(tagsId))
     })

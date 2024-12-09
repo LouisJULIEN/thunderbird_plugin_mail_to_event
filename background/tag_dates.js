@@ -16,17 +16,17 @@ export async function tagMailContentDates(mailContentInnerHTML, mailContentPlain
         if (dateTextIndex !== -1) {
             const textAfterDate = mailContentInnerHTML.slice(dateTextIndex + originalDateText.length)
 
-            const originalStartTimeText = oneFoundDate.originalDateTimeData.startTime.originalText
-            const originalEndTimeText = oneFoundDate.originalDateTimeData.endTime.originalText
+            const originalStartTimeText = oneFoundDate.originalDateTimeData?.startTime?.originalText
+            const originalEndTimeText = oneFoundDate.originalDateTimeData?.endTime?.originalText
 
             const startTimeIndex = textAfterDate.indexOf(originalStartTimeText)
             const endTimeIndex = textAfterDate.indexOf(originalEndTimeText)
 
             let timeHighlightOffset = 0
-            if(startTimeIndex !== -1 && startTimeIndex <= 50){
+            if (startTimeIndex !== -1 && startTimeIndex <= 50) {
                 timeHighlightOffset = startTimeIndex + originalStartTimeText.length
             }
-            if(endTimeIndex !== -1 && endTimeIndex <= 100){
+            if (endTimeIndex !== -1 && endTimeIndex <= 100) {
                 timeHighlightOffset = Math.max(timeHighlightOffset,
                     endTimeIndex + originalEndTimeText.length)
             }
