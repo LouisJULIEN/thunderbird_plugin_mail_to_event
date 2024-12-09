@@ -3,7 +3,7 @@ This Thunderbird plugin enables easy creation of a calendar event based on an em
 
 This plugin was inspired by how smartphones enable easy event creation of their email client.
 
-## Install bundle
+## Install bundles
 
  ```shell
 git clone git@github.com:LouisJULIEN/extract-date.git
