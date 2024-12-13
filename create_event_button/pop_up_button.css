@@ -23,7 +23,3 @@ input[aria-selected=true] {
     box-sizing: border-box;
     border: solid green 5px;
 }
-
-#selected-date-readable{
-    font-size: 10px;
-}

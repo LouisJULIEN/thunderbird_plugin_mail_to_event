@@ -17,9 +17,6 @@ document.getElementById("dates-selector").addEventListener('click',
             const startDatePicker = clickedElement.target.parentElement.getElementsByClassName('start-date-input')?.[0];
             startDatePicker.ariaSelected = "true"
 
-            const startDateValue = new Date(startDatePicker.value + ':00.000Z')
-            document.getElementById('selected-date-readable').innerText = startDateValue.toString()
-
             document.getElementById('end-date-input').value = startDatePicker.endDate
             document.getElementById('create-calendar-event').disabled = false
         }
