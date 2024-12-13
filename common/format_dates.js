@@ -1,4 +1,5 @@
 const formatHourMinutes = (maybeTime, shiftNextHalfHour) => {
+    console.log(shiftNextHalfHour, maybeTime)
     let [hours, minutes] = [null, null]
     if (maybeTime) {
         [hours, minutes] = maybeTime.split(':').map((x) => {
@@ -7,10 +8,10 @@ const formatHourMinutes = (maybeTime, shiftNextHalfHour) => {
     }
 
     const now = new Date()
-    hours = hours || now.getHours()
+    hours = Number.isInteger(hours) ? hours : now.getHours()
 
     const minutesOffset = shiftNextHalfHour ? 30 : 0
-    minutes = minutes || ((now.getMinutes() - (now.getMinutes() % 30)) + minutesOffset)
+    minutes = Number.isInteger(minutes) ? minutes : ((now.getMinutes() - (now.getMinutes() % 30)) + minutesOffset)
 
     return [+hours, +minutes]
 }
