@@ -1,0 +1,15 @@
+export const francLocaleToDateFnsLocale = {
+    spa: 'es',
+    eng: 'en',
+    por: 'pt',
+    fra: 'fr',
+    deu: 'de',
+    ind: 'hi',
+    vie: 'vi',
+    ita: 'it',
+    tur: 'tr',
+    pol: 'pl',
+    swh: 'sv',
+    rus: 'ru',
+    ukr: 'uk',
+}

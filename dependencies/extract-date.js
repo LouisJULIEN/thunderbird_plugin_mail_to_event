@@ -60894,6 +60894,7 @@ var require_createFormats = __commonJS({
     function _interopRequireDefault(e) {
       return e && e.__esModule ? e : { default: e };
     }
+    var formatCombinaison = (combination) => combination.join(" ").replace(" ,", ",").replace(/ +/, " ").replace(/ $/, "");
     var _default = () => {
       const yearFirstDashSeparator = [{
         dateFnsFormat: "yyyy-MM-dd"
@@ -60975,17 +60976,17 @@ var require_createFormats = __commonJS({
         dateFnsFormat: "M/d/yy",
         direction: "MDY"
       }];
-      const localised = [...(0, _cartesian.default)([["MMMM"], ["d", "do"], [",", ""], ["yyyy"]]).map((combination) => {
+      const localised = [...(0, _cartesian.default)([["MMMM"], ["d", "do"], [",", ""], ["yyyy"], [",", ""]]).map((combination) => {
         return {
-          dateFnsFormat: combination.join(" ").replace(" ,", ",").replace(/ +/, " ")
+          dateFnsFormat: formatCombinaison(combination)
         };
       }), ...(0, _cartesian.default)([["do", "d"], ["MMMM", "MMM"], ["yyyy"]]).map((combination) => {
         return {
-          dateFnsFormat: combination.join(" ").replace(" ,", ",").replace(/ +/, " ")
+          dateFnsFormat: formatCombinaison(combination)
         };
       }), ...(0, _cartesian.default)([["MMMM", "MMM"], ["yyyy"], ["do", "d"]]).map((combination) => {
         return {
-          dateFnsFormat: combination.join(" ").replace(" ,", ",").replace(/ +/, " ")
+          dateFnsFormat: formatCombinaison(combination)
         };
       }), {
         dateFnsFormat: "MMMM yyyy EEE do"
@@ -60994,29 +60995,29 @@ var require_createFormats = __commonJS({
       }];
       const impliedYearLocalised = [...(0, _cartesian.default)([["EEEE", "EEE"], ["", ","], ["MMMM", "MMM"], ["dd", "do", "d"]]).map((combination) => {
         return {
-          dateFnsFormat: combination.join(" ").replace(" ,", ",").replace(/ +/, " ")
+          dateFnsFormat: formatCombinaison(combination)
         };
       }), ...(0, _cartesian.default)([["EEEE", "EEE"], ["", ","], ["dd", "do", "d"], ["MMMM", "MMM"]]).map((combination) => {
         return {
-          dateFnsFormat: combination.join(" ").replace(" ,", ",").replace(/ +/, " ")
+          dateFnsFormat: formatCombinaison(combination)
         };
-      }), ...(0, _cartesian.default)([["MMMM", "MMM"], ["dd", "do", "d"]]).map((combination) => {
+      }), ...(0, _cartesian.default)([["MMMM", "MMM"], ["dd", "do", "d"], [",", ""]]).map((combination) => {
         return {
-          dateFnsFormat: combination.join(" ")
+          dateFnsFormat: formatCombinaison(combination)
         };
-      }), ...(0, _cartesian.default)([["dd", "do", "d"], ["MMMM", "MMM"]]).map((combination) => {
+      }), ...(0, _cartesian.default)([["dd", "do", "d"], ["MMMM", "MMM"], [",", ""]]).map((combination) => {
         return {
-          dateFnsFormat: combination.join(" ")
+          dateFnsFormat: formatCombinaison(combination)
         };
       })];
-      const impliedYear = [...(0, _cartesian.default)([["dd", "d"], ["/", "-", "."], ["MM", "M"]]).map((combination) => {
+      const impliedYear = [...(0, _cartesian.default)([["dd", "d"], ["/", "-", "."], ["MM", "M"], [",", ""]]).map((combination) => {
         return {
-          dateFnsFormat: combination.join(""),
+          dateFnsFormat: combination.join("").replace(" ,", ",").replace(/ +/, " "),
           direction: "DM"
         };
-      }), ...(0, _cartesian.default)([["MM", "M"], ["/", "-", "."], ["dd", "d"]]).map((combination) => {
+      }), ...(0, _cartesian.default)([["MM", "M"], ["/", "-", "."], ["dd", "d"], [",", ""]]).map((combination) => {
         return {
-          dateFnsFormat: combination.join(""),
+          dateFnsFormat: combination.join("").replace(" ,", ",").replace(/ +/, " "),
           direction: "MD"
         };
       })];

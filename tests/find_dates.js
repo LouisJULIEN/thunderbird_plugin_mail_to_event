@@ -33,9 +33,25 @@ This is a new sentence on a new line.A last one`;
 
         result = findDates('', '19/12')
         expect(result.length).to.equal(1)
-        result = findDates('', 'This 28 November')
+        result = findDates('', 'This 28 November.')
         expect(result.length).to.equal(1)
     })
+
+    it('should find french dates', () => {
+        let result
+
+        result = findDates('', 'Ce 28 Juillet je vais à la mer avec ma mère')
+        expect(result.length).to.equal(1)
+        result = findDates('', 'Ce 28 juillet je vais à la mer avec ma mère')
+        expect(result.length).to.equal(1)
+        result = findDates('', 'Ce 28 Décembre je vais à la montagne avec ma mère')
+        expect(result.length).to.equal(1)
+        result = findDates('', 'Je vous donne rendez-vous le 18 Décembre à H7 au 70 quai Perrache, 69002, Lyon.')
+        expect(result.length).to.equal(1)
+        result = findDates('', 'Je vous donne rendez-vous le 18 Décembre, à H7 au 70 quai Perrache, 69002, Lyon.')
+        expect(result.length).to.equal(1)
+    })
+
     it('should find exclude to old or too far dates', () => {
         let result
         result = findDates('', '01/24/2021')
@@ -44,25 +60,25 @@ This is a new sentence on a new line.A last one`;
         expect(result.length).to.equal(0)
     })
 
-    it('should find datetimes', () => {
+    it('should find datetimes in english text', () => {
         let result
-        result = findDates('', '12 september from 9AM')
+        result = findDates('', '12 september from 9AM for lunch')
         expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T09:00:00.000Z")
         expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T09:30:00.000Z")
 
-        result = findDates('', '12 september from 10 AM')
+        result = findDates('', '12 september from 10 AM for lunch')
         expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T10:00:00.000Z")
         expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T10:30:00.000Z")
 
-        result = findDates('', '12 september from 9 AM to 10 AM')
+        result = findDates('', '12 september from 9 AM to 10 AM for lunch')
         expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T09:00:00.000Z")
         expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T10:00:00.000Z")
 
-        result = findDates('', '12 september from 11 AM to 1 PM')
+        result = findDates('', '12 september from 11 AM to 1 PM for lunch')
         expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T11:00:00.000Z")
         expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T13:00:00.000Z")
 
-        result = findDates('', '12 september at 1 PM or 11 AM')
+        result = findDates('', '12 september at 1 PM or 11 AM for lunch')
         expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T13:00:00.000Z")
         expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T13:30:00.000Z")
     })

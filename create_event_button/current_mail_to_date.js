@@ -1,4 +1,4 @@
-import {findDates} from "./find_dates.js";
+import {findDates} from "../common/find_dates.js";
 
 export async function getCurrentMailDates() {
     let tabs = await messenger.tabs.query({active: true, currentWindow: true});

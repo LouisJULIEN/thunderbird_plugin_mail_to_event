@@ -2,6 +2,7 @@ import {findDates} from "../common/find_dates.js";
 
 export async function tagMailContentDates(mailContentInnerHTML, mailContentPlainText) {
     const foundDates = findDates('', mailContentPlainText, false)
+    console.log(foundDates)
     let HTMLIndex = 0
     let foundHtmlElements = []
 

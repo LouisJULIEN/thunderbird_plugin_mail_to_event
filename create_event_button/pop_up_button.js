@@ -1,5 +1,5 @@
 import "./pop_up_interaction.js";
-import {getCurrentMailDates} from "../common/mail_to_date.js";
+import {getCurrentMailDates} from "./current_mail_to_date.js";
 
 
 const showFoundDates = (dates) => {
