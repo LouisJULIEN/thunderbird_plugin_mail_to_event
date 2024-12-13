@@ -21,7 +21,6 @@ const removeDuplicatesDateISO = (arrayOfObjects) => arrayOfObjects.reduce((acc, 
 
 const customExtractDateTimes = (text, options) => {
     const extractedDates = extractDate(text, options)
-    console.log(extractedDates)
 
     const extractedDateTimes = extractedDates.map((oneExtractedDate) => {
         const dateStartingPoint = text.indexOf(oneExtractedDate.originalText)
@@ -59,7 +58,6 @@ const detectLang = (text) => {
 export function findDates(mailSubject, mailContent, removeDuplicatesDates = true) {
 
     const detectedLangDateFNS = detectLang(mailSubject + '.\n' + mailContent)
-    console.log(detectedLangDateFNS)
 
     const options = {
         minimumAge: 12,
@@ -76,7 +74,6 @@ export function findDates(mailSubject, mailContent, removeDuplicatesDates = true
 
 
     const allFoundDates = [].concat(mailSubjectDates, mailContentDates)
-    console.log(allFoundDates)
     const flatFoundDates = [].concat(...allFoundDates);
 
     const formatedDates = flatFoundDates.map(formatFoundDate)
