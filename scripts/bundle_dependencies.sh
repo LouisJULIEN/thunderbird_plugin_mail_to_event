@@ -1,5 +1,5 @@
-mkdir -p build_dependencies
-cd build_dependencies
+mkdir -p bundle_dependencies
+cd bundle_dependencies
 
 git clone git@github.com:wooorm/franc.git
 git clone git@github.com:LouisJULIEN/extract-date.git
