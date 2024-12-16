@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 
-cd ..
 PLUGIN_VERSION=`jq -r ".version" < manifest.json`
 echo $PLUGIN_VERSION
 PLUGIN_VERSION="${PLUGIN_VERSION//./-}"
