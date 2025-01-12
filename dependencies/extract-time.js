@@ -13654,9 +13654,9 @@ var require_date_fns = __commonJS({
   }
 });
 
-// dist/createMovingChunks.js
+// node_modules/@louis.jln/extract-time/createMovingChunks.js
 var require_createMovingChunks = __commonJS({
-  "dist/createMovingChunks.js"(exports) {
+  "node_modules/@louis.jln/extract-time/createMovingChunks.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13678,9 +13678,9 @@ var require_createMovingChunks = __commonJS({
   }
 });
 
-// dist/normalizeInput.js
+// node_modules/@louis.jln/extract-time/normalizeInput.js
 var require_normalizeInput = __commonJS({
-  "dist/normalizeInput.js"(exports) {
+  "node_modules/@louis.jln/extract-time/normalizeInput.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13764,9 +13764,9 @@ var require_cartesian = __commonJS({
   }
 });
 
-// dist/calculateSpecificity.js
+// node_modules/@louis.jln/extract-time/calculateSpecificity.js
 var require_calculateSpecificity = __commonJS({
-  "dist/calculateSpecificity.js"(exports) {
+  "node_modules/@louis.jln/extract-time/calculateSpecificity.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13793,9 +13793,9 @@ var require_calculateSpecificity = __commonJS({
   }
 });
 
-// dist/createFormats.js
+// node_modules/@louis.jln/extract-time/createFormats.js
 var require_createFormats = __commonJS({
-  "dist/createFormats.js"(exports) {
+  "node_modules/@louis.jln/extract-time/createFormats.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13875,9 +13875,9 @@ var require_createFormats = __commonJS({
   }
 });
 
-// dist/extractTime.js
+// node_modules/@louis.jln/extract-time/extractTime.js
 var require_extractTime = __commonJS({
-  "dist/extractTime.js"(exports) {
+  "node_modules/@louis.jln/extract-time/extractTime.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -13922,9 +13922,9 @@ var require_extractTime = __commonJS({
   }
 });
 
-// dist/index.js
-var require_dist = __commonJS({
-  "dist/index.js"(exports) {
+// node_modules/@louis.jln/extract-time/index.js
+var require_index = __commonJS({
+  "node_modules/@louis.jln/extract-time/index.js"(exports) {
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
@@ -13936,4 +13936,4 @@ var require_dist = __commonJS({
     var _default = exports.default = _extractTime.default;
   }
 });
-export default require_dist();
+export default require_index();

@@ -60729,9 +60729,9 @@ var require_dictionary2 = __commonJS({
   }
 });
 
-// dist/createMovingChunks.js
+// node_modules/@louis.jln/extract-date/createMovingChunks.js
 var require_createMovingChunks = __commonJS({
-  "dist/createMovingChunks.js"(exports) {
+  "node_modules/@louis.jln/extract-date/createMovingChunks.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -60753,9 +60753,9 @@ var require_createMovingChunks = __commonJS({
   }
 });
 
-// dist/extractRelativeDate.js
+// node_modules/@louis.jln/extract-date/extractRelativeDate.js
 var require_extractRelativeDate = __commonJS({
-  "dist/extractRelativeDate.js"(exports) {
+  "node_modules/@louis.jln/extract-date/extractRelativeDate.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -60854,9 +60854,9 @@ var require_cartesian = __commonJS({
   }
 });
 
-// dist/calculateSpecificity.js
+// node_modules/@louis.jln/extract-date/calculateSpecificity.js
 var require_calculateSpecificity = __commonJS({
-  "dist/calculateSpecificity.js"(exports) {
+  "node_modules/@louis.jln/extract-date/calculateSpecificity.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -60881,9 +60881,9 @@ var require_calculateSpecificity = __commonJS({
   }
 });
 
-// dist/createFormats.js
+// node_modules/@louis.jln/extract-date/createFormats.js
 var require_createFormats = __commonJS({
-  "dist/createFormats.js"(exports) {
+  "node_modules/@louis.jln/extract-date/createFormats.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -61049,9 +61049,9 @@ var require_createFormats = __commonJS({
   }
 });
 
-// dist/normalizeInput.js
+// node_modules/@louis.jln/extract-date/normalizeInput.js
 var require_normalizeInput = __commonJS({
-  "dist/normalizeInput.js"(exports) {
+  "node_modules/@louis.jln/extract-date/normalizeInput.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -61072,9 +61072,9 @@ var require_normalizeInput = __commonJS({
   }
 });
 
-// dist/extractDate.js
+// node_modules/@louis.jln/extract-date/extractDate.js
 var require_extractDate = __commonJS({
-  "dist/extractDate.js"(exports) {
+  "node_modules/@louis.jln/extract-date/extractDate.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -61243,9 +61243,9 @@ var require_extractDate = __commonJS({
   }
 });
 
-// dist/index.js
-var require_dist = __commonJS({
-  "dist/index.js"(exports) {
+// node_modules/@louis.jln/extract-date/index.js
+var require_index = __commonJS({
+  "node_modules/@louis.jln/extract-date/index.js"(exports) {
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
@@ -61257,7 +61257,7 @@ var require_dist = __commonJS({
     var _default = exports.default = _extractDate.default;
   }
 });
-export default require_dist();
+export default require_index();
 /*! Bundled license information:
 
 moment/moment.js:

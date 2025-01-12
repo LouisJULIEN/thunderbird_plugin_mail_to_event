@@ -3,24 +3,10 @@ This Thunderbird plugin enables easy creation of a calendar event based on an em
 
 This plugin was inspired by how smartphones enable easy event creation of their email client.
 
-## Install bundles
+## Install bundles and generate add-on zip
 
  ```shell
-git clone git@github.com:LouisJULIEN/extract-date.git
-git clone git@github.com:LouisJULIEN/extract-time.git
- 
-cd extract-date
-npm i
-npm run build
-npm run bundle
-
-cd ../extract-time
-npm i
-npm run build
-npm run bundle
-
-cd ../thunderbird_plugin_mail_to_event
-cp ../extract-date/bundle/extract-date.js dependencies/extract-date.js 
-cp ../extract-time/bundle/extract-time.js dependencies/extract-time.js
-
+npm install
+npm run bundle_dependencies
+npm run bundle_plugin
 ```

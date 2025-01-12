@@ -1,5 +1,10 @@
 {
-  "dependencies": {},
+  "dependencies": {
+    "franc": "^6.2.0",
+    "@louis.jln/extract-time": "3.0.0",
+    "@louis.jln/extract-date": "3.0.1",
+    "esbuild": "0.24.2"
+  },
   "devDependencies": {
     "@types/thunderbird-webext-browser": "^127.0.0",
     "chai": "^5.1.2",
@@ -11,7 +16,7 @@
   "type": "module",
   "scripts": {
     "test": "mocha ./tests/*",
-    "bundle_dependencies" : "./scripts/bundle_dependencies.sh",
+    "bundle_dependencies": "./scripts/bundle_dependencies.sh",
     "bundle_plugin": "./scripts/zip_to_publish.sh"
   }
 }

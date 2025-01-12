@@ -1,30 +1,3 @@
-mkdir -p bundle_dependencies
-cd bundle_dependencies
-
-git clone git@github.com:wooorm/franc.git
-git clone git@github.com:LouisJULIEN/extract-date.git
-git clone git@github.com:LouisJULIEN/extract-time.git
-
-set -e
-
-cd franc
-git pull
-npm i
-npm i esbuild
-npm run build
-npx esbuild packages/franc/index.js --bundle --outfile=../../dependencies/franc.js --format=esm
-
-
-cd ../extract-date
-git pull
-npm i
-npm run build
-npm run bundle
-cp bundle/extract-date.js ../../dependencies/extract-date.js
-
-cd ../extract-time
-git pull
-npm i
-npm run build
-npm run bundle
-cp bundle/extract-time.js ../../dependencies/extract-time.js
+npx esbuild node_modules/franc/index.js --bundle --outfile=dependencies/franc.js --format=esm
+npx esbuild node_modules/@louis.jln/extract-date/index.js --bundle --outfile=dependencies/extract-date.js --format=esm
+npx esbuild node_modules/@louis.jln/extract-time/index.js --bundle --outfile=dependencies/extract-time.js --format=esm
