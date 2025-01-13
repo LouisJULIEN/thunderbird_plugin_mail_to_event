@@ -2,7 +2,7 @@ import {formatFoundDate} from "./format_dates.js";
 import extractDate from "../import/default-date.js";
 import extractTime from "../import/default-time.js";
 import {franc} from "../dependencies/franc.js";
-import {francLocaleToDateFnsLocale} from "./franc_locale_to_extract_date_locale.js";
+import {francLocaleToDateFnsLocale, francLocaleToTimezone} from "./franc_locale_to_extract_date_locale.js";
 
 export const splitTextIntoSentences = (text) => {
     return text.split(/(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|!|\n)\s*/);
@@ -51,19 +51,21 @@ const customExtractDateTimes = (text, options) => {
 }
 
 const detectLang = (text) => {
-    const langFranc = franc(text, {only: Object.keys(francLocaleToDateFnsLocale)})
-    return francLocaleToDateFnsLocale[langFranc] || 'en'
+    return franc(text, {only: Object.keys(francLocaleToDateFnsLocale)})
 }
 
 export function findDates(mailSubject, mailContent, removeDuplicatesDates = true) {
+    const langFranc = detectLang(mailSubject + '.\n' + mailContent)
 
-    const detectedLangDateFNS = detectLang(mailSubject + '.\n' + mailContent)
+    const locale = francLocaleToDateFnsLocale[langFranc] || 'en';
+    const timezone = francLocaleToTimezone[langFranc];
 
     const options = {
         minimumAge: 12,
         maximumAge: 12 * 20,
         direction: 'DM',
-        locale: detectedLangDateFNS
+        locale,
+        timezone,
     }
 
     const mailSubjectSentences = splitTextIntoSentences(mailSubject)

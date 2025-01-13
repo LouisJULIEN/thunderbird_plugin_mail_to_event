@@ -13,3 +13,19 @@ export const francLocaleToDateFnsLocale = {
     rus: 'ru',
     ukr: 'uk',
 }
+
+export const francLocaleToTimezone = {
+    spa: 'Europe/Madrid',
+    eng: 'US/Central',
+    por: 'Europe/Lisbon',
+    fra: 'Europe/Paris',
+    deu: 'Europe/Berlin',
+    ind: 'Asia/Kolkata',
+    vie: 'Asia/Ho_Chi_Minh',
+    ita: 'Europe/Rome',
+    tur: 'Europe/Istanbul',
+    pol: 'Europe/Warsaw',
+    swh: 'Africa/Nairobi',
+    rus: 'Europe/Moscow',
+    ukr: 'Europe/Kiev',
+}

@@ -1,5 +1,4 @@
 const formatHourMinutes = (maybeTime, shiftNextHalfHour) => {
-    console.log(shiftNextHalfHour, maybeTime)
     let [hours, minutes] = [null, null]
     if (maybeTime) {
         [hours, minutes] = maybeTime.split(':').map((x) => {
