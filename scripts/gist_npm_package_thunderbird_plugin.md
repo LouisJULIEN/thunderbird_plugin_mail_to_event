@@ -119,9 +119,11 @@ You can also find an example of the same process in a [dedicated repo here](http
 ).
 
 ## After bundling
-Keep in mind that Thunderbird guidelines for Plugin requires you to document bundled packages and give enough documentation for reviewers to reproduce each bundle. I would advise to avoid too many manual steps in the bundling process in that regard.
+Keep in mind that Thunderbird guidelines for Plugin requires you to document bundled packages and give enough documentation for reviewers to reproduce each bundle. I would advise to avoid too many manual steps in the bundling process in that regard. 
 
-Otherwise, it works great, even with old packages!
+Ideally, I would advice to bundle from your Thunderbird plugin's repository. Also, bundle only NPM packages which are in your `package.json`. Also, have a `npm` command that (re)creates all the bundles (e.g. `npm run bundle_dependencies`). It will make the review of your package easier and faster.
+
+It works great, even with old packages!
 
 ## Credits
 Huge shout-out to [Mozilla community](https://chat.mozilla.org/#/room/#tb-addon-developers:mozilla.org) which was quick to reply with relevant information. Many thanks to [Arnd Issler](https://github.com/arndissler/) and [Mark Banner](https://github.com/Standard8) .
