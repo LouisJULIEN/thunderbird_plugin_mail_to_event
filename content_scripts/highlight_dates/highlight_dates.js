@@ -41,7 +41,74 @@ const createEventHTML = (uniqueID) => {
 <input type="submit" id="${tagsId.submitEventCreation}" value="Create event">
 </div>
 `
-    return {tagsId, html}
+
+    const br = document.createElement('br');
+
+
+    const container = document.createElement('div');
+    container.className = 'pluginMailToEvent-createEvent';
+
+    const eventTitleTextarea = document.createElement('textarea');
+    eventTitleTextarea.rows = '1';
+    eventTitleTextarea.cols = '30';
+    eventTitleTextarea.id = tagsId.eventTitle;
+    container.appendChild(eventTitleTextarea);
+
+
+    const startDateSelector = document.createElement('div');
+    startDateSelector.className = 'start-date-selector one-date-selector';
+
+    const startDateLabel = document.createElement('label');
+    startDateLabel.htmlFor = 'start-date-input';
+    startDateLabel.textContent = 'Start date';
+    startDateSelector.appendChild(startDateLabel);
+    startDateSelector.appendChild(br);
+
+    const startDateInput = document.createElement('input');
+    startDateInput.id = tagsId.startDate;
+    startDateInput.type = 'datetime-local';
+    startDateInput.value = '';
+    startDateSelector.appendChild(startDateInput);
+
+    container.appendChild(startDateSelector);
+
+
+    const endDateSelector = document.createElement('div');
+    endDateSelector.className = 'end-date-selector one-date-selector';
+
+    const endDateLabel = document.createElement('label');
+    endDateLabel.htmlFor = 'end-date-input';
+    endDateLabel.textContent = 'End date';
+    endDateSelector.appendChild(endDateLabel);
+    endDateSelector.appendChild(br);
+
+    const endDateInput = document.createElement('input');
+    endDateInput.id = tagsId.endDate;
+    endDateInput.type = 'datetime-local';
+    endDateInput.value = '';
+    endDateSelector.appendChild(endDateInput);
+
+    container.appendChild(endDateSelector);
+    container.appendChild(br);
+
+    const eventCommentTextarea = document.createElement('textarea');
+    eventCommentTextarea.rows = '2';
+    eventCommentTextarea.cols = '30';
+    eventCommentTextarea.id = tagsId.eventComment;
+    eventCommentTextarea.placeholder = 'Optional description';
+    container.appendChild(eventCommentTextarea);
+
+    const resultDisplayDiv = document.createElement('div');
+    resultDisplayDiv.id = tagsId.resultDisplay;
+    container.appendChild(resultDisplayDiv);
+
+    const submitButton = document.createElement('input');
+    submitButton.type = 'submit';
+    submitButton.id = tagsId.submitEventCreation;
+    submitButton.value = 'Create event';
+    container.appendChild(submitButton);
+
+    return {tagsId, container}
 }
 
 const submitEventCreation = async (tagsId) => {
@@ -76,8 +143,8 @@ async function eventCreatorPopup(oneFoundElement) {
         eventCreator.id = `pluginMailToEvent-event-creator-${uid}`
         eventCreator.className = `pluginMailToEvent-event-creator`
 
-        const {html, tagsId} = createEventHTML(uid)
-        eventCreator.innerHTML = html
+        const {container, tagsId} = createEventHTML(uid)
+        eventCreator.appendChild(container)
         const x = window.scrollX + clickEvent.clientX
         const y = window.scrollY + clickEvent.clientY
         eventCreator.style = `position: absolute; top: ${y}px; left: ${x}px`
