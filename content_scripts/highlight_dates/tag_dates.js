@@ -24,7 +24,6 @@ function getElementByText(parentElement, text) {
 
 async function tagMailContentDates(document) {
     const mailContentPlainText = document.body.textContent;
-    let mailContentInnerHTML = document.body.innerHTML;
 
     const foundDates = await browser.runtime.sendMessage({
         action: 'findDates',
@@ -82,7 +81,6 @@ async function tagMailContentDates(document) {
         })
     })
     return {
-        modifiedMailInnerHTML: mailContentInnerHTML,
         foundHtmlElements
     }
 }

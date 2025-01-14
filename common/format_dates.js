@@ -1,4 +1,5 @@
 const formatHourMinutes = (maybeTime, shiftNextHalfHour) => {
+    console.log(maybeTime, shiftNextHalfHour)
     let [hours, minutes] = [null, null]
     if (maybeTime) {
         [hours, minutes] = maybeTime.split(':').map((x) => {
@@ -8,15 +9,20 @@ const formatHourMinutes = (maybeTime, shiftNextHalfHour) => {
 
     const now = new Date()
     hours = Number.isInteger(hours) ? hours : now.getHours()
+    minutes = Number.isInteger(minutes) ? minutes : now.getMinutes()
 
     const minutesOffset = shiftNextHalfHour ? 30 : 0
-    minutes = Number.isInteger(minutes) ? minutes : ((now.getMinutes() - (now.getMinutes() % 30)) + minutesOffset)
+    minutes = (minutes - (minutes % 30)) + minutesOffset
+
 
     return [+hours, +minutes]
 }
 
 export const formatFoundDate = (aFoundDate) => {
     const [year, month, day] = aFoundDate.date.date.split('-')
+
+    console.log(aFoundDate)
+
     const startDateData = [
         +year,
         +month - 1, // monthIndex starts at 0 e.g. January is 0
@@ -27,9 +33,11 @@ export const formatFoundDate = (aFoundDate) => {
         +year,
         +month - 1, // monthIndex starts at 0 e.g. January is 0
         +day,
-        ...formatHourMinutes(aFoundDate?.endTime?.time || aFoundDate?.startTime?.time,
-            !aFoundDate?.endTime)
+        ...(aFoundDate?.endTime?.time ?
+            formatHourMinutes(aFoundDate?.endTime?.time, false) :
+            formatHourMinutes(aFoundDate?.startTime?.time, true))
     ]
+    console.log(endDateData)
 
     const startDateTimeJs = new Date(...startDateData)
     const endDateTimeJs = new Date(...endDateData)
