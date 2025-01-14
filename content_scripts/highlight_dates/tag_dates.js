@@ -13,7 +13,7 @@ function getElementByText(parentElement, text) {
             const textIndex = element.textContent.toLowerCase().indexOf(text)
 
             if (textIndex !== -1) {
-                return {element, textIndex};
+                return element;
             }
         }
         return null;
@@ -37,31 +37,42 @@ async function tagMailContentDates(document) {
 
     foundDates.map((oneFoundDate) => {
         const originalDateText = oneFoundDate.originalDateTimeData.date.originalText
-
         const containerIdValue = `plugin-date-index-${HTMLIndex}`
 
-        const {element: dateTextElement, textIndex} = getElementByText(document.body, originalDateText.toLowerCase())
-        if (dateTextElement) {
-            if (dateTextElement.nodeType === Node.TEXT_NODE) {
-                const originalText = dateTextElement.textContent
+        const dateTextElement = getElementByText(document.body, originalDateText.toLowerCase())
 
-                const spanModifiedText = document.createElement('span')
+        if (dateTextElement?.nodeType === Node.TEXT_NODE) {
+            const originalText = dateTextElement.textContent
 
-                const dateHighlightSpan = document.createElement('span')
-                dateHighlightSpan.setAttribute('id', containerIdValue)
-                dateHighlightSpan.setAttribute('class', 'pluginMailToEvent-highlightDate')
+            const textIndex = originalText.toLowerCase().indexOf(originalDateText.toLowerCase())
 
-                dateHighlightSpan.textContent = originalText.slice(textIndex, textIndex + originalDateText.length)
+            const originalStartTimeText = oneFoundDate.originalDateTimeData?.startTime?.originalText
+            const originalEndTimeText = oneFoundDate.originalDateTimeData?.endTime?.originalText
+            const startTimeIndex = originalText.toLowerCase().indexOf(originalStartTimeText)
+            const endTimeIndex = originalText.toLowerCase().indexOf(originalEndTimeText)
 
-                spanModifiedText.appendChild(document.createTextNode(originalText.slice(0, textIndex)))
-                spanModifiedText.appendChild(dateHighlightSpan)
-                spanModifiedText.appendChild(document.createTextNode(originalText.slice(textIndex + originalDateText.length)))
-
-                dateTextElement.parentElement.replaceChild(spanModifiedText, dateTextElement)
+            const startIndex = Math.max(textIndex, startTimeIndex, endTimeIndex)
+            let endIndex = textIndex + +originalDateText.length;
+            if (startTimeIndex > -1) {
+                endIndex = Math.max(endIndex, startTimeIndex + originalStartTimeText.length)
             }
-            else if  (dateTextElement.nodeType === Node.ELEMENT_NODE) {
-                throw "not handled yet"
+            if (endTimeIndex > -1) {
+                endIndex = Math.max(endIndex, endTimeIndex + originalEndTimeText.length)
             }
+
+            const spanModifiedText = document.createElement('span')
+
+            const dateHighlightSpan = document.createElement('span')
+            dateHighlightSpan.setAttribute('id', containerIdValue)
+            dateHighlightSpan.setAttribute('class', 'pluginMailToEvent-highlightDate')
+
+            dateHighlightSpan.textContent = originalText.slice(startIndex, endIndex)
+
+            spanModifiedText.appendChild(document.createTextNode(originalText.slice(0, startIndex)))
+            spanModifiedText.appendChild(dateHighlightSpan)
+            spanModifiedText.appendChild(document.createTextNode(originalText.slice(endIndex)))
+
+            dateTextElement.parentElement.replaceChild(spanModifiedText, dateTextElement)
         }
 
         HTMLIndex += 1
