@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import {JSDOM} from 'jsdom'
 import {set, reset} from 'mockdate'
-import {tagMailContentDates} from "../background/tag_dates.js";
+import {tagMailContentDates} from "../content_scripts/highlight_dates/tag_dates.js";
 
 describe('highlight dates', function () {
 
@@ -53,9 +53,7 @@ describe('highlight dates', function () {
 </html>
 `
         const emailContentDOM = new JSDOM(emailContent, 'text/html');
-        const emailContentHtml = emailContentDOM.window.document.body.innerHTML
-        const emailContentText = emailContentDOM.window.document.body.textContent
-        const result = await tagMailContentDates(emailContentHtml, emailContentText)
+        const result = await tagMailContentDates(emailContentDOM.body)
         expect(result).to.deep.equal({
             "foundHtmlElements": [
                 {

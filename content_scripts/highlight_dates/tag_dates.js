@@ -1,7 +1,33 @@
-import {findDates} from "../common/find_dates.js";
+function getElementByText(parentElement, text) {
+    function searchText(element) {
+        if (element.nodeType === Node.ELEMENT_NODE) {
+            for (let child of element.children) {
+                const result = searchText(child);
+                if (result) {
+                    return result;
+                }
+            }
+            if (element.textContent.includes(text)) {
+                return element;
+            }
+        }
+        return null;
+    }
 
-export async function tagMailContentDates(mailContentInnerHTML, mailContentPlainText) {
-    const foundDates = findDates('', mailContentPlainText, false)
+    return searchText(parentElement);
+}
+
+async function tagMailContentDates(document) {
+
+    const mailContentPlainText = document.body.textContent;
+    let mailContentInnerHTML = document.body.innerHTML;
+
+    const foundDates = await browser.runtime.sendMessage({
+        action: 'findDates',
+        mailSubject: '',
+        mailContentPlainText,
+        removeDuplicatesDates: false,
+    })
     let HTMLIndex = 0
     let foundHtmlElements = []
 

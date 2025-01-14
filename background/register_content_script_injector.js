@@ -1,6 +1,9 @@
 await messenger.scripting.messageDisplay.registerScripts([{
     id: "pluginMailToEvent-highlightDates",
-    js: ["content_scripts/highlight_dates/highlight_dates.js"],
+    js: [
+        "content_scripts/highlight_dates/tag_dates.js",
+        "content_scripts/highlight_dates/highlight_dates.js"
+    ],
     css: ["content_scripts/highlight_dates/highlight_dates.css"],
 }]);
 
@@ -18,6 +21,7 @@ for (let messageTab of messageTabs) {
     await messenger.scripting.executeScript({
         target: {tabId: messageTab.id},
         files: [
+            "content_scripts/highlight_dates/tag_dates.js",
             "content_scripts/highlight_dates/highlight_dates.js",
         ],
     })

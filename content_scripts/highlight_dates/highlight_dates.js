@@ -1,3 +1,5 @@
+// import {tagMailContentDates} from "./tag_dates.js"; injected via register_content_script_injector.js
+
 let createdDivIds = []
 
 function generateUID() {
@@ -91,12 +93,8 @@ async function eventCreatorPopup(oneFoundElement) {
 }
 
 async function highlightEmailDates() {
-    const res = await browser.runtime.sendMessage({
-        action: 'tagDates',
-        innerHTML: document.body.innerHTML,
-        textContent: document.body.textContent,
-    })
-    document.body.innerHTML = res.modifiedMailInnerHTML
+    const res = await tagMailContentDates(document)
+    // document.body.innerHTML = res.modifiedMailInnerHTML
     res.foundHtmlElements.map(eventCreatorPopup)
 }
 

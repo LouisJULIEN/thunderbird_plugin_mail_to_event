@@ -13,8 +13,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "louisjulien.mail_to_event@addons.thunderbird.net",
-      "strict_min_version": "128.0",
-      "strict_max_version": "129.0"
+      "strict_min_version": "128.0"
     }
   },
   "message_display_action": {
