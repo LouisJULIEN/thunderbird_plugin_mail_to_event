@@ -94,7 +94,6 @@ async function eventCreatorPopup(oneFoundElement) {
 
 async function highlightEmailDates() {
     const res = await tagMailContentDates(document)
-    // document.body.innerHTML = res.modifiedMailInnerHTML
     res.foundHtmlElements.map(eventCreatorPopup)
 }
 
