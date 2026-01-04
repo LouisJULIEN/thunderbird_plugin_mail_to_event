@@ -7,6 +7,6 @@ This plugin was inspired by how smartphones enable easy event creation of their 
 
  ```shell
 npm install
-npm run bundle_dependencies
-npm run bundle_plugin
+npm run bundle-dependencies
+npm run bundle-plugin
 ```

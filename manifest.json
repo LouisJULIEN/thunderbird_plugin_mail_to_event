@@ -4,7 +4,7 @@
   "short_name": "Mail content to Calendar event",
   "description": "This plugin offers to create new events based on the email subject and content",
   "homepage_url": "https://github.com/LouisJULIEN/thunderbird_plugin_mail_to_event",
-  "version": "0.8",
+  "version": "0.9",
   "author": "Louis JULIEN",
   "developer": {
     "name": "Louis JULIEN",
@@ -13,8 +13,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "louisjulien.mail_to_event@addons.thunderbird.net",
-      "strict_min_version": "128.0",
-      "strict_max_version": "129.0"
+      "strict_min_version": "128.0"
     }
   },
   "message_display_action": {

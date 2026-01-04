@@ -16,7 +16,7 @@
   "type": "module",
   "scripts": {
     "test": "mocha ./tests/*",
-    "bundle_dependencies": "./scripts/bundle_dependencies.sh",
-    "bundle_plugin": "./scripts/zip_to_publish.sh"
+    "bundle-dependencies": "./scripts/bundle_dependencies.sh",
+    "bundle-plugin": "./scripts/zip_to_publish.sh"
   }
 }
