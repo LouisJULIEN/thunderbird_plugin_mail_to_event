@@ -1,36 +1,170 @@
-body {
-    padding: 1ex;
+:root {
+    --bg-primary: #ffffff;
+    --bg-input: #f9f9fb;
+    --text-primary: #15141a;
+    --text-secondary: #5b5b66;
+    --border-color: #cfcfd8;
+    --accent: #0a84ff;
+    --accent-hover: #0060df;
+    --success: #058b00;
+    --error: #d70022;
 }
 
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #2b2a33;
+        --bg-input: #42414d;
+        --text-primary: #fbfbfe;
+        --text-secondary: #cfcfd8;
+        --border-color: #5b5b66;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 12px;
+    width: 350px;
+    box-sizing: border-box;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+h2 {
+    margin: 0 0 8px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 8px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+input[type="text"],
+input[type="datetime-local"],
+textarea,
+select {
+    box-sizing: border-box;
+    width: 100%;
+    height: 28px;
+    padding: 4px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-input);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 13px;
+}
+
+textarea {
+    height: auto;
+    resize: vertical;
+}
 
 #calendar-selector-section {
-    margin: 1ex 0;
+    margin-bottom: 8px;
     display: flex;
     align-items: center;
-    gap: 1ex;
+    gap: 8px;
 }
 
 #calendar-selector {
     flex: 1;
 }
 
+#calendar-selector-section label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
 .one-date-selector {
-    margin: 1ex 0;
-    display: block;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.one-date-selector .start-date-input {
+    flex: 1;
+}
+
+.one-date-selector .submit-start-date {
+    width: auto;
+    height: 28px;
+    padding: 4px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-input);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.one-date-selector .submit-start-date:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+input[aria-selected="true"] {
+    border-left: 3px solid var(--accent);
 }
 
 .end-date-selector {
-    padding: 1ex 0;
+    margin-bottom: 8px;
+}
+
+.end-date-selector label {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+#creation-result-display {
+    min-height: 1em;
+    margin: 4px 0;
+    font-size: 12px;
+}
+
+#creation-result-display:not(:empty) {
+    padding: 4px 0;
 }
 
 #create-calendar-event {
-    margin: 1ex 0;
-    padding: 1ex 1ex;
+    display: block;
     width: 100%;
-    font-size: 1.5em;
+    height: 32px;
+    margin-top: 8px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 4px;
+    background: var(--accent);
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
-input[aria-selected=true] {
-    box-sizing: border-box;
-    border: solid green 5px;
+#create-calendar-event:hover:not(:disabled) {
+    background: var(--accent-hover);
+}
+
+#create-calendar-event:disabled {
+    opacity: 0.5;
+    cursor: default;
 }

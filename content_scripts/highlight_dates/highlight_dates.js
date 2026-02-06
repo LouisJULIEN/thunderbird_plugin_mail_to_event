@@ -27,23 +27,20 @@ const createEventHTML = (uniqueID) => {
     const container = document.createElement('div');
     container.className = 'pluginMailToEvent-createEvent';
 
-    const eventTitleTextarea = document.createElement('textarea');
-    eventTitleTextarea.rows = '1';
-    eventTitleTextarea.cols = '30';
-    eventTitleTextarea.id = tagsId.eventTitle;
-    container.appendChild(eventTitleTextarea);
+    const eventTitleInput = document.createElement('input');
+    eventTitleInput.type = 'text';
+    eventTitleInput.id = tagsId.eventTitle;
+    container.appendChild(eventTitleInput);
 
     // Calendar selector section
     const calendarSection = document.createElement('div');
-    calendarSection.style.cssText = 'margin: 4px 0; display: flex; align-items: center; gap: 4px;';
+    calendarSection.className = 'pluginMailToEvent-calendarSection';
 
     const calendarSelect = document.createElement('select');
     calendarSelect.id = tagsId.calendarSelector;
-    calendarSelect.style.flex = '1';
     calendarSection.appendChild(calendarSelect);
 
     const defaultLabel = document.createElement('label');
-    defaultLabel.style.whiteSpace = 'nowrap';
     const defaultCheckbox = document.createElement('input');
     defaultCheckbox.type = 'checkbox';
     defaultCheckbox.id = tagsId.setDefaultCalendar;

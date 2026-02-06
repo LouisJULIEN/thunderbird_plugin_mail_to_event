@@ -9,7 +9,12 @@
 
 <body>
 
-<textarea rows="1" cols="35" id="event-title"></textarea>
+<h2>Create event</h2>
+
+<div class="form-group">
+    <label for="event-title">Title</label>
+    <input type="text" id="event-title">
+</div>
 
 <div id="calendar-selector-section">
     <select id="calendar-selector"></select>
@@ -19,17 +24,18 @@
 <div id="dates-selector">
 </div>
 
-<div class="end-date-selector one-date-selector">
-    <label for="end-date-input">End date</label><br/>
+<div class="end-date-selector">
+    <label for="end-date-input">End date</label>
     <input id="end-date-input" type="datetime-local" value="">
 </div>
 
-<textarea rows="2" cols="35" id="event-comment" placeholder="Optional description"></textarea>
-
+<div class="form-group">
+    <label for="event-comment">Description</label>
+    <textarea rows="2" id="event-comment" placeholder="Optional description"></textarea>
+</div>
 
 <div id="creation-result-display"></div>
-<input type="submit" id="create-calendar-event" value="Create event" disabled="disabled">
-
+<button type="button" id="create-calendar-event" disabled>Create event</button>
 
 <script type="module" src="pop_up_button.js"></script>
 </body>
