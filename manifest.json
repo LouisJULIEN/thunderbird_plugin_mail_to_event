@@ -38,7 +38,8 @@
     "messagesRead",
     "messagesUpdate",
     "scripting",
-    "nativeMessaging"
+    "nativeMessaging",
+    "storage"
   ],
   "experiment_apis": {
     "calendar_calendars": {

@@ -6,10 +6,20 @@ browser.runtime.onMessage.addListener(async (message) => {
     if (action === 'findDates') {
         return findDates(message.mailSubject, message.mailContentPlainText, message.removeDuplicatesDates)
     }
+    else if (action === 'getCalendars') {
+        return messenger.calendar.calendars.query({visible: true, readOnly: false, enabled: true})
+    }
     else if (action === 'createCalendarEvent') {
-        const calendars = await messenger.calendar.calendars.query({visible: true, readOnly: false, enabled: true})
-        const currentCalendar = calendars[0]
-        return createEvent(currentCalendar.id, ...message.args)
+        let calendarId = message.calendarId
+        if (!calendarId) {
+            const {defaultCalendarId} = await browser.storage.local.get("defaultCalendarId")
+            calendarId = defaultCalendarId
+        }
+        if (!calendarId) {
+            const calendars = await messenger.calendar.calendars.query({visible: true, readOnly: false, enabled: true})
+            calendarId = calendars[0].id
+        }
+        return createEvent(calendarId, ...message.args)
     }
     else{
         throw `Unknown message ${message}`

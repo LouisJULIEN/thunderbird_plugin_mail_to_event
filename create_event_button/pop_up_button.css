@@ -3,6 +3,17 @@ body {
 }
 
 
+#calendar-selector-section {
+    margin: 1ex 0;
+    display: flex;
+    align-items: center;
+    gap: 1ex;
+}
+
+#calendar-selector {
+    flex: 1;
+}
+
 .one-date-selector {
     margin: 1ex 0;
     display: block;

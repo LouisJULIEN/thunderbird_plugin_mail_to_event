@@ -17,30 +17,9 @@ const createEventHTML = (uniqueID) => {
         eventTitle: `pluginMailToEvent-event-title-${uniqueID}`,
         resultDisplay: `pluginMailToEvent-creation-result-display-${uniqueID}`,
         submitEventCreation: `pluginMailToEvent-create-calendar-event-${uniqueID}`,
+        calendarSelector: `pluginMailToEvent-calendar-selector-${uniqueID}`,
+        setDefaultCalendar: `pluginMailToEvent-set-default-calendar-${uniqueID}`,
     }
-
-    const html = `
-<div class="pluginMailToEvent-createEvent">
-<textarea rows="1" cols="30" id="${tagsId.eventTitle}"></textarea>
-
-<div class="start-date-selector one-date-selector">
-    <label for="start-date-input">Start date</label><br/>
-    <input id="${tagsId.startDate}" type="datetime-local" value="">
-</div>
-
-<div class="end-date-selector one-date-selector">
-    <label for="end-date-input">End date</label><br/>
-    <input id="${tagsId.endDate}" type="datetime-local" value="">
-</div>
-<br/>
-
-<textarea rows="2" cols="30" id="${tagsId.eventComment}" placeholder="Optional description"></textarea>
-
-
-<div id="${tagsId.resultDisplay}"></div>
-<input type="submit" id="${tagsId.submitEventCreation}" value="Create event">
-</div>
-`
 
     const br = document.createElement('br');
 
@@ -54,6 +33,25 @@ const createEventHTML = (uniqueID) => {
     eventTitleTextarea.id = tagsId.eventTitle;
     container.appendChild(eventTitleTextarea);
 
+    // Calendar selector section
+    const calendarSection = document.createElement('div');
+    calendarSection.style.cssText = 'margin: 4px 0; display: flex; align-items: center; gap: 4px;';
+
+    const calendarSelect = document.createElement('select');
+    calendarSelect.id = tagsId.calendarSelector;
+    calendarSelect.style.flex = '1';
+    calendarSection.appendChild(calendarSelect);
+
+    const defaultLabel = document.createElement('label');
+    defaultLabel.style.whiteSpace = 'nowrap';
+    const defaultCheckbox = document.createElement('input');
+    defaultCheckbox.type = 'checkbox';
+    defaultCheckbox.id = tagsId.setDefaultCalendar;
+    defaultLabel.appendChild(defaultCheckbox);
+    defaultLabel.appendChild(document.createTextNode(' Set as default'));
+    calendarSection.appendChild(defaultLabel);
+
+    container.appendChild(calendarSection);
 
     const startDateSelector = document.createElement('div');
     startDateSelector.className = 'start-date-selector one-date-selector';
@@ -62,7 +60,7 @@ const createEventHTML = (uniqueID) => {
     startDateLabel.htmlFor = 'start-date-input';
     startDateLabel.textContent = 'Start date';
     startDateSelector.appendChild(startDateLabel);
-    startDateSelector.appendChild(br);
+    startDateSelector.appendChild(br.cloneNode());
 
     const startDateInput = document.createElement('input');
     startDateInput.id = tagsId.startDate;
@@ -80,7 +78,7 @@ const createEventHTML = (uniqueID) => {
     endDateLabel.htmlFor = 'end-date-input';
     endDateLabel.textContent = 'End date';
     endDateSelector.appendChild(endDateLabel);
-    endDateSelector.appendChild(br);
+    endDateSelector.appendChild(br.cloneNode());
 
     const endDateInput = document.createElement('input');
     endDateInput.id = tagsId.endDate;
@@ -89,7 +87,7 @@ const createEventHTML = (uniqueID) => {
     endDateSelector.appendChild(endDateInput);
 
     container.appendChild(endDateSelector);
-    container.appendChild(br);
+    container.appendChild(br.cloneNode());
 
     const eventCommentTextarea = document.createElement('textarea');
     eventCommentTextarea.rows = '2';
@@ -111,14 +109,49 @@ const createEventHTML = (uniqueID) => {
     return {tagsId, container}
 }
 
+async function populateCalendarSelector(tagsId) {
+    const calendars = await browser.runtime.sendMessage({action: 'getCalendars'})
+    const calendarSelect = document.getElementById(tagsId.calendarSelector)
+    const defaultCheckbox = document.getElementById(tagsId.setDefaultCalendar)
+
+    calendars.forEach((cal) => {
+        const option = document.createElement('option')
+        option.value = cal.id
+        option.textContent = cal.name
+        calendarSelect.appendChild(option)
+    })
+
+    const {defaultCalendarId} = await browser.storage.local.get("defaultCalendarId")
+    if (defaultCalendarId && calendars.some(c => c.id === defaultCalendarId)) {
+        calendarSelect.value = defaultCalendarId
+        defaultCheckbox.checked = true
+    }
+
+    defaultCheckbox.addEventListener("change", async () => {
+        if (defaultCheckbox.checked) {
+            await browser.storage.local.set({defaultCalendarId: calendarSelect.value})
+        } else {
+            await browser.storage.local.remove("defaultCalendarId")
+        }
+    })
+
+    calendarSelect.addEventListener("change", async () => {
+        if (defaultCheckbox.checked) {
+            await browser.storage.local.set({defaultCalendarId: calendarSelect.value})
+        }
+    })
+}
+
 const submitEventCreation = async (tagsId) => {
     const selectedStartDate = document.getElementById(tagsId.startDate)?.value
     const selectedEndDate = document.getElementById(tagsId.endDate)?.value
     const title = document.getElementById(tagsId.eventTitle).value
     const comment = document.getElementById(tagsId.eventComment).value || ""
+    const calendarId = document.getElementById(tagsId.calendarSelector)?.value
     if (selectedStartDate && selectedEndDate && title) {
         const result = await browser.runtime.sendMessage({
             action: 'createCalendarEvent',
+            calendarId: calendarId,
             args: [
                 selectedStartDate + ':00.000Z',
                 selectedEndDate + ':00.000Z',
@@ -155,6 +188,8 @@ async function eventCreatorPopup(oneFoundElement) {
         document.getElementById(tagsId.startDate).value = startDateTime.dateISO.slice(0, 16)
         document.getElementById(tagsId.endDate).value = endDateTime.dateISO.slice(0, 16)
 
+        populateCalendarSelector(tagsId)
+
         document.getElementById(tagsId.submitEventCreation).addEventListener('click', () => submitEventCreation(tagsId))
     })
 }
@@ -178,4 +213,3 @@ document.addEventListener('click', function (clickEvent) {
         }
     }
 })
-
