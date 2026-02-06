@@ -21,7 +21,7 @@ export async function createEvent(calendarId, eventStartDate, eventEndDate, even
                     ['dtstart', {}, 'date-time', eventStartDate],
                     ['dtend', {}, 'date-time', eventEndDate],
                     ['summary', {}, 'text', eventSummary],
-                    ['comment', {}, 'text', eventComment],
+                    ['description', {}, 'text', eventComment],
                     ['uid', {}, 'text', uid],
                 ],
                 []
