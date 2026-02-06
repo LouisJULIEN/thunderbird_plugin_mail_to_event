@@ -19,6 +19,8 @@ const createEventHTML = (uniqueID) => {
         submitEventCreation: `pluginMailToEvent-create-calendar-event-${uniqueID}`,
         calendarSelector: `pluginMailToEvent-calendar-selector-${uniqueID}`,
         setDefaultCalendar: `pluginMailToEvent-set-default-calendar-${uniqueID}`,
+        timezoneSelector: `pluginMailToEvent-timezone-selector-${uniqueID}`,
+        setDefaultTimezone: `pluginMailToEvent-set-default-timezone-${uniqueID}`,
     }
 
     const br = document.createElement('br');
@@ -49,6 +51,24 @@ const createEventHTML = (uniqueID) => {
     calendarSection.appendChild(defaultLabel);
 
     container.appendChild(calendarSection);
+
+    // Timezone selector section
+    const timezoneSection = document.createElement('div');
+    timezoneSection.className = 'pluginMailToEvent-timezoneSection';
+
+    const timezoneSelect = document.createElement('select');
+    timezoneSelect.id = tagsId.timezoneSelector;
+    timezoneSection.appendChild(timezoneSelect);
+
+    const tzDefaultLabel = document.createElement('label');
+    const tzDefaultCheckbox = document.createElement('input');
+    tzDefaultCheckbox.type = 'checkbox';
+    tzDefaultCheckbox.id = tagsId.setDefaultTimezone;
+    tzDefaultLabel.appendChild(tzDefaultCheckbox);
+    tzDefaultLabel.appendChild(document.createTextNode(' Set as default'));
+    timezoneSection.appendChild(tzDefaultLabel);
+
+    container.appendChild(timezoneSection);
 
     const startDateSelector = document.createElement('div');
     startDateSelector.className = 'start-date-selector one-date-selector';
@@ -139,21 +159,59 @@ async function populateCalendarSelector(tagsId) {
     })
 }
 
+async function populateTimezoneSelector(tagsId) {
+    const timezoneIds = Intl.supportedValuesOf('timeZone')
+    const currentZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    const timezoneSelect = document.getElementById(tagsId.timezoneSelector)
+    const defaultCheckbox = document.getElementById(tagsId.setDefaultTimezone)
+
+    timezoneIds.forEach((tzId) => {
+        const option = document.createElement('option')
+        option.value = tzId
+        option.textContent = tzId
+        timezoneSelect.appendChild(option)
+    })
+
+    const {defaultTimezone} = await browser.storage.local.get("defaultTimezone")
+    if (defaultTimezone && timezoneIds.includes(defaultTimezone)) {
+        timezoneSelect.value = defaultTimezone
+        defaultCheckbox.checked = true
+    } else {
+        timezoneSelect.value = currentZone
+    }
+
+    defaultCheckbox.addEventListener("change", async () => {
+        if (defaultCheckbox.checked) {
+            await browser.storage.local.set({defaultTimezone: timezoneSelect.value})
+        } else {
+            await browser.storage.local.remove("defaultTimezone")
+        }
+    })
+
+    timezoneSelect.addEventListener("change", async () => {
+        if (defaultCheckbox.checked) {
+            await browser.storage.local.set({defaultTimezone: timezoneSelect.value})
+        }
+    })
+}
+
 const submitEventCreation = async (tagsId) => {
     const selectedStartDate = document.getElementById(tagsId.startDate)?.value
     const selectedEndDate = document.getElementById(tagsId.endDate)?.value
     const title = document.getElementById(tagsId.eventTitle).value
     const comment = document.getElementById(tagsId.eventComment).value || ""
     const calendarId = document.getElementById(tagsId.calendarSelector)?.value
+    const timezone = document.getElementById(tagsId.timezoneSelector)?.value
     if (selectedStartDate && selectedEndDate && title) {
         const result = await browser.runtime.sendMessage({
             action: 'createCalendarEvent',
             calendarId: calendarId,
             args: [
-                selectedStartDate + ':00.000Z',
-                selectedEndDate + ':00.000Z',
+                selectedStartDate + ':00',
+                selectedEndDate + ':00',
                 title,
-                comment]
+                comment,
+                timezone]
         })
 
         if (result.error) {
@@ -186,6 +244,7 @@ async function eventCreatorPopup(oneFoundElement) {
         document.getElementById(tagsId.endDate).value = endDateTime.dateISO.slice(0, 16)
 
         populateCalendarSelector(tagsId)
+        populateTimezoneSelector(tagsId)
 
         document.getElementById(tagsId.submitEventCreation).addEventListener('click', () => submitEventCreation(tagsId))
     })

@@ -95,6 +95,26 @@ textarea {
     gap: 4px;
 }
 
+#timezone-selector-section {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#timezone-selector {
+    flex: 1;
+}
+
+#timezone-selector-section label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
 .one-date-selector {
     margin-bottom: 6px;
     display: flex;

@@ -7,8 +7,9 @@ function generateUID() {
     });
 }
 
-export async function createEvent(calendarId, eventStartDate, eventEndDate, eventSummary, eventComment) {
+export async function createEvent(calendarId, eventStartDate, eventEndDate, eventSummary, eventComment, timezone) {
     const uid = generateUID()
+    const tzParam = timezone ? {tzid: timezone} : {}
     try {
         await calendarItems.create(calendarId, {
             format: "jcal",
@@ -18,8 +19,8 @@ export async function createEvent(calendarId, eventStartDate, eventEndDate, even
             item: [
                 'vevent',
                 [
-                    ['dtstart', {}, 'date-time', eventStartDate],
-                    ['dtend', {}, 'date-time', eventEndDate],
+                    ['dtstart', tzParam, 'date-time', eventStartDate],
+                    ['dtend', tzParam, 'date-time', eventEndDate],
                     ['summary', {}, 'text', eventSummary],
                     ['description', {}, 'text', eventComment],
                     ['uid', {}, 'text', uid],
