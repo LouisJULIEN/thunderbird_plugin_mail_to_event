@@ -8,5 +8,5 @@ This plugin was inspired by how smartphones enable easy event creation of their 
  ```shell
 npm install
 npm run bundle-dependencies
-npm run bundle-plugin
+npm run bundle-plugin:watch
 ```
