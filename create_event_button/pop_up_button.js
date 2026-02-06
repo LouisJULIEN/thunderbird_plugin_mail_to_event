@@ -28,8 +28,11 @@ const showFoundDates = (dates) => {
     })
 }
 
-const {dates, subject} = await getCurrentMailDates()
+const {dates, subject, detectedLanguage} = await getCurrentMailDates()
 document.getElementById("event-title").value = subject
+if (detectedLanguage) {
+    document.getElementById("detected-language").textContent = detectedLanguage
+}
 if (dates) {
     showFoundDates(dates)
 }

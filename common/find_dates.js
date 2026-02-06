@@ -79,9 +79,6 @@ export function findDates(mailSubject, mailContent, removeDuplicatesDates = true
     const flatFoundDates = [].concat(...allFoundDates);
 
     const formatedDates = flatFoundDates.map(formatFoundDate)
-    if (removeDuplicatesDates) {
-        return removeDuplicatesDateISO(formatedDates)
-    } else {
-        return formatedDates
-    }
+    const dates = removeDuplicatesDates ? removeDuplicatesDateISO(formatedDates) : formatedDates
+    return {dates, detectedLanguage: locale}
 }

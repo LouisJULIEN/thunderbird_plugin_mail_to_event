@@ -32,10 +32,22 @@ body {
     line-height: 1.4;
 }
 
-h2 {
-    margin: 0 0 8px;
-    font-size: 15px;
-    font-weight: 600;
+#detected-language {
+    text-align: right;
+    margin-bottom: 4px;
+}
+
+#detected-language:not(:empty) {
+    display: inline-block;
+    float: right;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    padding: 1px 6px;
+}
+
+#event-title {
+    margin-bottom: 8px;
 }
 
 .form-group {

@@ -24,61 +24,61 @@ This is a new sentence on a new line.A last one`;
     it('should find simple dates', () => {
         let result
 
-        result = findDates('', '24-01-2024')
+        result = findDates('', '24-01-2024').dates
         expect(result.length).to.equal(1)
-        result = findDates('', '24/01/2024')
+        result = findDates('', '24/01/2024').dates
         expect(result.length).to.equal(1)
-        result = findDates('', '24/01/2024.')
+        result = findDates('', '24/01/2024.').dates
         expect(result.length).to.equal(1)
 
-        result = findDates('', '19/12')
+        result = findDates('', '19/12').dates
         expect(result.length).to.equal(1)
-        result = findDates('', 'This 28 November.')
+        result = findDates('', 'This 28 November.').dates
         expect(result.length).to.equal(1)
     })
 
     it('should find french dates', () => {
         let result
 
-        result = findDates('', 'Ce 28 Juillet je vais à la mer avec ma mère')
+        result = findDates('', 'Ce 28 Juillet je vais à la mer avec ma mère').dates
         expect(result.length).to.equal(1)
-        result = findDates('', 'Ce 28 juillet je vais à la mer avec ma mère')
+        result = findDates('', 'Ce 28 juillet je vais à la mer avec ma mère').dates
         expect(result.length).to.equal(1)
-        result = findDates('', 'Ce 28 Décembre je vais à la montagne avec ma mère')
+        result = findDates('', 'Ce 28 Décembre je vais à la montagne avec ma mère').dates
         expect(result.length).to.equal(1)
-        result = findDates('', 'Je vous donne rendez-vous le 18 Décembre à H7 au 70 quai Perrache, 69002, Lyon.')
+        result = findDates('', 'Je vous donne rendez-vous le 18 Décembre à H7 au 70 quai Perrache, 69002, Lyon.').dates
         expect(result.length).to.equal(1)
-        result = findDates('', 'Je vous donne rendez-vous le 18 Décembre, à H7 au 70 quai Perrache, 69002, Lyon.')
+        result = findDates('', 'Je vous donne rendez-vous le 18 Décembre, à H7 au 70 quai Perrache, 69002, Lyon.').dates
         expect(result.length).to.equal(1)
     })
 
     it('should find exclude to old or too far dates', () => {
         let result
-        result = findDates('', '01/24/2021')
+        result = findDates('', '01/24/2021').dates
         expect(result.length).to.equal(0)
-        result = findDates('', '01/24/2064')
+        result = findDates('', '01/24/2064').dates
         expect(result.length).to.equal(0)
     })
 
     it('should find datetimes in english text', () => {
         let result
-        result = findDates('', '12 september from 9AM for lunch')
+        result = findDates('', '12 september from 9AM for lunch').dates
         expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T09:00:00.000Z")
         expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T09:30:00.000Z")
 
-        result = findDates('', '12 september from 10 AM for lunch')
+        result = findDates('', '12 september from 10 AM for lunch').dates
         expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T10:00:00.000Z")
         expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T10:30:00.000Z")
 
-        result = findDates('', '12 september from 9 AM to 10 AM for lunch')
+        result = findDates('', '12 september from 9 AM to 10 AM for lunch').dates
         expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T09:00:00.000Z")
         expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T10:00:00.000Z")
 
-        result = findDates('', '12 september from 11 AM to 1 PM for lunch')
+        result = findDates('', '12 september from 11 AM to 1 PM for lunch').dates
         expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T11:00:00.000Z")
         expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T13:00:00.000Z")
 
-        result = findDates('', '12 september at 1 PM or 11 AM for lunch')
+        result = findDates('', '12 september at 1 PM or 11 AM for lunch').dates
         expect(result[0].startDateTime.dateISO).to.equal("2024-09-12T13:00:00.000Z")
         expect(result[0].endDateTime.dateISO).to.equal("2024-09-12T13:30:00.000Z")
     })
@@ -86,7 +86,7 @@ This is a new sentence on a new line.A last one`;
     it('should find all dates in this email', () => {
         const emailContent = 'This is 24/01/2021. This 28 November. This number is alone 2024. 12\n11.' +
             "Let's meet the 19/12 at 11 PM"
-        const result = findDates('', emailContent)
+        const result = findDates('', emailContent).dates
 
 
         expect(result).to.deep.equal([{
@@ -144,7 +144,7 @@ This is a new sentence on a new line.A last one`;
     it('should find only one dates in this email', () => {
         const emailSubject = 'This is 24/01/2021'
         const emailContent = 'This is again 24/01/2021 for duplication purpose'
-        const result = findDates(emailSubject, emailContent)
+        const result = findDates(emailSubject, emailContent).dates
         expect(result).to.deep.equal([{
             "endDateTime": {
                 "dateISO": "2021-01-24T19:30:00.000Z",

@@ -14,7 +14,7 @@ export async function getCurrentMailDates() {
         const emailBodyTextInline = await messenger.messages.listInlineTextParts(messageId)
         const emailBodyText = await messenger.messengerUtilities.convertToPlainText(emailBodyTextInline[0].content)
 
-        const dates = findDates(subject, emailBodyText);
-        return {dates, subject, messageId}
+        const {dates, detectedLanguage} = findDates(subject, emailBodyText);
+        return {dates, subject, messageId, detectedLanguage}
     }
 }
