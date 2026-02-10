@@ -3,7 +3,7 @@
     "franc": "^6.2.0",
     "@louis.jln/extract-time": "3.0.0",
     "@louis.jln/extract-date": "3.0.1",
-    "esbuild": "0.24.2"
+    "esbuild": "0.25.0"
   },
   "devDependencies": {
     "@types/thunderbird-webext-browser": "^127.0.0",
