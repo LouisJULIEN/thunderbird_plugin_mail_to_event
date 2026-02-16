@@ -20,7 +20,14 @@
   "message_display_action": {
     "default_popup": "create_event_button/pop_up_button.html",
     "default_title": "Create event",
-    "default_icon": "images/calendar.svg"
+    "default_icon": "images/calendar-light.svg",
+    "theme_icons": [
+      {
+        "light": "images/calendar-dark.svg",
+        "dark": "images/calendar-light.svg",
+        "size": 16
+      }
+    ]
   },
   "background": {
     "scripts": [
