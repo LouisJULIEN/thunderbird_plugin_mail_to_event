@@ -19,5 +19,6 @@
     "bundle-dependencies": "./scripts/bundle_dependencies.sh",
     "bundle-plugin": "./scripts/zip_to_publish.sh",
     "bundle-plugin:watch": "./scripts/bundle_plugin_watch.sh"
-  }
+  },
+  "version": "1.0.0"
 }
