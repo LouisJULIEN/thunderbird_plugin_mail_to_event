@@ -3,15 +3,15 @@
     "franc": "^6.2.0",
     "@louis.jln/extract-time": "3.0.0",
     "@louis.jln/extract-date": "3.0.1",
-    "esbuild": "0.24.2"
+    "esbuild": "0.27.3"
   },
   "devDependencies": {
     "@types/thunderbird-webext-browser": "^127.0.0",
-    "chai": "^5.1.2",
-    "jsdom": "^25.0.1",
-    "mocha": "^10.8.2",
+    "chai": "^6.2.2",
+    "jsdom": "^27.0.1",
+    "mocha": "^11.7.5",
     "mockdate": "^3.0.5",
-    "web-ext": "^8.3.0"
+    "web-ext": "^9.3.0"
   },
   "type": "module",
   "scripts": {
