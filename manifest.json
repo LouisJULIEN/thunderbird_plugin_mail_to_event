@@ -30,9 +30,9 @@
     "type": "module"
   },
   "icons": {
-    "64": "images/calendar.svg",
-    "32": "images/calendar.svg",
-    "16": "images/calendar.svg"
+    "64": "images/icon-render.png",
+    "32": "images/icon-render.png",
+    "16": "images/icon-render.png"
   },
   "permissions": [
     "messagesRead",
