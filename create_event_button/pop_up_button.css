@@ -171,16 +171,6 @@ input[aria-selected="true"] {
     color: var(--text-secondary);
 }
 
-#creation-result-display {
-    min-height: 1em;
-    margin: 4px 0;
-    font-size: 12px;
-}
-
-#creation-result-display:not(:empty) {
-    padding: 4px 0;
-}
-
 #create-calendar-event {
     display: block;
     width: 100%;
@@ -204,4 +194,15 @@ input[aria-selected="true"] {
 #create-calendar-event:disabled {
     opacity: 0.5;
     cursor: default;
+}
+
+#create-calendar-event.success {
+    background: var(--success);
+    opacity: 1;
+    cursor: default;
+}
+
+#create-calendar-event.error {
+    background: var(--error);
+    opacity: 1;
 }

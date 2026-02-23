@@ -99,8 +99,11 @@ document.getElementById("create-calendar-event").addEventListener('click',
         const title = document.getElementById('event-title').value
         const comment = document.getElementById('event-comment').value || ""
         const location = document.getElementById('event-location').value || ""
+        const btn = document.getElementById("create-calendar-event")
 
         if (selectedStartDate && selectedEndDate && title) {
+            btn.disabled = true
+
             const result = await createEvent(
                 calendarSelector.value,
                 selectedStartDate + ':00',
@@ -112,10 +115,13 @@ document.getElementById("create-calendar-event").addEventListener('click',
             )
 
             if (result.error) {
-                document.getElementById("creation-result-display").innerText = result.error?.message
                 console.error(result)
+                btn.textContent = "✗ " + (result.error?.message || "Error")
+                btn.classList.add("error")
+                btn.disabled = false
             } else {
-                document.getElementById("creation-result-display").innerText = "Event creation successful"
+                btn.textContent = "✓ Event created"
+                btn.classList.add("success")
             }
         }
     })
