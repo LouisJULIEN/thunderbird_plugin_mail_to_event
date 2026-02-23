@@ -9,4 +9,5 @@ npx esbuild content_scripts/highlight_dates/highlight_dates.js \
     --bundle \
     --outfile=content_scripts/highlight_dates/bundle/highlight_dates.bundle.js \
     --format=iife \
+    --minify \
     --loader:.css=text

@@ -80,30 +80,22 @@ export function createEventFormBottom(idPrefix = '') {
     // Location
     const locationGroup = document.createElement('div')
     locationGroup.className = 'form-group'
-    const locationLabel = document.createElement('label')
-    locationLabel.htmlFor = ids.eventLocation
-    locationLabel.textContent = 'Location'
     const locationInput = document.createElement('input')
     locationInput.type = 'text'
     locationInput.id = ids.eventLocation
     locationInput.placeholder = 'Optional location'
-    locationGroup.appendChild(locationLabel)
     locationGroup.appendChild(locationInput)
     fragment.appendChild(locationGroup)
 
     // Description
-    const commentGroup = document.createElement('div')
-    commentGroup.className = 'form-group'
-    const commentLabel = document.createElement('label')
-    commentLabel.htmlFor = ids.eventComment
-    commentLabel.textContent = 'Description'
-    const commentTextarea = document.createElement('textarea')
-    commentTextarea.rows = 2
-    commentTextarea.id = ids.eventComment
-    commentTextarea.placeholder = 'Optional description'
-    commentGroup.appendChild(commentLabel)
-    commentGroup.appendChild(commentTextarea)
-    fragment.appendChild(commentGroup)
+    const descriptionGroup = document.createElement('div')
+    descriptionGroup.className = 'form-group'
+    const descriptionTextarea = document.createElement('textarea')
+    descriptionTextarea.rows = 2
+    descriptionTextarea.id = ids.eventComment
+    descriptionTextarea.placeholder = 'Optional description'
+    descriptionGroup.appendChild(descriptionTextarea)
+    fragment.appendChild(descriptionGroup)
 
     return {fragment, ids}
 }
