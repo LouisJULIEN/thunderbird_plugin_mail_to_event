@@ -36,7 +36,11 @@ export const formatFoundDate = (aFoundDate) => {
     ]
 
     const startDateTimeJs = new Date(...startDateData)
-    const endDateTimeJs = new Date(...endDateData)
+    let endDateTimeJs = new Date(...endDateData)
+
+    if (endDateTimeJs <= startDateTimeJs) {
+        endDateTimeJs = new Date(+year, +month - 1, +day, ...formatHourMinutes(aFoundDate?.startTime?.time, true))
+    }
 
     startDateTimeJs.setTime(startDateTimeJs.getTime() - startDateTimeJs.getTimezoneOffset() * 60 * 1000);
     endDateTimeJs.setTime(endDateTimeJs.getTime() - endDateTimeJs.getTimezoneOffset() * 60 * 1000);
