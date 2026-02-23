@@ -11,35 +11,16 @@
 
 <div id="detected-language"></div>
 
-<input type="text" id="event-title" placeholder="Event title">
+<!-- Title, calendar, timezone injected here by pop_up_button.js (createEventFormTop) -->
 
-<div id="calendar-selector-section">
-    <select id="calendar-selector"></select>
-    <label><input type="checkbox" id="set-default-calendar"> Set as default</label>
-</div>
-
-<div id="timezone-selector-section">
-    <select id="timezone-selector"></select>
-    <label><input type="checkbox" id="set-default-timezone"> Set as default</label>
-</div>
-
-<div id="dates-selector">
-</div>
+<div id="dates-selector"></div>
 
 <div class="end-date-selector">
     <label for="end-date-input">End date</label>
     <input id="end-date-input" type="datetime-local" value="">
 </div>
 
-<div class="form-group">
-    <label for="event-location">Location</label>
-    <input type="text" id="event-location" placeholder="Optional location">
-</div>
-
-<div class="form-group">
-    <label for="event-comment">Description</label>
-    <textarea rows="2" id="event-comment" placeholder="Optional description"></textarea>
-</div>
+<!-- Location, description injected here by pop_up_button.js (createEventFormBottom) -->
 
 <button type="button" id="create-calendar-event" disabled>Create event</button>
 

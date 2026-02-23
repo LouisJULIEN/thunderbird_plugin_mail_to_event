@@ -1,4 +1,7 @@
-// import {tagMailContentDates} from "./tag_dates.js"; injected via register_content_script_injector.js
+import {tagMailContentDates} from "./tag_dates.js";
+import {createEventFormTop, createEventFormBottom} from "../../common/event_form.js";
+import {populateCalendarSelector} from "../../common/calendar_selector.js";
+import {populateTimezoneSelector} from "../../common/timezone_selector.js";
 
 let createdDivIds = []
 
@@ -9,220 +12,6 @@ function generateUID() {
     });
 }
 
-const createEventHTML = (uniqueID) => {
-    const tagsId = {
-        startDate: `pluginMailToEvent-start-date-input-${uniqueID}`,
-        endDate: `pluginMailToEvent-end-date-input-${uniqueID}`,
-        eventComment: `pluginMailToEvent-event-comment-${uniqueID}`,
-        eventTitle: `pluginMailToEvent-event-title-${uniqueID}`,
-        resultDisplay: `pluginMailToEvent-creation-result-display-${uniqueID}`,
-        submitEventCreation: `pluginMailToEvent-create-calendar-event-${uniqueID}`,
-        calendarSelector: `pluginMailToEvent-calendar-selector-${uniqueID}`,
-        setDefaultCalendar: `pluginMailToEvent-set-default-calendar-${uniqueID}`,
-        timezoneSelector: `pluginMailToEvent-timezone-selector-${uniqueID}`,
-        setDefaultTimezone: `pluginMailToEvent-set-default-timezone-${uniqueID}`,
-    }
-
-    const br = document.createElement('br');
-
-
-    const container = document.createElement('div');
-    container.className = 'pluginMailToEvent-createEvent';
-
-    const eventTitleInput = document.createElement('input');
-    eventTitleInput.type = 'text';
-    eventTitleInput.id = tagsId.eventTitle;
-    container.appendChild(eventTitleInput);
-
-    // Calendar selector section
-    const calendarSection = document.createElement('div');
-    calendarSection.className = 'pluginMailToEvent-calendarSection';
-
-    const calendarSelect = document.createElement('select');
-    calendarSelect.id = tagsId.calendarSelector;
-    calendarSection.appendChild(calendarSelect);
-
-    const defaultLabel = document.createElement('label');
-    const defaultCheckbox = document.createElement('input');
-    defaultCheckbox.type = 'checkbox';
-    defaultCheckbox.id = tagsId.setDefaultCalendar;
-    defaultLabel.appendChild(defaultCheckbox);
-    defaultLabel.appendChild(document.createTextNode(' Set as default'));
-    calendarSection.appendChild(defaultLabel);
-
-    container.appendChild(calendarSection);
-
-    // Timezone selector section
-    const timezoneSection = document.createElement('div');
-    timezoneSection.className = 'pluginMailToEvent-timezoneSection';
-
-    const timezoneSelect = document.createElement('select');
-    timezoneSelect.id = tagsId.timezoneSelector;
-    timezoneSection.appendChild(timezoneSelect);
-
-    const tzDefaultLabel = document.createElement('label');
-    const tzDefaultCheckbox = document.createElement('input');
-    tzDefaultCheckbox.type = 'checkbox';
-    tzDefaultCheckbox.id = tagsId.setDefaultTimezone;
-    tzDefaultLabel.appendChild(tzDefaultCheckbox);
-    tzDefaultLabel.appendChild(document.createTextNode(' Set as default'));
-    timezoneSection.appendChild(tzDefaultLabel);
-
-    container.appendChild(timezoneSection);
-
-    const startDateSelector = document.createElement('div');
-    startDateSelector.className = 'start-date-selector one-date-selector';
-
-    const startDateLabel = document.createElement('label');
-    startDateLabel.htmlFor = 'start-date-input';
-    startDateLabel.textContent = 'Start date';
-    startDateSelector.appendChild(startDateLabel);
-    startDateSelector.appendChild(br.cloneNode());
-
-    const startDateInput = document.createElement('input');
-    startDateInput.id = tagsId.startDate;
-    startDateInput.type = 'datetime-local';
-    startDateInput.value = '';
-    startDateSelector.appendChild(startDateInput);
-
-    container.appendChild(startDateSelector);
-
-
-    const endDateSelector = document.createElement('div');
-    endDateSelector.className = 'end-date-selector one-date-selector';
-
-    const endDateLabel = document.createElement('label');
-    endDateLabel.htmlFor = 'end-date-input';
-    endDateLabel.textContent = 'End date';
-    endDateSelector.appendChild(endDateLabel);
-    endDateSelector.appendChild(br.cloneNode());
-
-    const endDateInput = document.createElement('input');
-    endDateInput.id = tagsId.endDate;
-    endDateInput.type = 'datetime-local';
-    endDateInput.value = '';
-    endDateSelector.appendChild(endDateInput);
-
-    container.appendChild(endDateSelector);
-    container.appendChild(br.cloneNode());
-
-    const eventCommentTextarea = document.createElement('textarea');
-    eventCommentTextarea.rows = '2';
-    eventCommentTextarea.cols = '30';
-    eventCommentTextarea.id = tagsId.eventComment;
-    eventCommentTextarea.placeholder = 'Optional description';
-    container.appendChild(eventCommentTextarea);
-
-    const resultDisplayDiv = document.createElement('div');
-    resultDisplayDiv.id = tagsId.resultDisplay;
-    container.appendChild(resultDisplayDiv);
-
-    const submitButton = document.createElement('input');
-    submitButton.type = 'submit';
-    submitButton.id = tagsId.submitEventCreation;
-    submitButton.value = 'Create event';
-    container.appendChild(submitButton);
-
-    return {tagsId, container}
-}
-
-async function populateCalendarSelector(tagsId) {
-    const calendars = await browser.runtime.sendMessage({action: 'getCalendars'})
-    const calendarSelect = document.getElementById(tagsId.calendarSelector)
-    const defaultCheckbox = document.getElementById(tagsId.setDefaultCalendar)
-
-    calendars.forEach((cal) => {
-        const option = document.createElement('option')
-        option.value = cal.id
-        option.textContent = cal.name
-        calendarSelect.appendChild(option)
-    })
-
-    const {defaultCalendarId} = await browser.storage.local.get("defaultCalendarId")
-    if (defaultCalendarId && calendars.some(c => c.id === defaultCalendarId)) {
-        calendarSelect.value = defaultCalendarId
-        defaultCheckbox.checked = true
-    }
-
-    defaultCheckbox.addEventListener("change", async () => {
-        if (defaultCheckbox.checked) {
-            await browser.storage.local.set({defaultCalendarId: calendarSelect.value})
-        } else {
-            await browser.storage.local.remove("defaultCalendarId")
-        }
-    })
-
-    calendarSelect.addEventListener("change", async () => {
-        if (defaultCheckbox.checked) {
-            await browser.storage.local.set({defaultCalendarId: calendarSelect.value})
-        }
-    })
-}
-
-async function populateTimezoneSelector(tagsId) {
-    const timezoneIds = Intl.supportedValuesOf('timeZone')
-    const currentZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-    const timezoneSelect = document.getElementById(tagsId.timezoneSelector)
-    const defaultCheckbox = document.getElementById(tagsId.setDefaultTimezone)
-
-    timezoneIds.forEach((tzId) => {
-        const option = document.createElement('option')
-        option.value = tzId
-        option.textContent = tzId
-        timezoneSelect.appendChild(option)
-    })
-
-    const {defaultTimezone} = await browser.storage.local.get("defaultTimezone")
-    if (defaultTimezone && timezoneIds.includes(defaultTimezone)) {
-        timezoneSelect.value = defaultTimezone
-        defaultCheckbox.checked = true
-    } else {
-        timezoneSelect.value = currentZone
-    }
-
-    defaultCheckbox.addEventListener("change", async () => {
-        if (defaultCheckbox.checked) {
-            await browser.storage.local.set({defaultTimezone: timezoneSelect.value})
-        } else {
-            await browser.storage.local.remove("defaultTimezone")
-        }
-    })
-
-    timezoneSelect.addEventListener("change", async () => {
-        if (defaultCheckbox.checked) {
-            await browser.storage.local.set({defaultTimezone: timezoneSelect.value})
-        }
-    })
-}
-
-const submitEventCreation = async (tagsId) => {
-    const selectedStartDate = document.getElementById(tagsId.startDate)?.value
-    const selectedEndDate = document.getElementById(tagsId.endDate)?.value
-    const title = document.getElementById(tagsId.eventTitle).value
-    const comment = document.getElementById(tagsId.eventComment).value || ""
-    const calendarId = document.getElementById(tagsId.calendarSelector)?.value
-    const timezone = document.getElementById(tagsId.timezoneSelector)?.value
-    if (selectedStartDate && selectedEndDate && title) {
-        const result = await browser.runtime.sendMessage({
-            action: 'createCalendarEvent',
-            calendarId: calendarId,
-            args: [
-                selectedStartDate + ':00',
-                selectedEndDate + ':00',
-                title,
-                comment,
-                timezone]
-        })
-
-        if (result.error) {
-            document.getElementById(tagsId.resultDisplay).innerText = result.error?.message
-            console.error(result)
-        } else {
-            document.getElementById(tagsId.resultDisplay).innerText = "Event creation successful"
-        }
-    }
-}
-
 async function eventCreatorPopup(oneFoundElement) {
     const {htmlContainerIdValue, startDateTime, endDateTime} = oneFoundElement
     document.getElementById(htmlContainerIdValue).addEventListener('click', (clickEvent) => {
@@ -231,22 +20,95 @@ async function eventCreatorPopup(oneFoundElement) {
         eventCreator.id = `pluginMailToEvent-event-creator-${uid}`
         eventCreator.className = `pluginMailToEvent-event-creator`
 
-        const {container, tagsId} = createEventHTML(uid)
-        eventCreator.appendChild(container)
+        const {fragment: topFragment, ids: topIds} = createEventFormTop(uid)
+        const {fragment: bottomFragment, ids: bottomIds} = createEventFormBottom(uid)
+
+        // Start date (content-script specific — pre-filled from clicked element)
+        const startDateContainer = document.createElement('div')
+        startDateContainer.className = 'one-date-selector'
+        const startDateLabel = document.createElement('label')
+        startDateLabel.textContent = 'Start date'
+        const startDateInput = document.createElement('input')
+        startDateInput.id = `${uid}-start-date`
+        startDateInput.type = 'datetime-local'
+        startDateInput.value = startDateTime.dateISO.slice(0, 16)
+        startDateContainer.appendChild(startDateLabel)
+        startDateContainer.appendChild(document.createElement('br'))
+        startDateContainer.appendChild(startDateInput)
+
+        // End date
+        const endDateContainer = document.createElement('div')
+        endDateContainer.className = 'one-date-selector'
+        const endDateLabel = document.createElement('label')
+        endDateLabel.textContent = 'End date'
+        const endDateInput = document.createElement('input')
+        endDateInput.id = `${uid}-end-date`
+        endDateInput.type = 'datetime-local'
+        endDateInput.value = endDateTime.dateISO.slice(0, 16)
+        endDateContainer.appendChild(endDateLabel)
+        endDateContainer.appendChild(document.createElement('br'))
+        endDateContainer.appendChild(endDateInput)
+
+        // Result display + submit button
+        const resultDisplay = document.createElement('div')
+        resultDisplay.id = `${uid}-result`
+
+        const submitButton = document.createElement('input')
+        submitButton.type = 'submit'
+        submitButton.id = `${uid}-create-event`
+        submitButton.value = 'Create event'
+
+        // Assemble: top fields → dates → bottom fields → result → button
+        eventCreator.appendChild(topFragment)
+        eventCreator.appendChild(startDateContainer)
+        eventCreator.appendChild(endDateContainer)
+        eventCreator.appendChild(bottomFragment)
+        eventCreator.appendChild(resultDisplay)
+        eventCreator.appendChild(submitButton)
+
         const x = window.scrollX + clickEvent.clientX
         const y = window.scrollY + clickEvent.clientY
         eventCreator.style = `position: absolute; top: ${y}px; left: ${x}px`
         document.body.appendChild(eventCreator)
         createdDivIds.push(eventCreator.id)
 
-        document.getElementById(tagsId.eventTitle).value = document.title
-        document.getElementById(tagsId.startDate).value = startDateTime.dateISO.slice(0, 16)
-        document.getElementById(tagsId.endDate).value = endDateTime.dateISO.slice(0, 16)
+        document.getElementById(topIds.eventTitle).value = document.title
 
-        populateCalendarSelector(tagsId)
-        populateTimezoneSelector(tagsId)
+        populateCalendarSelector(
+            document.getElementById(topIds.calendarSelector),
+            document.getElementById(topIds.setDefaultCalendar),
+            () => browser.runtime.sendMessage({action: 'getCalendars'})
+        )
 
-        document.getElementById(tagsId.submitEventCreation).addEventListener('click', () => submitEventCreation(tagsId))
+        populateTimezoneSelector(
+            document.getElementById(topIds.timezoneSelector),
+            document.getElementById(topIds.setDefaultTimezone)
+        )
+
+        document.getElementById(`${uid}-create-event`).addEventListener('click', async () => {
+            const selectedStartDate = document.getElementById(`${uid}-start-date`)?.value
+            const selectedEndDate = document.getElementById(`${uid}-end-date`)?.value
+            const title = document.getElementById(topIds.eventTitle).value
+            const comment = document.getElementById(bottomIds.eventComment).value || ""
+            const location = document.getElementById(bottomIds.eventLocation).value || ""
+            const calendarId = document.getElementById(topIds.calendarSelector)?.value
+            const timezone = document.getElementById(topIds.timezoneSelector)?.value
+
+            if (selectedStartDate && selectedEndDate && title) {
+                const result = await browser.runtime.sendMessage({
+                    action: 'createCalendarEvent',
+                    calendarId: calendarId,
+                    args: [selectedStartDate + ':00', selectedEndDate + ':00', title, comment, timezone, location]
+                })
+
+                if (result.error) {
+                    document.getElementById(`${uid}-result`).innerText = result.error?.message
+                    console.error(result)
+                } else {
+                    document.getElementById(`${uid}-result`).innerText = "Event creation successful"
+                }
+            }
+        })
     })
 }
 
@@ -254,7 +116,6 @@ async function highlightEmailDates() {
     const res = await tagMailContentDates(document)
     res.foundHtmlElements.map(eventCreatorPopup)
 }
-
 
 highlightEmailDates()
 

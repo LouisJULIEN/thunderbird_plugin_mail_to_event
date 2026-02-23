@@ -25,7 +25,7 @@ function getElementByText(parentElement, text) {
     return searchText(parentElement);
 }
 
-async function tagMailContentDates(document) {
+export async function tagMailContentDates(document) {
     const mailContentPlainText = document.body.textContent;
 
     const foundDates = await browser.runtime.sendMessage({

@@ -1,76 +1,20 @@
 import {createEvent} from "./create_calendar_event.js";
-
-const calendars = await messenger.calendar.calendars.query({visible: true, readOnly: false, enabled: true})
+import {populateCalendarSelector} from "../common/calendar_selector.js";
+import {populateTimezoneSelector} from "../common/timezone_selector.js";
 
 const calendarSelector = document.getElementById("calendar-selector")
 const setDefaultCheckbox = document.getElementById("set-default-calendar")
 
-// Populate calendar dropdown
-calendars.forEach((cal) => {
-    const option = document.createElement("option")
-    option.value = cal.id
-    option.textContent = cal.name
-    calendarSelector.appendChild(option)
-})
-
-// Restore saved default
-const {defaultCalendarId} = await browser.storage.local.get("defaultCalendarId")
-if (defaultCalendarId && calendars.some(c => c.id === defaultCalendarId)) {
-    calendarSelector.value = defaultCalendarId
-    setDefaultCheckbox.checked = true
-}
-
-// When checkbox changes, save or remove default
-setDefaultCheckbox.addEventListener("change", async () => {
-    if (setDefaultCheckbox.checked) {
-        await browser.storage.local.set({defaultCalendarId: calendarSelector.value})
-    } else {
-        await browser.storage.local.remove("defaultCalendarId")
-    }
-})
-
-// When dropdown changes while checkbox is checked, update stored default
-calendarSelector.addEventListener("change", async () => {
-    if (setDefaultCheckbox.checked) {
-        await browser.storage.local.set({defaultCalendarId: calendarSelector.value})
-    }
-})
-
-// Timezone selector
-const timezoneIds = Intl.supportedValuesOf('timeZone')
-const currentZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+await populateCalendarSelector(
+    calendarSelector,
+    setDefaultCheckbox,
+    () => messenger.calendar.calendars.query({visible: true, readOnly: false, enabled: true})
+)
 
 const timezoneSelector = document.getElementById("timezone-selector")
 const setDefaultTimezoneCheckbox = document.getElementById("set-default-timezone")
 
-timezoneIds.forEach((tzId) => {
-    const option = document.createElement("option")
-    option.value = tzId
-    option.textContent = tzId
-    timezoneSelector.appendChild(option)
-})
-
-const {defaultTimezone} = await browser.storage.local.get("defaultTimezone")
-if (defaultTimezone && timezoneIds.includes(defaultTimezone)) {
-    timezoneSelector.value = defaultTimezone
-    setDefaultTimezoneCheckbox.checked = true
-} else {
-    timezoneSelector.value = currentZone
-}
-
-setDefaultTimezoneCheckbox.addEventListener("change", async () => {
-    if (setDefaultTimezoneCheckbox.checked) {
-        await browser.storage.local.set({defaultTimezone: timezoneSelector.value})
-    } else {
-        await browser.storage.local.remove("defaultTimezone")
-    }
-})
-
-timezoneSelector.addEventListener("change", async () => {
-    if (setDefaultTimezoneCheckbox.checked) {
-        await browser.storage.local.set({defaultTimezone: timezoneSelector.value})
-    }
-})
+await populateTimezoneSelector(timezoneSelector, setDefaultTimezoneCheckbox)
 
 const resetAriaSelected = () => {
     Array.from(document.getElementsByClassName('start-date-input')).forEach((e) => {

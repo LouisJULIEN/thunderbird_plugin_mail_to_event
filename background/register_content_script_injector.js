@@ -1,10 +1,9 @@
 await messenger.scripting.messageDisplay.registerScripts([{
     id: "pluginMailToEvent-highlightDates",
     js: [
-        "content_scripts/highlight_dates/tag_dates.js",
-        "content_scripts/highlight_dates/highlight_dates.js"
+        "content_scripts/highlight_dates/bundle/highlight_dates.bundle.js"
     ],
-    css: ["content_scripts/highlight_dates/highlight_dates.css"],
+    css: ["content_scripts/highlight_dates/highlight_dates.css","content_scripts/highlight_dates/pop_up_button.css"],
 }]);
 
 
@@ -16,13 +15,12 @@ let messageTabs = openTabs.filter(
 for (let messageTab of messageTabs) {
     await messenger.scripting.insertCSS({
         target: {tabId: messageTab.id},
-        files: ["content_scripts/highlight_dates/highlight_dates.css"]
+        files: ["content_scripts/highlight_dates/highlight_dates.css","content_scripts/highlight_dates/pop_up_button.css",]
     })
     await messenger.scripting.executeScript({
         target: {tabId: messageTab.id},
         files: [
-            "content_scripts/highlight_dates/tag_dates.js",
-            "content_scripts/highlight_dates/highlight_dates.js",
+            "content_scripts/highlight_dates/bundle/highlight_dates.bundle.js"
         ],
     })
 }

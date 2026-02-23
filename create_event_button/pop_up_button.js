@@ -1,6 +1,18 @@
-import "./pop_up_interaction.js";
+import {createEventFormTop, createEventFormBottom} from "../common/event_form.js";
 import {getCurrentMailDates} from "./current_mail_to_date.js";
 
+// Insert top fields (title, calendar, timezone) before the dates selector
+const {fragment: topFragment} = createEventFormTop()
+const datesSelector = document.getElementById('dates-selector')
+datesSelector.parentNode.insertBefore(topFragment, datesSelector)
+
+// Insert bottom fields (location, description) before the create button
+const {fragment: bottomFragment} = createEventFormBottom()
+const createBtn = document.getElementById('create-calendar-event')
+createBtn.parentNode.insertBefore(bottomFragment, createBtn)
+
+// Import interaction only after form fields are in the DOM
+await import("./pop_up_interaction.js")
 
 const showFoundDates = (dates) => {
     const datesContainer = document.getElementById('dates-selector');
