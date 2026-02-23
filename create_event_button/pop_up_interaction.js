@@ -47,6 +47,7 @@ document.getElementById("create-calendar-event").addEventListener('click',
 
         if (selectedStartDate && selectedEndDate && title) {
             btn.disabled = true
+            btn.textContent = 'Creating…'
 
             const result = await createEvent(
                 calendarSelector.value,

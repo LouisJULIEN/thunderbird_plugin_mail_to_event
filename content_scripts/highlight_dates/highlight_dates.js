@@ -52,22 +52,17 @@ async function eventCreatorPopup(oneFoundElement) {
         endDateContainer.appendChild(endDateLabel)
         endDateContainer.appendChild(endDateInput)
 
-        // Result display + submit button
-        const resultDisplay = document.createElement('div')
-        resultDisplay.id = `${uid}-result`
-
         const submitButton = document.createElement('input')
         submitButton.type = 'submit'
         submitButton.id = `${uid}-create-event`
         submitButton.className = 'pluginMailToEvent-create-btn'
         submitButton.value = 'Create event'
 
-        // Assemble: top fields → dates → bottom fields → result → button
+        // Assemble: top fields → dates → bottom fields → button
         eventCreator.appendChild(topFragment)
         eventCreator.appendChild(startDateContainer)
         eventCreator.appendChild(endDateContainer)
         eventCreator.appendChild(bottomFragment)
-        eventCreator.appendChild(resultDisplay)
         eventCreator.appendChild(submitButton)
 
         const x = window.scrollX + clickEvent.clientX
@@ -99,6 +94,8 @@ async function eventCreatorPopup(oneFoundElement) {
             const timezone = document.getElementById(topIds.timezoneSelector)?.value
 
             if (selectedStartDate && selectedEndDate && title) {
+                submitButton.disabled = true
+                submitButton.value = 'Creating…'
                 const result = await browser.runtime.sendMessage({
                     action: 'createCalendarEvent',
                     calendarId: calendarId,
@@ -106,10 +103,12 @@ async function eventCreatorPopup(oneFoundElement) {
                 })
 
                 if (result.error) {
-                    document.getElementById(`${uid}-result`).innerText = result.error?.message
                     console.error(result)
+                    submitButton.value = "✗ " + (result.error?.message || "Error")
+                    submitButton.classList.add("error")
                 } else {
-                    document.getElementById(`${uid}-result`).innerText = "Event creation successful"
+                    submitButton.value = "✓ Event created"
+                    submitButton.classList.add("success")
                 }
             }
         })

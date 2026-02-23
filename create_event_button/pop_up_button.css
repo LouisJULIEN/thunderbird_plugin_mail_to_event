@@ -202,22 +202,25 @@
 }
 
 #create-calendar-event:hover:not(:disabled),
-.pluginMailToEvent-create-btn:hover {
+.pluginMailToEvent-create-btn:hover:not(:disabled) {
     background: var(--accent-hover);
 }
 
-#create-calendar-event:disabled {
+#create-calendar-event:disabled,
+.pluginMailToEvent-create-btn:disabled {
     opacity: 0.5;
-    cursor: default;
+    cursor: not-allowed;
 }
 
-#create-calendar-event.success {
+#create-calendar-event.success,
+.pluginMailToEvent-create-btn.success {
     background: var(--success);
     opacity: 1;
     cursor: default;
 }
 
-#create-calendar-event.error {
+#create-calendar-event.error,
+.pluginMailToEvent-create-btn.error {
     background: var(--error);
     opacity: 1;
 }
