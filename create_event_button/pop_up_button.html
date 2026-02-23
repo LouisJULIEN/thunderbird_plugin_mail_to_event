@@ -7,22 +7,24 @@
     <link rel="stylesheet" type="text/css" media="screen" href="pop_up_button.css">
 </head>
 
-<body>
+<body class="pluginMailToEvent-popup">
 
-<div id="detected-language"></div>
+<div class="pluginMailToEvent-event-creator">
+    <div id="detected-language"></div>
 
-<!-- Title, calendar, timezone injected here by pop_up_button.js (createEventFormTop) -->
+    <!-- Title, calendar, timezone injected here by pop_up_button.js (createEventFormTop) -->
 
-<div id="dates-selector"></div>
+    <div id="dates-selector"></div>
 
-<div class="end-date-selector">
-    <label for="end-date-input">End date</label>
-    <input id="end-date-input" type="datetime-local" value="">
+    <div class="end-date-selector">
+        <label for="end-date-input">End date</label>
+        <input id="end-date-input" type="datetime-local" value="">
+    </div>
+
+    <!-- Location, description injected here by pop_up_button.js (createEventFormBottom) -->
+
+    <button type="button" id="create-calendar-event" disabled>Create event</button>
 </div>
-
-<!-- Location, description injected here by pop_up_button.js (createEventFormBottom) -->
-
-<button type="button" id="create-calendar-event" disabled>Create event</button>
 
 <script type="module" src="pop_up_button.js"></script>
 </body>

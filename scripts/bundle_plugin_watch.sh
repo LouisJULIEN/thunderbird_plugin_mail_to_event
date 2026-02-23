@@ -6,12 +6,13 @@ PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 
 bundle() {
     echo "[$(date +%H:%M:%S)] Bundling plugin..."
+    "$SCRIPT_DIR/bundle_content_script.sh"
     "$SCRIPT_DIR/zip_to_publish.sh"
     echo "[$(date +%H:%M:%S)] Done."
 }
 
 get_hash() {
-    find "$PROJECT_DIR" -not -path '*/node_modules/*' -not -path '*/.git/*' -not -path '*/zip/*' -not -path '*/scripts/*' -type f -printf '%T@\n' 2>/dev/null | sort | md5sum
+    find "$PROJECT_DIR" -not -path '*/node_modules/*' -not -path '*/.git/*' -not -path '*/zip/*' -not -path '*/scripts/*' -not -path '*/content_scripts/highlight_dates/bundle/*' -type f -printf '%T@\n' 2>/dev/null | sort | md5sum
 }
 
 cd "$PROJECT_DIR"

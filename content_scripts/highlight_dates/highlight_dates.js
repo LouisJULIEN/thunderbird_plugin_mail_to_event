@@ -1,4 +1,9 @@
 import {tagMailContentDates} from "./tag_dates.js";
+import cssText from "../../create_event_button/pop_up_button.css";
+
+const style = document.createElement('style')
+style.textContent = cssText
+document.head.appendChild(style)
 import {createEventFormTop, createEventFormBottom} from "../../common/event_form.js";
 import {populateCalendarSelector} from "../../common/calendar_selector.js";
 import {populateTimezoneSelector} from "../../common/timezone_selector.js";
