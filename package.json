@@ -19,7 +19,7 @@
     "test": "mocha ./tests/*",
     "bundle-dependencies": "./scripts/bundle_dependencies.sh",
     "bundle-content-script": "./scripts/bundle_content_script.sh",
-    "bundle-plugin": "./scripts/zip_to_publish.sh"
+    "bundle-plugin": "npm run bundle-content-script && ./scripts/zip_to_publish.sh"
   },
   "version": "1.0.0"
 }
