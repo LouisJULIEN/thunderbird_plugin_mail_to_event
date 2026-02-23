@@ -67,6 +67,7 @@ document.getElementById("create-calendar-event").addEventListener('click',
             } else {
                 btn.textContent = "✓ Event created"
                 btn.classList.add("success")
+                await browser.storage.local.remove('savedPopupValues')
             }
         }
     })

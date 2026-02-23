@@ -1,14 +1,15 @@
 import {tagMailContentDates} from "./tag_dates.js";
 import cssText from "../../create_event_button/pop_up_button.css";
-
-const style = document.createElement('style')
-style.textContent = cssText
-document.head.appendChild(style)
 import {createEventFormTop, createEventFormBottom} from "../../common/event_form.js";
 import {populateCalendarSelector} from "../../common/calendar_selector.js";
 import {populateTimezoneSelector} from "../../common/timezone_selector.js";
 
-let createdDivIds = []
+const style = document.createElement('style')
+style.textContent = cssText
+document.head.appendChild(style)
+
+const activePopups = new Map()  // htmlContainerIdValue -> popupElement
+const savedValues = new Map()   // htmlContainerIdValue -> {title, startDate, endDate, location, comment}
 
 function generateUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -17,18 +18,46 @@ function generateUID() {
     });
 }
 
+function makeDraggable(el) {
+    let isDragging = false, startX, startY, startLeft, startTop
+    const handle = el.querySelector('.pluginMailToEvent-drag-handle')
+    handle.addEventListener('mousedown', (e) => {
+        isDragging = true
+        el.classList.add('pluginMailToEvent-event-creator--dragging')
+        startX = e.clientX
+        startY = e.clientY
+        startLeft = parseInt(el.style.left) || 0
+        startTop = parseInt(el.style.top) || 0
+        e.preventDefault()
+    })
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return
+        el.style.left = (startLeft + e.clientX - startX) + 'px'
+        el.style.top = (startTop + e.clientY - startY) + 'px'
+    })
+    document.addEventListener('mouseup', () => {
+        isDragging = false
+        el.classList.remove('pluginMailToEvent-event-creator--dragging')
+    })
+}
+
 async function eventCreatorPopup(oneFoundElement) {
     const {htmlContainerIdValue, startDateTime, endDateTime} = oneFoundElement
     document.getElementById(htmlContainerIdValue).addEventListener('click', (clickEvent) => {
+        if (activePopups.has(htmlContainerIdValue)) return
+
         const uid = generateUID()
         const eventCreator = document.createElement('div')
         eventCreator.id = `pluginMailToEvent-event-creator-${uid}`
-        eventCreator.className = `pluginMailToEvent-event-creator`
+        eventCreator.className = 'pluginMailToEvent-event-creator'
+
+        const dragHandle = document.createElement('div')
+        dragHandle.className = 'pluginMailToEvent-drag-handle'
+        eventCreator.appendChild(dragHandle)
 
         const {fragment: topFragment, ids: topIds} = createEventFormTop(uid)
         const {fragment: bottomFragment, ids: bottomIds} = createEventFormBottom(uid)
 
-        // Start date (content-script specific — pre-filled from clicked element)
         const startDateContainer = document.createElement('div')
         startDateContainer.className = 'form-group'
         const startDateLabel = document.createElement('label')
@@ -40,7 +69,6 @@ async function eventCreatorPopup(oneFoundElement) {
         startDateContainer.appendChild(startDateLabel)
         startDateContainer.appendChild(startDateInput)
 
-        // End date
         const endDateContainer = document.createElement('div')
         endDateContainer.className = 'form-group'
         const endDateLabel = document.createElement('label')
@@ -58,7 +86,6 @@ async function eventCreatorPopup(oneFoundElement) {
         submitButton.className = 'pluginMailToEvent-create-btn'
         submitButton.value = 'Create event'
 
-        // Assemble: top fields → dates → bottom fields → button
         eventCreator.appendChild(topFragment)
         eventCreator.appendChild(startDateContainer)
         eventCreator.appendChild(endDateContainer)
@@ -69,9 +96,31 @@ async function eventCreatorPopup(oneFoundElement) {
         const y = window.scrollY + clickEvent.clientY
         eventCreator.style = `position: absolute; top: ${y}px; left: ${x}px`
         document.body.appendChild(eventCreator)
-        createdDivIds.push(eventCreator.id)
+        activePopups.set(htmlContainerIdValue, eventCreator)
 
-        document.getElementById(topIds.eventTitle).value = document.title
+        // Restore saved values or set defaults
+        const saved = savedValues.get(htmlContainerIdValue)
+        if (saved) {
+            document.getElementById(topIds.eventTitle).value = saved.title ?? document.title
+            document.getElementById(`${uid}-start-date`).value = saved.startDate ?? startDateInput.value
+            document.getElementById(`${uid}-end-date`).value = saved.endDate ?? endDateInput.value
+            if (saved.location) document.getElementById(bottomIds.eventLocation).value = saved.location
+            if (saved.comment) document.getElementById(bottomIds.eventComment).value = saved.comment
+        } else {
+            document.getElementById(topIds.eventTitle).value = document.title
+        }
+
+        eventCreator.addEventListener('input', () => {
+            savedValues.set(htmlContainerIdValue, {
+                title: document.getElementById(topIds.eventTitle)?.value,
+                startDate: document.getElementById(`${uid}-start-date`)?.value,
+                endDate: document.getElementById(`${uid}-end-date`)?.value,
+                location: document.getElementById(bottomIds.eventLocation)?.value,
+                comment: document.getElementById(bottomIds.eventComment)?.value,
+            })
+        })
+
+        makeDraggable(eventCreator)
 
         populateCalendarSelector(
             document.getElementById(topIds.calendarSelector),
@@ -84,7 +133,7 @@ async function eventCreatorPopup(oneFoundElement) {
             document.getElementById(topIds.setDefaultTimezone)
         )
 
-        document.getElementById(`${uid}-create-event`).addEventListener('click', async () => {
+        submitButton.addEventListener('click', async () => {
             const selectedStartDate = document.getElementById(`${uid}-start-date`)?.value
             const selectedEndDate = document.getElementById(`${uid}-end-date`)?.value
             const title = document.getElementById(topIds.eventTitle).value
@@ -104,14 +153,20 @@ async function eventCreatorPopup(oneFoundElement) {
 
                 if (result.error) {
                     console.error(result)
+                    submitButton.disabled = false
                     submitButton.value = "✗ " + (result.error?.message || "Error")
                     submitButton.classList.add("error")
                 } else {
                     submitButton.value = "✓ Event created"
                     submitButton.classList.add("success")
+                    savedValues.delete(htmlContainerIdValue)
                 }
             }
         })
+
+        eventCreator.addEventListener('mouseleave', () => {
+            eventCreator.classList.add('pluginMailToEvent-event-creator--visited')
+        }, {once: true})
     })
 }
 
@@ -127,9 +182,9 @@ document.addEventListener('click', function (clickEvent) {
         clickEvent.target.closest('.pluginMailToEvent-highlightDate')
 
     if (!clickedOnAnEventCreator) {
-        while (createdDivIds.length > 0) {
-            const oneEventCreatorId = createdDivIds.pop()
-            document.getElementById(oneEventCreatorId).remove()
-        }
+        activePopups.forEach((popup, key) => {
+            popup.remove()
+            activePopups.delete(key)
+        })
     }
 })

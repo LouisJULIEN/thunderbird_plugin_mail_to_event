@@ -75,7 +75,263 @@
   }
 
   // create_event_button/pop_up_button.css
-  var pop_up_button_default = '.pluginMailToEvent-popup {\n    margin: 0;\n}\n\n.pluginMailToEvent-popup > .pluginMailToEvent-event-creator {\n    border: none;\n    box-shadow: none;\n    border-radius: 0;\n    width: 350px;\n}\n\n.pluginMailToEvent-highlightDate {\n    text-decoration: underline;\n    text-decoration-color: #0a84ff;\n    text-underline-offset: 2px;\n    cursor: pointer;\n}\n\n.pluginMailToEvent-event-creator {\n    --bg-primary: #ffffff;\n    --bg-input: #f9f9fb;\n    --text-primary: #15141a;\n    --text-secondary: #5b5b66;\n    --border-color: #cfcfd8;\n    --accent: #0a84ff;\n    --accent-hover: #0060df;\n    --success: #058b00;\n    --error: #d70022;\n\n    background: var(--bg-primary);\n    color: var(--text-primary);\n    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;\n    font-size: 13px;\n    line-height: 1.4;\n    padding: 12px;\n    box-sizing: border-box;\n    border: 1px solid var(--border-color);\n    border-radius: 8px;\n    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);\n    min-width: 300px;\n}\n\n@media (prefers-color-scheme: dark) {\n    .pluginMailToEvent-event-creator {\n        --bg-primary: #2b2a33;\n        --bg-input: #42414d;\n        --text-primary: #fbfbfe;\n        --text-secondary: #cfcfd8;\n        --border-color: #5b5b66;\n        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);\n    }\n}\n\n#detected-language:not(:empty) {\n    display: inline-block;\n    float: right;\n    font-size: 10px;\n    text-transform: uppercase;\n    color: var(--text-secondary);\n    padding: 1px 6px;\n    margin-bottom: 4px;\n}\n\n.pluginMailToEvent-event-creator input[type="text"],\n.pluginMailToEvent-event-creator input[type="datetime-local"],\n.pluginMailToEvent-event-creator textarea,\n.pluginMailToEvent-event-creator select {\n    box-sizing: border-box;\n    width: 100%;\n    height: 28px;\n    padding: 4px 8px;\n    border: 1px solid var(--border-color);\n    border-radius: 4px;\n    background: var(--bg-input);\n    color: var(--text-primary);\n    font-family: inherit;\n    font-size: 13px;\n}\n\n.pluginMailToEvent-event-creator textarea {\n    height: auto;\n    resize: vertical;\n}\n\n.form-group {\n    margin-bottom: 8px;\n}\n\n.form-group label {\n    display: block;\n    margin-bottom: 2px;\n    font-size: 12px;\n    color: var(--text-secondary);\n}\n\n#dates-selector {\n    max-height: 200px;\n    overflow-y: auto;\n}\n\n.pluginMailToEvent-calendarSection {\n    margin-top: 5px;\n    margin-bottom: 8px;\n    display: flex;\n    align-items: center;\n    gap: 8px;\n}\n\n.pluginMailToEvent-calendarSection select {\n    flex: 1;\n}\n\n.pluginMailToEvent-calendarSection label {\n    font-size: 12px;\n    color: var(--text-secondary);\n    white-space: nowrap;\n    display: flex;\n    align-items: center;\n    gap: 4px;\n}\n\n.pluginMailToEvent-timezoneSection {\n    margin-bottom: 8px;\n    display: flex;\n    align-items: center;\n    gap: 8px;\n}\n\n.pluginMailToEvent-timezoneSection select {\n    flex: 1;\n}\n\n.pluginMailToEvent-timezoneSection label {\n    font-size: 12px;\n    color: var(--text-secondary);\n    white-space: nowrap;\n    display: flex;\n    align-items: center;\n    gap: 4px;\n}\n\n\n.one-date-selector {\n    margin-bottom: 6px;\n    display: flex;\n    align-items: center;\n    gap: 6px;\n}\n\n.start-date-input {\n    flex: 1;\n}\n\n.submit-start-date {\n    width: auto;\n    height: 28px;\n    padding: 4px 10px;\n    border: none;\n    border-radius: 4px;\n    background: var(--accent);\n    color: #fff;\n    font-family: inherit;\n    font-size: 14px;\n    font-weight: 600;\n    cursor: pointer;\n}\n\n.one-date-selector .submit-start-date:hover {\n    border-color: var(--accent);\n}\n\n.one-date-selector  input[aria-selected="true"] {\n    border: 2px solid var(--accent);\n}\n\n.end-date-selector {\n    margin-bottom: 8px;\n}\n\n.end-date-selector label {\n    display: block;\n    margin-bottom: 2px;\n    font-size: 12px;\n    color: var(--text-secondary);\n}\n\n#create-calendar-event,\n.pluginMailToEvent-create-btn {\n    display: block;\n    width: 100%;\n    height: 32px;\n    margin-top: 8px;\n    padding: 0 16px;\n    border: none;\n    border-radius: 4px;\n    background: var(--accent);\n    color: #fff;\n    font-family: inherit;\n    font-size: 14px;\n    font-weight: 600;\n    cursor: pointer;\n}\n\n#create-calendar-event:hover:not(:disabled),\n.pluginMailToEvent-create-btn:hover:not(:disabled) {\n    background: var(--accent-hover);\n}\n\n#create-calendar-event:disabled,\n.pluginMailToEvent-create-btn:disabled {\n    opacity: 0.5;\n    cursor: not-allowed;\n}\n\n#create-calendar-event.success,\n.pluginMailToEvent-create-btn.success {\n    background: var(--success);\n    opacity: 1;\n    cursor: default;\n}\n\n#create-calendar-event.error,\n.pluginMailToEvent-create-btn.error {\n    background: var(--error);\n    opacity: 1;\n}\n';
+  var pop_up_button_default = `.pluginMailToEvent-popup {
+    margin: 0;
+}
+
+.pluginMailToEvent-popup > .pluginMailToEvent-event-creator {
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    width: 350px;
+}
+
+.pluginMailToEvent-drag-handle {
+    height: 16px;
+    margin: -12px -12px 8px;
+    border-radius: 8px 8px 0 0;
+    background: var(--border-color);
+    cursor: grab;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+}
+
+.pluginMailToEvent-drag-handle::before,
+.pluginMailToEvent-drag-handle::after {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background: var(--text-secondary);
+    border-radius: 1px;
+}
+
+.pluginMailToEvent-drag-handle:active {
+    cursor: grabbing;
+}
+
+.pluginMailToEvent-event-creator--dragging {
+    opacity: 0.8 !important;
+}
+
+.pluginMailToEvent-highlightDate {
+    text-decoration: underline;
+    text-decoration-color: #0a84ff;
+    text-underline-offset: 2px;
+    cursor: pointer;
+}
+
+.pluginMailToEvent-event-creator {
+    --bg-primary: #ffffff;
+    --bg-input: #f9f9fb;
+    --text-primary: #15141a;
+    --text-secondary: #5b5b66;
+    --border-color: #cfcfd8;
+    --accent: #0a84ff;
+    --accent-hover: #0060df;
+    --success: #058b00;
+    --error: #d70022;
+
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 300px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .pluginMailToEvent-event-creator {
+        --bg-primary: #2b2a33;
+        --bg-input: #42414d;
+        --text-primary: #fbfbfe;
+        --text-secondary: #cfcfd8;
+        --border-color: #5b5b66;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+}
+
+#detected-language:not(:empty) {
+    display: inline-block;
+    float: right;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    padding: 1px 6px;
+    margin-bottom: 4px;
+}
+
+.pluginMailToEvent-event-creator input[type="text"],
+.pluginMailToEvent-event-creator input[type="datetime-local"],
+.pluginMailToEvent-event-creator textarea,
+.pluginMailToEvent-event-creator select {
+    box-sizing: border-box;
+    width: 100%;
+    height: 28px;
+    padding: 4px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-input);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.pluginMailToEvent-event-creator textarea {
+    height: auto;
+    resize: vertical;
+}
+
+.form-group {
+    margin-bottom: 8px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+#dates-selector {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.pluginMailToEvent-calendarSection {
+    margin-top: 5px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pluginMailToEvent-calendarSection select {
+    flex: 1;
+}
+
+.pluginMailToEvent-calendarSection label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pluginMailToEvent-timezoneSection {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pluginMailToEvent-timezoneSection select {
+    flex: 1;
+}
+
+.pluginMailToEvent-timezoneSection label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+
+.one-date-selector {
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.start-date-input {
+    flex: 1;
+}
+
+.submit-start-date {
+    width: auto;
+    height: 28px;
+    padding: 4px 10px;
+    border: none;
+    border-radius: 4px;
+    background: var(--accent);
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.one-date-selector .submit-start-date:hover {
+    border-color: var(--accent);
+}
+
+.one-date-selector  input[aria-selected="true"] {
+    border: 2px solid var(--accent);
+}
+
+.end-date-selector {
+    margin-bottom: 8px;
+}
+
+.end-date-selector label {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+#create-calendar-event,
+.pluginMailToEvent-create-btn {
+    display: block;
+    width: 100%;
+    height: 32px;
+    margin-top: 8px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 4px;
+    background: var(--accent);
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#create-calendar-event:hover:not(:disabled),
+.pluginMailToEvent-create-btn:hover:not(:disabled) {
+    background: var(--accent-hover);
+}
+
+#create-calendar-event:disabled,
+.pluginMailToEvent-create-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#create-calendar-event.success,
+.pluginMailToEvent-create-btn.success {
+    background: var(--success);
+    opacity: 1;
+    cursor: default;
+}
+
+#create-calendar-event.error,
+.pluginMailToEvent-create-btn.error {
+    background: var(--error);
+    opacity: 1;
+}
+`;
 
   // common/event_form.js
   function createEventFormTop(idPrefix = "") {
@@ -222,20 +478,47 @@
   var style = document.createElement("style");
   style.textContent = pop_up_button_default;
   document.head.appendChild(style);
-  var createdDivIds = [];
+  var activePopups = /* @__PURE__ */ new Map();
+  var savedValues = /* @__PURE__ */ new Map();
   function generateUID() {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
       const r = Math.random() * 16 | 0, v = c == "x" ? r : r & 3 | 8;
       return v.toString(16);
     });
   }
+  function makeDraggable(el) {
+    let isDragging = false, startX, startY, startLeft, startTop;
+    const handle = el.querySelector(".pluginMailToEvent-drag-handle");
+    handle.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      el.classList.add("pluginMailToEvent-event-creator--dragging");
+      startX = e.clientX;
+      startY = e.clientY;
+      startLeft = parseInt(el.style.left) || 0;
+      startTop = parseInt(el.style.top) || 0;
+      e.preventDefault();
+    });
+    document.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+      el.style.left = startLeft + e.clientX - startX + "px";
+      el.style.top = startTop + e.clientY - startY + "px";
+    });
+    document.addEventListener("mouseup", () => {
+      isDragging = false;
+      el.classList.remove("pluginMailToEvent-event-creator--dragging");
+    });
+  }
   async function eventCreatorPopup(oneFoundElement) {
     const { htmlContainerIdValue, startDateTime, endDateTime } = oneFoundElement;
     document.getElementById(htmlContainerIdValue).addEventListener("click", (clickEvent) => {
+      if (activePopups.has(htmlContainerIdValue)) return;
       const uid = generateUID();
       const eventCreator = document.createElement("div");
       eventCreator.id = `pluginMailToEvent-event-creator-${uid}`;
-      eventCreator.className = `pluginMailToEvent-event-creator`;
+      eventCreator.className = "pluginMailToEvent-event-creator";
+      const dragHandle = document.createElement("div");
+      dragHandle.className = "pluginMailToEvent-drag-handle";
+      eventCreator.appendChild(dragHandle);
       const { fragment: topFragment, ids: topIds } = createEventFormTop(uid);
       const { fragment: bottomFragment, ids: bottomIds } = createEventFormBottom(uid);
       const startDateContainer = document.createElement("div");
@@ -272,8 +555,27 @@
       const y = window.scrollY + clickEvent.clientY;
       eventCreator.style = `position: absolute; top: ${y}px; left: ${x}px`;
       document.body.appendChild(eventCreator);
-      createdDivIds.push(eventCreator.id);
-      document.getElementById(topIds.eventTitle).value = document.title;
+      activePopups.set(htmlContainerIdValue, eventCreator);
+      const saved = savedValues.get(htmlContainerIdValue);
+      if (saved) {
+        document.getElementById(topIds.eventTitle).value = saved.title ?? document.title;
+        document.getElementById(`${uid}-start-date`).value = saved.startDate ?? startDateInput.value;
+        document.getElementById(`${uid}-end-date`).value = saved.endDate ?? endDateInput.value;
+        if (saved.location) document.getElementById(bottomIds.eventLocation).value = saved.location;
+        if (saved.comment) document.getElementById(bottomIds.eventComment).value = saved.comment;
+      } else {
+        document.getElementById(topIds.eventTitle).value = document.title;
+      }
+      eventCreator.addEventListener("input", () => {
+        savedValues.set(htmlContainerIdValue, {
+          title: document.getElementById(topIds.eventTitle)?.value,
+          startDate: document.getElementById(`${uid}-start-date`)?.value,
+          endDate: document.getElementById(`${uid}-end-date`)?.value,
+          location: document.getElementById(bottomIds.eventLocation)?.value,
+          comment: document.getElementById(bottomIds.eventComment)?.value
+        });
+      });
+      makeDraggable(eventCreator);
       populateCalendarSelector(
         document.getElementById(topIds.calendarSelector),
         document.getElementById(topIds.setDefaultCalendar),
@@ -283,7 +585,7 @@
         document.getElementById(topIds.timezoneSelector),
         document.getElementById(topIds.setDefaultTimezone)
       );
-      document.getElementById(`${uid}-create-event`).addEventListener("click", async () => {
+      submitButton.addEventListener("click", async () => {
         const selectedStartDate = document.getElementById(`${uid}-start-date`)?.value;
         const selectedEndDate = document.getElementById(`${uid}-end-date`)?.value;
         const title = document.getElementById(topIds.eventTitle).value;
@@ -301,14 +603,19 @@
           });
           if (result.error) {
             console.error(result);
+            submitButton.disabled = false;
             submitButton.value = "\u2717 " + (result.error?.message || "Error");
             submitButton.classList.add("error");
           } else {
             submitButton.value = "\u2713 Event created";
             submitButton.classList.add("success");
+            savedValues.delete(htmlContainerIdValue);
           }
         }
       });
+      eventCreator.addEventListener("mouseleave", () => {
+        eventCreator.classList.add("pluginMailToEvent-event-creator--visited");
+      }, { once: true });
     });
   }
   async function highlightEmailDates() {
@@ -319,10 +626,10 @@
   document.addEventListener("click", function(clickEvent) {
     const clickedOnAnEventCreator = clickEvent.target.closest(".pluginMailToEvent-event-creator") || clickEvent.target.closest(".pluginMailToEvent-highlightDate");
     if (!clickedOnAnEventCreator) {
-      while (createdDivIds.length > 0) {
-        const oneEventCreatorId = createdDivIds.pop();
-        document.getElementById(oneEventCreatorId).remove();
-      }
+      activePopups.forEach((popup, key) => {
+        popup.remove();
+        activePopups.delete(key);
+      });
     }
   });
 })();

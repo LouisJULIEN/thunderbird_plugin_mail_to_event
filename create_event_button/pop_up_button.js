@@ -48,3 +48,19 @@ if (detectedLanguage) {
 if (dates) {
     showFoundDates(dates)
 }
+
+// Restore saved values (overrides auto-detected subject if user had previously typed something)
+const {savedPopupValues} = await browser.storage.local.get('savedPopupValues')
+if (savedPopupValues) {
+    if (savedPopupValues.title) document.getElementById('event-title').value = savedPopupValues.title
+    if (savedPopupValues.location) document.getElementById('event-location').value = savedPopupValues.location
+    if (savedPopupValues.comment) document.getElementById('event-comment').value = savedPopupValues.comment
+}
+
+document.querySelector('.pluginMailToEvent-event-creator').addEventListener('input', async () => {
+    await browser.storage.local.set({savedPopupValues: {
+        title: document.getElementById('event-title')?.value,
+        location: document.getElementById('event-location')?.value,
+        comment: document.getElementById('event-comment')?.value,
+    }})
+})
