@@ -15,10 +15,10 @@
   },
   "type": "module",
   "scripts": {
+    "dev": "./scripts/bundle_plugin_watch.sh",
     "test": "mocha ./tests/*",
     "bundle-dependencies": "./scripts/bundle_dependencies.sh",
-    "bundle-plugin": "./scripts/zip_to_publish.sh",
-    "bundle-plugin:watch": "./scripts/bundle_plugin_watch.sh"
+    "bundle-plugin": "./scripts/zip_to_publish.sh"
   },
   "version": "1.0.0"
 }

@@ -98,6 +98,7 @@ document.getElementById("create-calendar-event").addEventListener('click',
         const selectedEndDate = document.getElementById('end-date-input')?.value
         const title = document.getElementById('event-title').value
         const comment = document.getElementById('event-comment').value || ""
+        const location = document.getElementById('event-location').value || ""
 
         if (selectedStartDate && selectedEndDate && title) {
             const result = await createEvent(
@@ -106,7 +107,8 @@ document.getElementById("create-calendar-event").addEventListener('click',
                 selectedEndDate + ':00',
                 title,
                 comment,
-                timezoneSelector.value
+                timezoneSelector.value,
+                location
             )
 
             if (result.error) {
