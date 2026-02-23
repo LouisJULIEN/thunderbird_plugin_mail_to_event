@@ -30,7 +30,7 @@ async function eventCreatorPopup(oneFoundElement) {
 
         // Start date (content-script specific — pre-filled from clicked element)
         const startDateContainer = document.createElement('div')
-        startDateContainer.className = 'one-date-selector'
+        startDateContainer.className = 'form-group'
         const startDateLabel = document.createElement('label')
         startDateLabel.textContent = 'Start date'
         const startDateInput = document.createElement('input')
@@ -38,12 +38,11 @@ async function eventCreatorPopup(oneFoundElement) {
         startDateInput.type = 'datetime-local'
         startDateInput.value = startDateTime.dateISO.slice(0, 16)
         startDateContainer.appendChild(startDateLabel)
-        startDateContainer.appendChild(document.createElement('br'))
         startDateContainer.appendChild(startDateInput)
 
         // End date
         const endDateContainer = document.createElement('div')
-        endDateContainer.className = 'one-date-selector'
+        endDateContainer.className = 'form-group'
         const endDateLabel = document.createElement('label')
         endDateLabel.textContent = 'End date'
         const endDateInput = document.createElement('input')
@@ -51,7 +50,6 @@ async function eventCreatorPopup(oneFoundElement) {
         endDateInput.type = 'datetime-local'
         endDateInput.value = endDateTime.dateISO.slice(0, 16)
         endDateContainer.appendChild(endDateLabel)
-        endDateContainer.appendChild(document.createElement('br'))
         endDateContainer.appendChild(endDateInput)
 
         // Result display + submit button
@@ -61,6 +59,7 @@ async function eventCreatorPopup(oneFoundElement) {
         const submitButton = document.createElement('input')
         submitButton.type = 'submit'
         submitButton.id = `${uid}-create-event`
+        submitButton.className = 'pluginMailToEvent-create-btn'
         submitButton.value = 'Create event'
 
         // Assemble: top fields → dates → bottom fields → result → button
