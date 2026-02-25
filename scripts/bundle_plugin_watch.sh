@@ -6,8 +6,7 @@ PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 
 bundle() {
     echo "[$(date +%H:%M:%S)] Bundling plugin..."
-    "$SCRIPT_DIR/bundle_content_script.sh"
-    "$SCRIPT_DIR/zip_to_publish.sh"
+    npm run bundle-plugin
     echo "[$(date +%H:%M:%S)] Done."
 }
 
