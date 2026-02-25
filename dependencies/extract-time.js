@@ -6227,7 +6227,7 @@ var require_Setter = __commonJS({
     var _createClass2 = _interopRequireDefault(require_createClass());
     var _defineProperty2 = _interopRequireDefault(require_defineProperty());
     var TIMEZONE_UNIT_PRIORITY = 10;
-    var Setter = /* @__PURE__ */ function() {
+    var Setter = /* @__PURE__ */ (function() {
       function Setter2() {
         (0, _classCallCheck2.default)(this, Setter2);
         (0, _defineProperty2.default)(this, "priority", void 0);
@@ -6240,9 +6240,9 @@ var require_Setter = __commonJS({
         }
       }]);
       return Setter2;
-    }();
+    })();
     exports.Setter = Setter;
-    var ValueSetter = /* @__PURE__ */ function(_Setter) {
+    var ValueSetter = /* @__PURE__ */ (function(_Setter) {
       (0, _inherits2.default)(ValueSetter2, _Setter);
       var _super = (0, _createSuper2.default)(ValueSetter2);
       function ValueSetter2(value, validateValue, setValue, priority, subPriority) {
@@ -6270,9 +6270,9 @@ var require_Setter = __commonJS({
         }
       }]);
       return ValueSetter2;
-    }(Setter);
+    })(Setter);
     exports.ValueSetter = ValueSetter;
-    var DateToSystemTimezoneSetter = /* @__PURE__ */ function(_Setter2) {
+    var DateToSystemTimezoneSetter = /* @__PURE__ */ (function(_Setter2) {
       (0, _inherits2.default)(DateToSystemTimezoneSetter2, _Setter2);
       var _super2 = (0, _createSuper2.default)(DateToSystemTimezoneSetter2);
       function DateToSystemTimezoneSetter2() {
@@ -6299,7 +6299,7 @@ var require_Setter = __commonJS({
         }
       }]);
       return DateToSystemTimezoneSetter2;
-    }(Setter);
+    })(Setter);
     exports.DateToSystemTimezoneSetter = DateToSystemTimezoneSetter;
   }
 });
@@ -6317,7 +6317,7 @@ var require_Parser = __commonJS({
     var _createClass2 = _interopRequireDefault(require_createClass());
     var _defineProperty2 = _interopRequireDefault(require_defineProperty());
     var _Setter = require_Setter();
-    var Parser = /* @__PURE__ */ function() {
+    var Parser = /* @__PURE__ */ (function() {
       function Parser2() {
         (0, _classCallCheck2.default)(this, Parser2);
         (0, _defineProperty2.default)(this, "incompatibleTokens", void 0);
@@ -6343,7 +6343,7 @@ var require_Parser = __commonJS({
         }
       }]);
       return Parser2;
-    }();
+    })();
     exports.Parser = Parser;
   }
 });
@@ -6364,7 +6364,7 @@ var require_EraParser = __commonJS({
     var _createSuper2 = _interopRequireDefault(require_createSuper());
     var _defineProperty2 = _interopRequireDefault(require_defineProperty());
     var _Parser2 = require_Parser();
-    var EraParser = /* @__PURE__ */ function(_Parser) {
+    var EraParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(EraParser2, _Parser);
       var _super = (0, _createSuper2.default)(EraParser2);
       function EraParser2() {
@@ -6418,7 +6418,7 @@ var require_EraParser = __commonJS({
         }
       }]);
       return EraParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.EraParser = EraParser;
   }
 });
@@ -6624,7 +6624,7 @@ var require_YearParser = __commonJS({
     var _defineProperty2 = _interopRequireDefault(require_defineProperty());
     var _Parser2 = require_Parser();
     var _utils = require_utils();
-    var YearParser = /* @__PURE__ */ function(_Parser) {
+    var YearParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(YearParser2, _Parser);
       var _super = (0, _createSuper2.default)(YearParser2);
       function YearParser2() {
@@ -6680,7 +6680,7 @@ var require_YearParser = __commonJS({
         }
       }]);
       return YearParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.YearParser = YearParser;
   }
 });
@@ -6704,7 +6704,7 @@ var require_LocalWeekYearParser = __commonJS({
     var _utils = require_utils();
     var _index = _interopRequireDefault(require_getUTCWeekYear());
     var _index2 = _interopRequireDefault(require_startOfUTCWeek());
-    var LocalWeekYearParser = /* @__PURE__ */ function(_Parser) {
+    var LocalWeekYearParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(LocalWeekYearParser2, _Parser);
       var _super = (0, _createSuper2.default)(LocalWeekYearParser2);
       function LocalWeekYearParser2() {
@@ -6760,7 +6760,7 @@ var require_LocalWeekYearParser = __commonJS({
         }
       }]);
       return LocalWeekYearParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.LocalWeekYearParser = LocalWeekYearParser;
   }
 });
@@ -6783,7 +6783,7 @@ var require_ISOWeekYearParser = __commonJS({
     var _Parser2 = require_Parser();
     var _utils = require_utils();
     var _index = _interopRequireDefault(require_startOfUTCISOWeek());
-    var ISOWeekYearParser = /* @__PURE__ */ function(_Parser) {
+    var ISOWeekYearParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(ISOWeekYearParser2, _Parser);
       var _super = (0, _createSuper2.default)(ISOWeekYearParser2);
       function ISOWeekYearParser2() {
@@ -6815,7 +6815,7 @@ var require_ISOWeekYearParser = __commonJS({
         }
       }]);
       return ISOWeekYearParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.ISOWeekYearParser = ISOWeekYearParser;
   }
 });
@@ -6837,7 +6837,7 @@ var require_ExtendedYearParser = __commonJS({
     var _defineProperty2 = _interopRequireDefault(require_defineProperty());
     var _Parser2 = require_Parser();
     var _utils = require_utils();
-    var ExtendedYearParser = /* @__PURE__ */ function(_Parser) {
+    var ExtendedYearParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(ExtendedYearParser2, _Parser);
       var _super = (0, _createSuper2.default)(ExtendedYearParser2);
       function ExtendedYearParser2() {
@@ -6868,7 +6868,7 @@ var require_ExtendedYearParser = __commonJS({
         }
       }]);
       return ExtendedYearParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.ExtendedYearParser = ExtendedYearParser;
   }
 });
@@ -6890,7 +6890,7 @@ var require_QuarterParser = __commonJS({
     var _defineProperty2 = _interopRequireDefault(require_defineProperty());
     var _Parser2 = require_Parser();
     var _utils = require_utils();
-    var QuarterParser = /* @__PURE__ */ function(_Parser) {
+    var QuarterParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(QuarterParser2, _Parser);
       var _super = (0, _createSuper2.default)(QuarterParser2);
       function QuarterParser2() {
@@ -6961,7 +6961,7 @@ var require_QuarterParser = __commonJS({
         }
       }]);
       return QuarterParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.QuarterParser = QuarterParser;
   }
 });
@@ -6983,7 +6983,7 @@ var require_StandAloneQuarterParser = __commonJS({
     var _defineProperty2 = _interopRequireDefault(require_defineProperty());
     var _Parser2 = require_Parser();
     var _utils = require_utils();
-    var StandAloneQuarterParser = /* @__PURE__ */ function(_Parser) {
+    var StandAloneQuarterParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(StandAloneQuarterParser2, _Parser);
       var _super = (0, _createSuper2.default)(StandAloneQuarterParser2);
       function StandAloneQuarterParser2() {
@@ -7054,7 +7054,7 @@ var require_StandAloneQuarterParser = __commonJS({
         }
       }]);
       return StandAloneQuarterParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.StandAloneQuarterParser = StandAloneQuarterParser;
   }
 });
@@ -7077,7 +7077,7 @@ var require_MonthParser = __commonJS({
     var _utils = require_utils();
     var _Parser2 = require_Parser();
     var _constants = require_constants2();
-    var MonthParser = /* @__PURE__ */ function(_Parser) {
+    var MonthParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(MonthParser2, _Parser);
       var _super = (0, _createSuper2.default)(MonthParser2);
       function MonthParser2() {
@@ -7153,7 +7153,7 @@ var require_MonthParser = __commonJS({
         }
       }]);
       return MonthParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.MonthParser = MonthParser;
   }
 });
@@ -7176,7 +7176,7 @@ var require_StandAloneMonthParser = __commonJS({
     var _Parser2 = require_Parser();
     var _constants = require_constants2();
     var _utils = require_utils();
-    var StandAloneMonthParser = /* @__PURE__ */ function(_Parser) {
+    var StandAloneMonthParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(StandAloneMonthParser2, _Parser);
       var _super = (0, _createSuper2.default)(StandAloneMonthParser2);
       function StandAloneMonthParser2() {
@@ -7252,7 +7252,7 @@ var require_StandAloneMonthParser = __commonJS({
         }
       }]);
       return StandAloneMonthParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.StandAloneMonthParser = StandAloneMonthParser;
   }
 });
@@ -7302,7 +7302,7 @@ var require_LocalWeekParser = __commonJS({
     var _utils = require_utils();
     var _index = _interopRequireDefault(require_setUTCWeek());
     var _index2 = _interopRequireDefault(require_startOfUTCWeek());
-    var LocalWeekParser = /* @__PURE__ */ function(_Parser) {
+    var LocalWeekParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(LocalWeekParser2, _Parser);
       var _super = (0, _createSuper2.default)(LocalWeekParser2);
       function LocalWeekParser2() {
@@ -7342,7 +7342,7 @@ var require_LocalWeekParser = __commonJS({
         }
       }]);
       return LocalWeekParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.LocalWeekParser = LocalWeekParser;
   }
 });
@@ -7392,7 +7392,7 @@ var require_ISOWeekParser = __commonJS({
     var _utils = require_utils();
     var _index = _interopRequireDefault(require_setUTCISOWeek());
     var _index2 = _interopRequireDefault(require_startOfUTCISOWeek());
-    var ISOWeekParser = /* @__PURE__ */ function(_Parser) {
+    var ISOWeekParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(ISOWeekParser2, _Parser);
       var _super = (0, _createSuper2.default)(ISOWeekParser2);
       function ISOWeekParser2() {
@@ -7432,7 +7432,7 @@ var require_ISOWeekParser = __commonJS({
         }
       }]);
       return ISOWeekParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.ISOWeekParser = ISOWeekParser;
   }
 });
@@ -7457,7 +7457,7 @@ var require_DateParser = __commonJS({
     var _constants = require_constants2();
     var DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var DAYS_IN_MONTH_LEAP_YEAR = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    var DateParser = /* @__PURE__ */ function(_Parser) {
+    var DateParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(DateParser2, _Parser);
       var _super = (0, _createSuper2.default)(DateParser2);
       function DateParser2() {
@@ -7507,7 +7507,7 @@ var require_DateParser = __commonJS({
         }
       }]);
       return DateParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.DateParser = DateParser;
   }
 });
@@ -7530,7 +7530,7 @@ var require_DayOfYearParser = __commonJS({
     var _Parser2 = require_Parser();
     var _constants = require_constants2();
     var _utils = require_utils();
-    var DayOfYearParser = /* @__PURE__ */ function(_Parser) {
+    var DayOfYearParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(DayOfYearParser2, _Parser);
       var _super = (0, _createSuper2.default)(DayOfYearParser2);
       function DayOfYearParser2() {
@@ -7580,7 +7580,7 @@ var require_DayOfYearParser = __commonJS({
         }
       }]);
       return DayOfYearParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.DayOfYearParser = DayOfYearParser;
   }
 });
@@ -7636,7 +7636,7 @@ var require_DayParser = __commonJS({
     var _defineProperty2 = _interopRequireDefault(require_defineProperty());
     var _Parser2 = require_Parser();
     var _index = _interopRequireDefault(require_setUTCDay());
-    var DayParser = /* @__PURE__ */ function(_Parser) {
+    var DayParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(DayParser2, _Parser);
       var _super = (0, _createSuper2.default)(DayParser2);
       function DayParser2() {
@@ -7715,7 +7715,7 @@ var require_DayParser = __commonJS({
         }
       }]);
       return DayParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.DayParser = DayParser;
   }
 });
@@ -7738,7 +7738,7 @@ var require_LocalDayParser = __commonJS({
     var _Parser2 = require_Parser();
     var _utils = require_utils();
     var _index = _interopRequireDefault(require_setUTCDay());
-    var LocalDayParser = /* @__PURE__ */ function(_Parser) {
+    var LocalDayParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(LocalDayParser2, _Parser);
       var _super = (0, _createSuper2.default)(LocalDayParser2);
       function LocalDayParser2() {
@@ -7828,7 +7828,7 @@ var require_LocalDayParser = __commonJS({
         }
       }]);
       return LocalDayParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.LocalDayParser = LocalDayParser;
   }
 });
@@ -7851,7 +7851,7 @@ var require_StandAloneLocalDayParser = __commonJS({
     var _Parser2 = require_Parser();
     var _utils = require_utils();
     var _index = _interopRequireDefault(require_setUTCDay());
-    var StandAloneLocalDayParser = /* @__PURE__ */ function(_Parser) {
+    var StandAloneLocalDayParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(StandAloneLocalDayParser2, _Parser);
       var _super = (0, _createSuper2.default)(StandAloneLocalDayParser2);
       function StandAloneLocalDayParser2() {
@@ -7941,7 +7941,7 @@ var require_StandAloneLocalDayParser = __commonJS({
         }
       }]);
       return StandAloneLocalDayParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.StandAloneLocalDayParser = StandAloneLocalDayParser;
   }
 });
@@ -7995,7 +7995,7 @@ var require_ISODayParser = __commonJS({
     var _Parser2 = require_Parser();
     var _utils = require_utils();
     var _index = _interopRequireDefault(require_setUTCISODay());
-    var ISODayParser = /* @__PURE__ */ function(_Parser) {
+    var ISODayParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(ISODayParser2, _Parser);
       var _super = (0, _createSuper2.default)(ISODayParser2);
       function ISODayParser2() {
@@ -8087,7 +8087,7 @@ var require_ISODayParser = __commonJS({
         }
       }]);
       return ISODayParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.ISODayParser = ISODayParser;
   }
 });
@@ -8109,7 +8109,7 @@ var require_AMPMParser = __commonJS({
     var _defineProperty2 = _interopRequireDefault(require_defineProperty());
     var _Parser2 = require_Parser();
     var _utils = require_utils();
-    var AMPMParser = /* @__PURE__ */ function(_Parser) {
+    var AMPMParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(AMPMParser2, _Parser);
       var _super = (0, _createSuper2.default)(AMPMParser2);
       function AMPMParser2() {
@@ -8164,7 +8164,7 @@ var require_AMPMParser = __commonJS({
         }
       }]);
       return AMPMParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.AMPMParser = AMPMParser;
   }
 });
@@ -8186,7 +8186,7 @@ var require_AMPMMidnightParser = __commonJS({
     var _defineProperty2 = _interopRequireDefault(require_defineProperty());
     var _Parser2 = require_Parser();
     var _utils = require_utils();
-    var AMPMMidnightParser = /* @__PURE__ */ function(_Parser) {
+    var AMPMMidnightParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(AMPMMidnightParser2, _Parser);
       var _super = (0, _createSuper2.default)(AMPMMidnightParser2);
       function AMPMMidnightParser2() {
@@ -8241,7 +8241,7 @@ var require_AMPMMidnightParser = __commonJS({
         }
       }]);
       return AMPMMidnightParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.AMPMMidnightParser = AMPMMidnightParser;
   }
 });
@@ -8263,7 +8263,7 @@ var require_DayPeriodParser = __commonJS({
     var _defineProperty2 = _interopRequireDefault(require_defineProperty());
     var _Parser2 = require_Parser();
     var _utils = require_utils();
-    var DayPeriodParser = /* @__PURE__ */ function(_Parser) {
+    var DayPeriodParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(DayPeriodParser2, _Parser);
       var _super = (0, _createSuper2.default)(DayPeriodParser2);
       function DayPeriodParser2() {
@@ -8318,7 +8318,7 @@ var require_DayPeriodParser = __commonJS({
         }
       }]);
       return DayPeriodParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.DayPeriodParser = DayPeriodParser;
   }
 });
@@ -8341,7 +8341,7 @@ var require_Hour1to12Parser = __commonJS({
     var _Parser2 = require_Parser();
     var _constants = require_constants2();
     var _utils = require_utils();
-    var Hour1to12Parser = /* @__PURE__ */ function(_Parser) {
+    var Hour1to12Parser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(Hour1to12Parser2, _Parser);
       var _super = (0, _createSuper2.default)(Hour1to12Parser2);
       function Hour1to12Parser2() {
@@ -8389,7 +8389,7 @@ var require_Hour1to12Parser = __commonJS({
         }
       }]);
       return Hour1to12Parser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.Hour1to12Parser = Hour1to12Parser;
   }
 });
@@ -8412,7 +8412,7 @@ var require_Hour0to23Parser = __commonJS({
     var _Parser2 = require_Parser();
     var _constants = require_constants2();
     var _utils = require_utils();
-    var Hour0to23Parser = /* @__PURE__ */ function(_Parser) {
+    var Hour0to23Parser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(Hour0to23Parser2, _Parser);
       var _super = (0, _createSuper2.default)(Hour0to23Parser2);
       function Hour0to23Parser2() {
@@ -8453,7 +8453,7 @@ var require_Hour0to23Parser = __commonJS({
         }
       }]);
       return Hour0to23Parser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.Hour0to23Parser = Hour0to23Parser;
   }
 });
@@ -8476,7 +8476,7 @@ var require_Hour0To11Parser = __commonJS({
     var _Parser2 = require_Parser();
     var _constants = require_constants2();
     var _utils = require_utils();
-    var Hour0To11Parser = /* @__PURE__ */ function(_Parser) {
+    var Hour0To11Parser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(Hour0To11Parser2, _Parser);
       var _super = (0, _createSuper2.default)(Hour0To11Parser2);
       function Hour0To11Parser2() {
@@ -8522,7 +8522,7 @@ var require_Hour0To11Parser = __commonJS({
         }
       }]);
       return Hour0To11Parser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.Hour0To11Parser = Hour0To11Parser;
   }
 });
@@ -8545,7 +8545,7 @@ var require_Hour1To24Parser = __commonJS({
     var _Parser2 = require_Parser();
     var _constants = require_constants2();
     var _utils = require_utils();
-    var Hour1To24Parser = /* @__PURE__ */ function(_Parser) {
+    var Hour1To24Parser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(Hour1To24Parser2, _Parser);
       var _super = (0, _createSuper2.default)(Hour1To24Parser2);
       function Hour1To24Parser2() {
@@ -8587,7 +8587,7 @@ var require_Hour1To24Parser = __commonJS({
         }
       }]);
       return Hour1To24Parser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.Hour1To24Parser = Hour1To24Parser;
   }
 });
@@ -8610,7 +8610,7 @@ var require_MinuteParser = __commonJS({
     var _Parser2 = require_Parser();
     var _constants = require_constants2();
     var _utils = require_utils();
-    var MinuteParser = /* @__PURE__ */ function(_Parser) {
+    var MinuteParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(MinuteParser2, _Parser);
       var _super = (0, _createSuper2.default)(MinuteParser2);
       function MinuteParser2() {
@@ -8651,7 +8651,7 @@ var require_MinuteParser = __commonJS({
         }
       }]);
       return MinuteParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.MinuteParser = MinuteParser;
   }
 });
@@ -8674,7 +8674,7 @@ var require_SecondParser = __commonJS({
     var _Parser2 = require_Parser();
     var _constants = require_constants2();
     var _utils = require_utils();
-    var SecondParser = /* @__PURE__ */ function(_Parser) {
+    var SecondParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(SecondParser2, _Parser);
       var _super = (0, _createSuper2.default)(SecondParser2);
       function SecondParser2() {
@@ -8715,7 +8715,7 @@ var require_SecondParser = __commonJS({
         }
       }]);
       return SecondParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.SecondParser = SecondParser;
   }
 });
@@ -8737,7 +8737,7 @@ var require_FractionOfSecondParser = __commonJS({
     var _defineProperty2 = _interopRequireDefault(require_defineProperty());
     var _Parser2 = require_Parser();
     var _utils = require_utils();
-    var FractionOfSecondParser = /* @__PURE__ */ function(_Parser) {
+    var FractionOfSecondParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(FractionOfSecondParser2, _Parser);
       var _super = (0, _createSuper2.default)(FractionOfSecondParser2);
       function FractionOfSecondParser2() {
@@ -8767,7 +8767,7 @@ var require_FractionOfSecondParser = __commonJS({
         }
       }]);
       return FractionOfSecondParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.FractionOfSecondParser = FractionOfSecondParser;
   }
 });
@@ -8790,7 +8790,7 @@ var require_ISOTimezoneWithZParser = __commonJS({
     var _Parser2 = require_Parser();
     var _constants = require_constants2();
     var _utils = require_utils();
-    var ISOTimezoneWithZParser = /* @__PURE__ */ function(_Parser) {
+    var ISOTimezoneWithZParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(ISOTimezoneWithZParser2, _Parser);
       var _super = (0, _createSuper2.default)(ISOTimezoneWithZParser2);
       function ISOTimezoneWithZParser2() {
@@ -8831,7 +8831,7 @@ var require_ISOTimezoneWithZParser = __commonJS({
         }
       }]);
       return ISOTimezoneWithZParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.ISOTimezoneWithZParser = ISOTimezoneWithZParser;
   }
 });
@@ -8854,7 +8854,7 @@ var require_ISOTimezoneParser = __commonJS({
     var _Parser2 = require_Parser();
     var _constants = require_constants2();
     var _utils = require_utils();
-    var ISOTimezoneParser = /* @__PURE__ */ function(_Parser) {
+    var ISOTimezoneParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(ISOTimezoneParser2, _Parser);
       var _super = (0, _createSuper2.default)(ISOTimezoneParser2);
       function ISOTimezoneParser2() {
@@ -8895,7 +8895,7 @@ var require_ISOTimezoneParser = __commonJS({
         }
       }]);
       return ISOTimezoneParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.ISOTimezoneParser = ISOTimezoneParser;
   }
 });
@@ -8917,7 +8917,7 @@ var require_TimestampSecondsParser = __commonJS({
     var _defineProperty2 = _interopRequireDefault(require_defineProperty());
     var _Parser2 = require_Parser();
     var _utils = require_utils();
-    var TimestampSecondsParser = /* @__PURE__ */ function(_Parser) {
+    var TimestampSecondsParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(TimestampSecondsParser2, _Parser);
       var _super = (0, _createSuper2.default)(TimestampSecondsParser2);
       function TimestampSecondsParser2() {
@@ -8945,7 +8945,7 @@ var require_TimestampSecondsParser = __commonJS({
         }
       }]);
       return TimestampSecondsParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.TimestampSecondsParser = TimestampSecondsParser;
   }
 });
@@ -8967,7 +8967,7 @@ var require_TimestampMillisecondsParser = __commonJS({
     var _defineProperty2 = _interopRequireDefault(require_defineProperty());
     var _Parser2 = require_Parser();
     var _utils = require_utils();
-    var TimestampMillisecondsParser = /* @__PURE__ */ function(_Parser) {
+    var TimestampMillisecondsParser = /* @__PURE__ */ (function(_Parser) {
       (0, _inherits2.default)(TimestampMillisecondsParser2, _Parser);
       var _super = (0, _createSuper2.default)(TimestampMillisecondsParser2);
       function TimestampMillisecondsParser2() {
@@ -8995,7 +8995,7 @@ var require_TimestampMillisecondsParser = __commonJS({
         }
       }]);
       return TimestampMillisecondsParser2;
-    }(_Parser2.Parser);
+    })(_Parser2.Parser);
     exports.TimestampMillisecondsParser = TimestampMillisecondsParser;
   }
 });
