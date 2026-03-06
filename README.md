@@ -3,7 +3,7 @@ This Thunderbird plugin enables easy creation of a calendar event based on an em
 
 This plugin was inspired by how smartphones enable easy event creation of their email client.
 
-## Create addon zip
+## Create addon zip XPI file
 ```bash
 npm install
 npm run bundle-plugin
