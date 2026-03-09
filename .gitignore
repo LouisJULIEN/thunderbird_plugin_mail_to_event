@@ -1,6 +1,6 @@
 .idea
 node_modules
 zip/
-dependencies/node_modules
+dependencies
 bundle_dependencies
 .claude/settings.local.json
