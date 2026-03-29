@@ -22,6 +22,9 @@ const resetAriaSelected = () => {
     })
 }
 
+let selectedOriginalStart = null
+let selectedOriginalEnd = null
+
 document.getElementById("dates-selector").addEventListener('click',
     (clickedElement) => {
         if (clickedElement.target.className === "submit-start-date") {
@@ -30,10 +33,38 @@ document.getElementById("dates-selector").addEventListener('click',
             const startDatePicker = clickedElement.target.parentElement.getElementsByClassName('start-date-input')?.[0];
             startDatePicker.ariaSelected = "true"
 
-            document.getElementById('end-date-input').value = startDatePicker.endDate
+            selectedOriginalStart = startDatePicker.value
+            selectedOriginalEnd = startDatePicker.endDate
+
+            document.getElementById('end-date-input').value = selectedOriginalEnd
             document.getElementById('create-calendar-event').disabled = false
         }
     })
+
+const toLocalDateTimeString = (date) => {
+    const offset = date.getTimezoneOffset() * 60000
+    return new Date(date.getTime() - offset).toISOString().slice(0, 16)
+}
+
+document.getElementById("dates-selector").addEventListener('input',
+    (event) => {
+        if (event.target.className === "start-date-input" && event.target.ariaSelected === "true") {
+            const deltaMs = new Date(event.target.value) - new Date(selectedOriginalStart)
+            const newEnd = new Date(new Date(selectedOriginalEnd).getTime() + deltaMs)
+            const endInput = document.getElementById('end-date-input')
+            endInput.value = toLocalDateTimeString(newEnd)
+            selectedOriginalStart = event.target.value
+            selectedOriginalEnd = endInput.value
+        }
+    })
+
+document.getElementById('end-date-input').addEventListener('input', () => {
+    const selectedStart = document.querySelector(".start-date-input[aria-selected='true']")
+    if (selectedStart) {
+        selectedOriginalStart = selectedStart.value
+        selectedOriginalEnd = document.getElementById('end-date-input').value
+    }
+})
 
 
 document.getElementById("create-calendar-event").addEventListener('click',
