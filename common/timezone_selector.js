@@ -5,7 +5,7 @@
  */
 export async function populateTimezoneSelector(selectEl, defaultCheckboxEl) {
     const timezoneIds = Intl.supportedValuesOf('timeZone')
-    const currentZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    const currentZone = messenger.calendar.timezones.currentZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone
 
     timezoneIds.forEach((tzId) => {
         const option = document.createElement('option')

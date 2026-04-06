@@ -4,7 +4,7 @@ import {findDates} from "../common/find_dates.js";
 browser.runtime.onMessage.addListener(async (message) => {
     const action = message?.action
     if (action === 'findDates') {
-        return findDates(message.mailSubject, message.mailContentPlainText, message.removeDuplicatesDates).dates
+        return findDates(message.mailSubject, message.mailContentPlainText, message.removeDuplicatesDates, messenger.calendar.timezones.currentZone).dates
     }
     else if (action === 'getCalendars') {
         return messenger.calendar.calendars.query({visible: true, readOnly: false, enabled: true})

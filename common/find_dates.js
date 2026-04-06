@@ -54,11 +54,11 @@ const detectLang = (text) => {
     return franc(text, {only: Object.keys(francLocaleToDateFnsLocale)})
 }
 
-export function findDates(mailSubject, mailContent, removeDuplicatesDates = true) {
+export function findDates(mailSubject, mailContent, removeDuplicatesDates = true, thunderbirdTimezone = null) {
     const langFranc = detectLang(mailSubject + '.\n' + mailContent)
 
     const locale = francLocaleToDateFnsLocale[langFranc] || 'en';
-    const timezone = francLocaleToTimezone[langFranc];
+    const timezone = thunderbirdTimezone ?? francLocaleToTimezone[langFranc];
 
     const options = {
         minimumAge: 12,
