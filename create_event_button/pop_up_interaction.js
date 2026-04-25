@@ -98,7 +98,10 @@ document.getElementById("create-calendar-event").addEventListener('click',
             } else {
                 btn.textContent = "✓ Event created"
                 btn.classList.add("success")
-                await browser.storage.local.remove('savedPopupValues')
+                const messageId = document.querySelector('.pluginMailToEvent-event-creator')?.dataset.messageId
+                if (messageId) {
+                    await browser.storage.session.remove(`emailFormData_${messageId}`)
+                }
             }
         }
     })

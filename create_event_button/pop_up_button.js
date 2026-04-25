@@ -40,27 +40,75 @@ const showFoundDates = (dates) => {
     })
 }
 
-const {dates, subject, detectedLanguage} = await getCurrentMailDates()
+const {dates, subject, messageId, detectedLanguage} = await getCurrentMailDates()
 document.getElementById("event-title").value = subject
 if (detectedLanguage) {
     document.getElementById("detected-language").textContent = detectedLanguage
 }
 if (dates) {
     showFoundDates(dates)
+    if (dates.length === 1) {
+        document.querySelector('.submit-start-date').click()
+    }
 }
 
-// Restore saved values (overrides auto-detected subject if user had previously typed something)
-const {savedPopupValues} = await browser.storage.local.get('savedPopupValues')
-if (savedPopupValues) {
-    if (savedPopupValues.title) document.getElementById('event-title').value = savedPopupValues.title
-    if (savedPopupValues.location) document.getElementById('event-location').value = savedPopupValues.location
-    if (savedPopupValues.comment) document.getElementById('event-comment').value = savedPopupValues.comment
+const formContainer = document.querySelector('.pluginMailToEvent-event-creator')
+if (messageId) {
+    formContainer.dataset.messageId = messageId
 }
 
-document.querySelector('.pluginMailToEvent-event-creator').addEventListener('input', async () => {
-    await browser.storage.local.set({savedPopupValues: {
-        title: document.getElementById('event-title')?.value,
-        location: document.getElementById('event-location')?.value,
-        comment: document.getElementById('event-comment')?.value,
-    }})
+const storageKey = messageId ? `emailFormData_${messageId}` : null
+
+const saveFormData = async () => {
+    if (!storageKey) return
+    const startDateInputs = Array.from(document.getElementsByClassName('start-date-input'))
+    const selectedInput = document.querySelector(".start-date-input[aria-selected='true']")
+    await browser.storage.session.set({
+        [storageKey]: {
+            title: document.getElementById('event-title')?.value,
+            location: document.getElementById('event-location')?.value,
+            comment: document.getElementById('event-comment')?.value,
+            startDates: startDateInputs.map(input => input.value),
+            selectedDateIndex: selectedInput ? startDateInputs.indexOf(selectedInput) : -1,
+            selectedEndDate: document.getElementById('end-date-input')?.value,
+        }
+    })
+}
+
+// Restore saved values per email (session storage — lost when Thunderbird closes)
+if (storageKey) {
+    const saved = await browser.storage.session.get(storageKey)
+    const savedFormData = saved[storageKey]
+    if (savedFormData) {
+        if (savedFormData.title) document.getElementById('event-title').value = savedFormData.title
+        if (savedFormData.location) document.getElementById('event-location').value = savedFormData.location
+        if (savedFormData.comment) document.getElementById('event-comment').value = savedFormData.comment
+
+        const startDateInputs = Array.from(document.getElementsByClassName('start-date-input'))
+
+        if (savedFormData.startDates) {
+            savedFormData.startDates.forEach((date, i) => {
+                if (startDateInputs[i]) startDateInputs[i].value = date
+            })
+        }
+
+        if (savedFormData.selectedDateIndex >= 0) {
+            const selectedInput = startDateInputs[savedFormData.selectedDateIndex]
+            if (selectedInput) {
+                selectedInput.endDate = savedFormData.selectedEndDate
+                selectedInput.parentElement.querySelector('.submit-start-date').click()
+            }
+        }
+
+        if (savedFormData.selectedEndDate) {
+            document.getElementById('end-date-input').value = savedFormData.selectedEndDate
+        }
+    }
+}
+
+formContainer.addEventListener('input', saveFormData)
+
+// Save when a date row is selected — fires after pop_up_interaction.js's listener updates ariaSelected
+document.getElementById('dates-selector').addEventListener('click', (e) => {
+    if (e.target.className === 'submit-start-date') saveFormData()
 })
