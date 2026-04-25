@@ -16,7 +16,6 @@ await import("./pop_up_interaction.js")
 
 const showFoundDates = (dates) => {
     const datesContainer = document.getElementById('dates-selector');
-    console.log(JSON.stringify(dates))
     dates.map((oneFoundDate) => {
         let container = document.createElement("div",)
         container.className = "one-date-selector"

@@ -54,7 +54,7 @@ export async function tagMailContentDates(document) {
                 const startTimeIndex = originalText.toLowerCase().indexOf(originalStartTimeText)
                 const endTimeIndex = originalText.toLowerCase().indexOf(originalEndTimeText)
 
-                const startIndex = Math.max(textIndex, startTimeIndex, endTimeIndex)
+                const startIndex = Math.min(...[textIndex, startTimeIndex, endTimeIndex].filter(i => i >= 0))
                 let endIndex = textIndex + +originalDateText.length;
                 if (startTimeIndex > -1) {
                     endIndex = Math.max(endIndex, startTimeIndex + originalStartTimeText.length)
