@@ -16,7 +16,7 @@ await import("./pop_up_interaction.js")
 
 const showFoundDates = (dates) => {
     const datesContainer = document.getElementById('dates-selector');
-
+    console.log(JSON.stringify(dates))
     dates.map((oneFoundDate) => {
         let container = document.createElement("div",)
         container.className = "one-date-selector"
@@ -45,11 +45,21 @@ document.getElementById("event-title").value = subject
 if (detectedLanguage) {
     document.getElementById("detected-language").textContent = detectedLanguage
 }
-if (dates) {
+if (dates.length >0) {
     showFoundDates(dates)
     if (dates.length === 1) {
         document.querySelector('.submit-start-date').click()
     }
+}
+else {
+    const now = new Date()
+    const offset = now.getTimezoneOffset() * 60000
+    const startDate = new Date(now - offset)
+    const endDate = new Date(now - offset + 30 * 60000)
+    showFoundDates([{
+        startDateTime: { dateISO: startDate.toISOString(), dateJS: startDate},
+        endDateTime: { dateISO: endDate.toISOString(), dateJS: endDate},
+    }])
 }
 
 const formContainer = document.querySelector('.pluginMailToEvent-event-creator')
