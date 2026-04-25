@@ -45,20 +45,19 @@ document.getElementById("event-title").value = subject
 if (detectedLanguage) {
     document.getElementById("detected-language").textContent = detectedLanguage
 }
-if (dates.length >0) {
+if (dates.length > 0) {
     showFoundDates(dates)
     if (dates.length === 1) {
         document.querySelector('.submit-start-date').click()
     }
-}
-else {
+} else {
     const now = new Date()
     const offset = now.getTimezoneOffset() * 60000
     const startDate = new Date(now - offset)
     const endDate = new Date(now - offset + 30 * 60000)
     showFoundDates([{
-        startDateTime: { dateISO: startDate.toISOString(), dateJS: startDate},
-        endDateTime: { dateISO: endDate.toISOString(), dateJS: endDate},
+        startDateTime: {dateISO: startDate.toISOString(), dateJS: startDate},
+        endDateTime: {dateISO: endDate.toISOString(), dateJS: endDate},
     }])
 }
 
