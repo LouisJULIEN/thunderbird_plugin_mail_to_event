@@ -1,6 +1,6 @@
 function getElementByText(parentElement, text) {
     function searchText(element) {
-        if (element.nodeType === Node.ELEMENT_NODE) {
+        if (element.nodeType === 1 /* ELEMENT_NODE */) {
             let currentResults = []
 
             for (let child of element.childNodes) {
@@ -12,7 +12,7 @@ function getElementByText(parentElement, text) {
             return currentResults
         }
 
-        if (element.nodeType === Node.TEXT_NODE || element.nodeType === Node.ELEMENT_NODE) {
+        if (element.nodeType === 3 /* TEXT_NODE */ || element.nodeType === 1 /* ELEMENT_NODE */) {
             const textIndex = element.textContent.toLowerCase().indexOf(text)
 
             if (textIndex !== -1) {
@@ -25,15 +25,7 @@ function getElementByText(parentElement, text) {
     return searchText(parentElement);
 }
 
-export async function tagMailContentDates(document) {
-    const mailContentPlainText = document.body.textContent;
-
-    const foundDates = await browser.runtime.sendMessage({
-        action: 'findDates',
-        mailSubject: '',
-        mailContentPlainText,
-        removeDuplicatesDates: false,
-    })
+export function tagDatesInDocument(document, foundDates) {
     let HTMLIndex = 0
     let foundHtmlElements = []
 
@@ -44,7 +36,7 @@ export async function tagMailContentDates(document) {
         allDateTextElements.map(dateTextElement => {
             const containerIdValue = `plugin-date-index-${HTMLIndex}`
 
-            if (dateTextElement?.nodeType === Node.TEXT_NODE) {
+            if (dateTextElement?.nodeType === 3 /* TEXT_NODE */) {
                 const originalText = dateTextElement.textContent
 
                 const textIndex = originalText.toLowerCase().indexOf(originalDateText.toLowerCase())
@@ -90,3 +82,13 @@ export async function tagMailContentDates(document) {
     }
 }
 
+export async function tagMailContentDates(document) {
+    const mailContentPlainText = document.body.textContent;
+    const foundDates = await browser.runtime.sendMessage({
+        action: 'findDates',
+        mailSubject: '',
+        mailContentPlainText,
+        removeDuplicatesDates: false,
+    })
+    return tagDatesInDocument(document, foundDates)
+}
