@@ -1,5 +1,6 @@
 import {createEventFormTop, createEventFormBottom} from "../common/event_form.js";
 import {getCurrentMailDates} from "./current_mail_to_date.js";
+import {setupDateRangeSync} from "../common/date_range_sync.js";
 
 // Insert top fields (title, calendar, timezone) before the dates selector
 const {fragment: topFragment} = createEventFormTop()
@@ -16,6 +17,7 @@ await import("./pop_up_interaction.js")
 
 const showFoundDates = (dates) => {
     const datesContainer = document.getElementById('dates-selector');
+    const endDateEl = document.getElementById('end-date-input')
     dates.map((oneFoundDate) => {
         let container = document.createElement("div",)
         container.className = "one-date-selector"
@@ -26,6 +28,7 @@ const showFoundDates = (dates) => {
         dateInput.type = 'datetime-local';
         dateInput.value = oneFoundDate.startDateTime.dateISO.slice(0, 16)
         dateInput.endDate = oneFoundDate.endDateTime.dateISO.slice(0, 16)
+        dateInput._syncer = setupDateRangeSync(dateInput, endDateEl, dateInput.endDate)
 
         let selectOneDateInput = document.createElement('input');
         selectOneDateInput.type = "submit"

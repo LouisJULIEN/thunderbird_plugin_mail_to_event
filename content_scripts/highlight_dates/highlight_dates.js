@@ -3,6 +3,7 @@ import cssText from "../../create_event_button/pop_up_button.css";
 import {createEventFormTop, createEventFormBottom} from "../../common/event_form.js";
 import {populateCalendarSelector} from "../../common/calendar_selector.js";
 import {populateTimezoneSelector} from "../../common/timezone_selector.js";
+import {setupDateRangeSync} from "../../common/date_range_sync.js";
 
 const style = document.createElement('style')
 style.textContent = cssText
@@ -98,13 +99,7 @@ async function eventCreatorPopup(oneFoundElement) {
         document.body.appendChild(eventCreator)
         activePopups.set(htmlContainerIdValue, eventCreator)
 
-        const toLocalDateTimeString = (date) => {
-            const offset = date.getTimezoneOffset() * 60000
-            return new Date(date.getTime() - offset).toISOString().slice(0, 16)
-        }
-
-        let trackedStart = startDateInput.value
-        let trackedEnd = endDateInput.value
+        const syncer = setupDateRangeSync(startDateInput, endDateInput)
 
         // Restore saved values or set defaults
         const saved = savedValues.get(htmlContainerIdValue)
@@ -114,28 +109,10 @@ async function eventCreatorPopup(oneFoundElement) {
             document.getElementById(`${uid}-end-date`).value = saved.endDate ?? endDateInput.value
             if (saved.location) document.getElementById(bottomIds.eventLocation).value = saved.location
             if (saved.comment) document.getElementById(bottomIds.eventComment).value = saved.comment
-            trackedStart = document.getElementById(`${uid}-start-date`).value
-            trackedEnd = document.getElementById(`${uid}-end-date`).value
+            syncer.reset(document.getElementById(`${uid}-start-date`).value, document.getElementById(`${uid}-end-date`).value)
         } else {
             document.getElementById(topIds.eventTitle).value = document.title
         }
-
-        startDateInput.addEventListener('focus', () => {
-            trackedStart = startDateInput.value
-        })
-
-        startDateInput.addEventListener('input', () => {
-            const deltaMs = new Date(startDateInput.value) - new Date(trackedStart)
-            const newEnd = new Date(new Date(trackedEnd).getTime() + deltaMs)
-            endDateInput.value = toLocalDateTimeString(newEnd)
-            trackedStart = startDateInput.value
-            trackedEnd = endDateInput.value
-        })
-
-        endDateInput.addEventListener('input', () => {
-            trackedStart = startDateInput.value
-            trackedEnd = endDateInput.value
-        })
 
         eventCreator.addEventListener('input', () => {
             savedValues.set(htmlContainerIdValue, {
