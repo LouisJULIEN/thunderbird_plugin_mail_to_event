@@ -4,6 +4,7 @@ import {createEventFormTop, createEventFormBottom} from "../../common/event_form
 import {populateCalendarSelector} from "../../common/calendar_selector.js";
 import {populateTimezoneSelector} from "../../common/timezone_selector.js";
 import {setupDateRangeSync} from "../../common/date_range_sync.js";
+import {handleCreateResult, setCreating} from "../../common/create_event_result.js";
 
 const style = document.createElement('style')
 style.textContent = cssText
@@ -148,24 +149,16 @@ async function eventCreatorPopup(oneFoundElement) {
             const timezone = document.getElementById(topIds.timezoneSelector)?.value
 
             if (selectedStartDate && selectedEndDate && title) {
-                submitButton.disabled = true
-                submitButton.value = 'Creating…'
+                setCreating(submitButton)
                 const result = await browser.runtime.sendMessage({
                     action: 'createCalendarEvent',
                     calendarId: calendarId,
                     args: [selectedStartDate + ':00', selectedEndDate + ':00', title, comment, timezone, location]
                 })
 
-                if (result.error) {
-                    console.error(result)
-                    submitButton.disabled = false
-                    submitButton.value = "✗ " + (result.error?.message || "Error")
-                    submitButton.classList.add("error")
-                } else {
-                    submitButton.value = "✓ Event created"
-                    submitButton.classList.add("success")
+                handleCreateResult(submitButton, result, () => {
                     savedValues.delete(htmlContainerIdValue)
-                }
+                })
             }
         })
 

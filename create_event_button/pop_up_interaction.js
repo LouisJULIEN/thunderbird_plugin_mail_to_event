@@ -1,6 +1,7 @@
 import {createEvent} from "./create_calendar_event.js";
 import {populateCalendarSelector} from "../common/calendar_selector.js";
 import {populateTimezoneSelector} from "../common/timezone_selector.js";
+import {handleCreateResult, setCreating} from "../common/create_event_result.js";
 
 const calendarSelector = document.getElementById("calendar-selector")
 const setDefaultCheckbox = document.getElementById("set-default-calendar")
@@ -57,8 +58,7 @@ document.getElementById("create-calendar-event").addEventListener('click',
         const btn = document.getElementById("create-calendar-event")
 
         if (selectedStartDate && selectedEndDate && title) {
-            btn.disabled = true
-            btn.textContent = 'Creating…'
+            setCreating(btn)
 
             const result = await createEvent(
                 calendarSelector.value,
@@ -70,18 +70,11 @@ document.getElementById("create-calendar-event").addEventListener('click',
                 location
             )
 
-            if (result.error) {
-                console.error(result)
-                btn.textContent = "✗ " + (result.error?.message || "Error")
-                btn.classList.add("error")
-                btn.disabled = false
-            } else {
-                btn.textContent = "✓ Event created"
-                btn.classList.add("success")
+            handleCreateResult(btn, result, async () => {
                 const messageId = document.querySelector('.pluginMailToEvent-event-creator')?.dataset.messageId
                 if (messageId) {
                     await browser.storage.session.remove(`emailFormData_${messageId}`)
                 }
-            }
+            })
         }
     })
