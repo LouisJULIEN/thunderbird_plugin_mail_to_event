@@ -24,6 +24,14 @@ const resetAriaSelected = () => {
 
 let selectedOriginalStart = null
 let selectedOriginalEnd = null
+let pendingOriginalStart = null
+
+document.getElementById("dates-selector").addEventListener('focus',
+    (event) => {
+        if (event.target.className === "start-date-input") {
+            pendingOriginalStart = event.target.value
+        }
+    }, true)
 
 document.getElementById("dates-selector").addEventListener('click',
     (clickedElement) => {
@@ -48,14 +56,23 @@ const toLocalDateTimeString = (date) => {
 
 document.getElementById("dates-selector").addEventListener('input',
     (event) => {
-        if (event.target.className === "start-date-input" && event.target.ariaSelected === "true") {
-            const deltaMs = new Date(event.target.value) - new Date(selectedOriginalStart)
-            const newEnd = new Date(new Date(selectedOriginalEnd).getTime() + deltaMs)
-            const endInput = document.getElementById('end-date-input')
-            endInput.value = toLocalDateTimeString(newEnd)
-            selectedOriginalStart = event.target.value
-            selectedOriginalEnd = endInput.value
+        if (event.target.className !== "start-date-input") return
+
+        if (event.target.ariaSelected !== "true") {
+            resetAriaSelected()
+            event.target.ariaSelected = "true"
+            document.getElementById('create-calendar-event').disabled = false
+            selectedOriginalStart = pendingOriginalStart ?? event.target.value
+            selectedOriginalEnd = event.target.endDate
+            document.getElementById('end-date-input').value = selectedOriginalEnd
         }
+
+        const deltaMs = new Date(event.target.value) - new Date(selectedOriginalStart)
+        const newEnd = new Date(new Date(selectedOriginalEnd).getTime() + deltaMs)
+        const endInput = document.getElementById('end-date-input')
+        endInput.value = toLocalDateTimeString(newEnd)
+        selectedOriginalStart = event.target.value
+        selectedOriginalEnd = endInput.value
     })
 
 document.getElementById('end-date-input').addEventListener('input', () => {
@@ -65,7 +82,6 @@ document.getElementById('end-date-input').addEventListener('input', () => {
         selectedOriginalEnd = document.getElementById('end-date-input').value
     }
 })
-
 
 document.getElementById("create-calendar-event").addEventListener('click',
     async () => {
