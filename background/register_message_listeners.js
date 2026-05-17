@@ -9,6 +9,9 @@ browser.runtime.onMessage.addListener(async (message) => {
     else if (action === 'getCalendars') {
         return messenger.calendar.calendars.query({visible: true, readOnly: false, enabled: true})
     }
+    else if (action === 'getTimezone') {
+        return messenger.calendar.timezones.currentZone
+    }
     else if (action === 'createCalendarEvent') {
         let calendarId = message.calendarId
         if (!calendarId) {

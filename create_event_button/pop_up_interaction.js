@@ -14,7 +14,7 @@ await populateCalendarSelector(
 const timezoneSelector = document.getElementById("timezone-selector")
 const setDefaultTimezoneCheckbox = document.getElementById("set-default-timezone")
 
-await populateTimezoneSelector(timezoneSelector, setDefaultTimezoneCheckbox)
+await populateTimezoneSelector(timezoneSelector, setDefaultTimezoneCheckbox, () => messenger.calendar.timezones.currentZone)
 
 const resetAriaSelected = () => {
     Array.from(document.getElementsByClassName('start-date-input')).forEach((e) => {

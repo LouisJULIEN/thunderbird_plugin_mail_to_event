@@ -134,7 +134,8 @@ async function eventCreatorPopup(oneFoundElement) {
 
         populateTimezoneSelector(
             document.getElementById(topIds.timezoneSelector),
-            document.getElementById(topIds.setDefaultTimezone)
+            document.getElementById(topIds.setDefaultTimezone),
+            () => browser.runtime.sendMessage({action: 'getTimezone'})
         )
 
         submitButton.addEventListener('click', async () => {

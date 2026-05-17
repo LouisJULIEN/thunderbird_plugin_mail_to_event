@@ -2,10 +2,13 @@
  * Populates a timezone <select> element and wires up the "Set as default" checkbox.
  * @param {HTMLSelectElement} selectEl
  * @param {HTMLInputElement} defaultCheckboxEl
+ * @param {() => string | Promise<string>} getCurrentZone - returns the current timezone ID
  */
-export async function populateTimezoneSelector(selectEl, defaultCheckboxEl) {
+export async function populateTimezoneSelector(selectEl, defaultCheckboxEl, getCurrentZone) {
     const timezoneIds = Intl.supportedValuesOf('timeZone')
-    const currentZone = messenger.calendar.timezones.currentZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone
+    const currentZone = getCurrentZone
+        ? await getCurrentZone()
+        : Intl.DateTimeFormat().resolvedOptions().timeZone
 
     timezoneIds.forEach((tzId) => {
         const option = document.createElement('option')
