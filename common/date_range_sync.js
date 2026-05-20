@@ -18,7 +18,12 @@ export function setupDateRangeSync(startInput, endInput, initialEnd) {
     startInput.addEventListener('input', () => {
         const deltaMs = new Date(startInput.value) - new Date(trackedStart)
         const newEnd = new Date(new Date(trackedEnd).getTime() + deltaMs)
-        endInput.value = toLocalDateTimeString(newEnd)
+        if (endInput.type === 'date') {
+            const newEndStr = newEnd.toISOString().slice(0, 10)
+            endInput.value = newEndStr < startInput.value ? startInput.value : newEndStr
+        } else {
+            endInput.value = toLocalDateTimeString(newEnd)
+        }
         trackedStart = startInput.value
         trackedEnd = endInput.value
     })
