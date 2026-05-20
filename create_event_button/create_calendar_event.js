@@ -7,12 +7,27 @@ function generateUID() {
     });
 }
 
-export async function createEvent(calendarId, eventStartDate, eventEndDate, eventSummary, eventComment, timezone, location) {
+export async function createEvent(calendarId, eventStartDate, eventEndDate, eventSummary, eventComment, timezone, location, allDay = false) {
     const uid = generateUID()
-    const tzParam = timezone ? {tzid: timezone} : {}
+
+    let startValue, endValue, valueType, tzParam
+    if (allDay) {
+        valueType = 'date'
+        tzParam = {}
+        startValue = eventStartDate.slice(0, 10)
+        const endDay = new Date(eventEndDate.slice(0, 10))
+        endDay.setUTCDate(endDay.getUTCDate() + 1)
+        endValue = endDay.toISOString().slice(0, 10)
+    } else {
+        valueType = 'date-time'
+        tzParam = timezone ? {tzid: timezone} : {}
+        startValue = eventStartDate
+        endValue = eventEndDate
+    }
+
     const properties = [
-        ['dtstart', tzParam, 'date-time', eventStartDate],
-        ['dtend', tzParam, 'date-time', eventEndDate],
+        ['dtstart', tzParam, valueType, startValue],
+        ['dtend', tzParam, valueType, endValue],
         ['summary', {}, 'text', eventSummary],
         ['description', {}, 'text', eventComment],
         ['uid', {}, 'text', uid],

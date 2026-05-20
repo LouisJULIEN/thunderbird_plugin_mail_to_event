@@ -103,12 +103,28 @@ Selection state: `aria-selected="true"` on the active `.start-date-input`.
 
 When clicking "select": call `_syncer.reset(value, endDate)` to reinitialise tracked baseline (needed in case end was manually edited while this row was previously active), then set `#end-date-input` to `endDate`.
 
+## All-Day Toggle (both popups)
+
+Shared logic in `common/all_day_toggle.js` → `setupAllDayToggle(checkbox, getStartInputs, endInput, onToggle)`.
+
+On change:
+1. Switches all start inputs and end input between `datetime-local` ↔ `date`
+2. Preserves date portion (`value.slice(0, 10)`) when going to all-day; appends `T00:00` when reverting
+3. If all-day and end date empty → defaults to `startInputs[0]` + 1 day
+4. Calls `onToggle(allDay, endInput)` — caller resets the syncer there
+
+Button popup: checkbox is `#all-day` in HTML. `onToggle` resets `selected._syncer`.  
+In-email popup: checkbox built in JS as `${uid}-all-day` (uid-prefixed — multiple popups can coexist). `onToggle` resets the local `syncer`.
+
+When creating an all-day event, dates are passed without `:00` suffix and `allDay=true` is the last arg. The in-email popup includes it as the last element of `message.args`; `register_message_listeners.js` does `createEvent(calendarId, ...message.args)` — no change needed there.
+
+Both `input[type="date"]` and `input[type="datetime-local"]` must be in the CSS input selector.
 
 ## State Persistence
 
 **Button popup** — uses `browser.storage.session` keyed by `emailFormData_${messageId}` (lost on Thunderbird close). Saves: title, location, comment, all startDate values, selectedDateIndex, selectedEndDate, allDay. Restore runs after `showFoundDates`; re-clicks the "select" button to restore selection, then dispatches `change` on `#all-day` if needed (triggers the handler registered in `pop_up_interaction.js`). `formContainer.addEventListener('input', saveFormData)` catches most field changes. The all-day checkbox uses `change` not `input` — separately registered.
 
-**In-email popup** — uses an in-memory `Map` (`savedValues`, keyed by `htmlContainerIdValue`). Values survive the popup being closed and reopened within the same Thunderbird session but are lost on reload. No `browser.storage` involved.
+**In-email popup** — uses an in-memory `Map` (`savedValues`, keyed by `htmlContainerIdValue`). Values survive the popup being closed and reopened within the same Thunderbird session but are lost on reload. No `browser.storage` involved. Saves: title, startDate, endDate, location, comment, allDay. The all-day checkbox fires `change` not `input` — a separate `change` listener triggers `save()` alongside the `setupAllDayToggle` listener.
 
 ## CSS Notes
 

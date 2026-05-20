@@ -82,6 +82,7 @@ const saveFormData = async () => {
             startDates: startDateInputs.map(input => input.value),
             selectedDateIndex: selectedInput ? startDateInputs.indexOf(selectedInput) : -1,
             selectedEndDate: document.getElementById('end-date-input')?.value,
+            allDay: document.getElementById('all-day')?.checked,
         }
     })
 }
@@ -114,10 +115,17 @@ if (storageKey) {
         if (savedFormData.selectedEndDate) {
             document.getElementById('end-date-input').value = savedFormData.selectedEndDate
         }
+
+        if (savedFormData.allDay) {
+            const allDayCheckbox = document.getElementById('all-day')
+            allDayCheckbox.checked = true
+            allDayCheckbox.dispatchEvent(new Event('change'))
+        }
     }
 }
 
 formContainer.addEventListener('input', saveFormData)
+document.getElementById('all-day').addEventListener('change', saveFormData)
 
 // Save when a date row is selected — fires after pop_up_interaction.js's listener updates ariaSelected
 document.getElementById('dates-selector').addEventListener('click', (e) => {

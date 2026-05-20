@@ -5,6 +5,7 @@ import {populateCalendarSelector} from "../../common/calendar_selector.js";
 import {populateTimezoneSelector} from "../../common/timezone_selector.js";
 import {setupDateRangeSync} from "../../common/date_range_sync.js";
 import {handleCreateResult, setCreating} from "../../common/create_event_result.js";
+import {setupAllDayToggle} from "../../common/all_day_toggle.js";
 
 const style = document.createElement('style')
 style.textContent = cssText
@@ -73,13 +74,27 @@ async function eventCreatorPopup(oneFoundElement) {
 
         const endDateContainer = document.createElement('div')
         endDateContainer.className = 'form-group'
+
+        const endDateHeader = document.createElement('div')
+        endDateHeader.className = 'end-date-header'
         const endDateLabel = document.createElement('label')
+        endDateLabel.setAttribute('for', `${uid}-end-date`)
         endDateLabel.textContent = 'End date'
+        const allDayLabel = document.createElement('label')
+        allDayLabel.className = 'all-day-label'
+        const allDayCheckbox = document.createElement('input')
+        allDayCheckbox.type = 'checkbox'
+        allDayCheckbox.id = `${uid}-all-day`
+        allDayLabel.appendChild(allDayCheckbox)
+        allDayLabel.appendChild(document.createTextNode(' All day'))
+        endDateHeader.appendChild(endDateLabel)
+        endDateHeader.appendChild(allDayLabel)
+        endDateContainer.appendChild(endDateHeader)
+
         const endDateInput = document.createElement('input')
         endDateInput.id = `${uid}-end-date`
         endDateInput.type = 'datetime-local'
         endDateInput.value = endDateTime.dateISO.slice(0, 16)
-        endDateContainer.appendChild(endDateLabel)
         endDateContainer.appendChild(endDateInput)
 
         const submitButton = document.createElement('input')
@@ -102,28 +117,41 @@ async function eventCreatorPopup(oneFoundElement) {
 
         const syncer = setupDateRangeSync(startDateInput, endDateInput)
 
+        setupAllDayToggle(
+            allDayCheckbox,
+            () => [startDateInput],
+            endDateInput,
+            (_allDay, endInput) => syncer.reset(startDateInput.value, endInput.value)
+        )
+
         // Restore saved values or set defaults
         const saved = savedValues.get(htmlContainerIdValue)
         if (saved) {
+            if (saved.allDay) {
+                allDayCheckbox.checked = true
+                allDayCheckbox.dispatchEvent(new Event('change'))
+            }
             document.getElementById(topIds.eventTitle).value = saved.title ?? document.title
-            document.getElementById(`${uid}-start-date`).value = saved.startDate ?? startDateInput.value
-            document.getElementById(`${uid}-end-date`).value = saved.endDate ?? endDateInput.value
+            startDateInput.value = saved.startDate ?? startDateInput.value
+            endDateInput.value = saved.endDate ?? endDateInput.value
             if (saved.location) document.getElementById(bottomIds.eventLocation).value = saved.location
             if (saved.comment) document.getElementById(bottomIds.eventComment).value = saved.comment
-            syncer.reset(document.getElementById(`${uid}-start-date`).value, document.getElementById(`${uid}-end-date`).value)
+            syncer.reset(startDateInput.value, endDateInput.value)
         } else {
             document.getElementById(topIds.eventTitle).value = document.title
         }
 
-        eventCreator.addEventListener('input', () => {
-            savedValues.set(htmlContainerIdValue, {
-                title: document.getElementById(topIds.eventTitle)?.value,
-                startDate: document.getElementById(`${uid}-start-date`)?.value,
-                endDate: document.getElementById(`${uid}-end-date`)?.value,
-                location: document.getElementById(bottomIds.eventLocation)?.value,
-                comment: document.getElementById(bottomIds.eventComment)?.value,
-            })
+        const save = () => savedValues.set(htmlContainerIdValue, {
+            title: document.getElementById(topIds.eventTitle)?.value,
+            startDate: startDateInput.value,
+            endDate: endDateInput.value,
+            location: document.getElementById(bottomIds.eventLocation)?.value,
+            comment: document.getElementById(bottomIds.eventComment)?.value,
+            allDay: allDayCheckbox.checked,
         })
+
+        eventCreator.addEventListener('input', save)
+        allDayCheckbox.addEventListener('change', save)
 
         makeDraggable(eventCreator)
 
@@ -150,10 +178,15 @@ async function eventCreatorPopup(oneFoundElement) {
 
             if (selectedStartDate && selectedEndDate && title) {
                 setCreating(submitButton)
+                const allDay = allDayCheckbox.checked
                 const result = await browser.runtime.sendMessage({
                     action: 'createCalendarEvent',
                     calendarId: calendarId,
-                    args: [selectedStartDate + ':00', selectedEndDate + ':00', title, comment, timezone, location]
+                    args: [
+                        allDay ? selectedStartDate : selectedStartDate + ':00',
+                        allDay ? selectedEndDate : selectedEndDate + ':00',
+                        title, comment, timezone, location, allDay
+                    ]
                 })
 
                 handleCreateResult(submitButton, result, () => {

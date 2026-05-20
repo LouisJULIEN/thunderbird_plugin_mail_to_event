@@ -93,6 +93,7 @@
 
 .pluginMailToEvent-event-creator input[type="text"],
 .pluginMailToEvent-event-creator input[type="datetime-local"],
+.pluginMailToEvent-event-creator input[type="date"],
 .pluginMailToEvent-event-creator textarea,
 .pluginMailToEvent-event-creator select {
     box-sizing: border-box;
@@ -207,11 +208,23 @@
     margin-bottom: 8px;
 }
 
-.end-date-selector label {
-    display: block;
+.end-date-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 2px;
+}
+
+.end-date-header label {
     font-size: 12px;
     color: var(--text-secondary);
+}
+
+.all-day-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
 }
 
 #create-calendar-event,
