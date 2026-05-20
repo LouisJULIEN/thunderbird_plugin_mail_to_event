@@ -60,10 +60,12 @@ export function findDates(mailSubject, mailContent, removeDuplicatesDates = true
     const locale = francLocaleToDateFnsLocale[langFranc] || 'en';
     const timezone = thunderbirdTimezone ?? francLocaleToTimezone[langFranc];
 
+    const direction = langFranc === 'eng' && /^(America|US)\//.test(timezone) ? 'MD' : 'DM'
+
     const options = {
         minimumAge: 12,
         maximumAge: 12 * 20,
-        direction: 'DM',
+        direction,
         locale,
         timezone,
     }

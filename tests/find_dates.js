@@ -60,6 +60,22 @@ This is a new sentence on a new line.A last one`;
         expect(result.length).to.equal(0)
     })
 
+    it('should parse US-format numeric dates correctly when timezone is American', () => {
+        // 5/7/2026 in US format is May 7 (MM/DD), not July 5 (DD/MM)
+        const result = findDates('', "Let's meet on 5/7/2026 at 9 AM to discuss the project deliverables", true, 'America/Chicago').dates
+        expect(result.length).to.equal(1)
+        expect(result[0].startDateTime.dateISO).to.equal('2026-05-07T09:00:00.000Z')
+        expect(result[0].endDateTime.dateISO).to.equal('2026-05-07T09:30:00.000Z')
+    })
+
+    it('should parse UK-format numeric dates correctly when timezone is European', () => {
+        // 5/7/2026 in UK format is July 5 (DD/MM)
+        const result = findDates('', "Let's meet on 5/7/2026 at 9 AM to discuss the project deliverables", true, 'Europe/London').dates
+        expect(result.length).to.equal(1)
+        expect(result[0].startDateTime.dateISO).to.equal('2026-07-05T09:00:00.000Z')
+        expect(result[0].endDateTime.dateISO).to.equal('2026-07-05T09:30:00.000Z')
+    })
+
     it('should find datetimes in english text', () => {
         let result
         result = findDates('', '12 september from 9AM for lunch').dates
@@ -84,8 +100,8 @@ This is a new sentence on a new line.A last one`;
     })
 
     it('should find all dates in this email', () => {
-        const emailContent = 'This is 24/01/2021. This 28 November. This number is alone 2024. 12\n11.' +
-            "Let's meet the 19/12 at 11 PM"
+        const emailContent = 'This is 2021-01-24. This 28 November. This number is alone 2024. 12\n11.' +
+            "Let's meet the 12/19 at 11 PM"
         const result = findDates('', emailContent).dates
 
 
@@ -97,7 +113,7 @@ This is a new sentence on a new line.A last one`;
             "originalDateTimeData": {
                 "date": {
                     "date": "2021-01-24",
-                    "originalText": "24/01/2021"
+                    "originalText": "2021-01-24"
                 }
             },
             "startDateTime": {
@@ -127,7 +143,7 @@ This is a new sentence on a new line.A last one`;
             "originalDateTimeData": {
                 "date": {
                     "date": "2024-12-19",
-                    "originalText": "19/12"
+                    "originalText": "12/19"
                 },
                 "startTime": {
                     "originalText": "11 PM",
@@ -142,8 +158,8 @@ This is a new sentence on a new line.A last one`;
     })
 
     it('should find only one dates in this email', () => {
-        const emailSubject = 'This is 24/01/2021'
-        const emailContent = 'This is again 24/01/2021 for duplication purpose'
+        const emailSubject = 'This is 2021-01-24'
+        const emailContent = 'This is again 2021-01-24 for duplication purpose'
         const result = findDates(emailSubject, emailContent).dates
         expect(result).to.deep.equal([{
             "endDateTime": {
@@ -153,7 +169,7 @@ This is a new sentence on a new line.A last one`;
             "originalDateTimeData": {
                 "date": {
                     "date": "2021-01-24",
-                    "originalText": "24/01/2021"
+                    "originalText": "2021-01-24"
                 }
             },
             "startDateTime": {
