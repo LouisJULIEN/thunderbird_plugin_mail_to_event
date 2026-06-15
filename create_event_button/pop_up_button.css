@@ -68,6 +68,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     min-width: 300px;
+    z-index: 103; /* https://github.com/LouisJULIEN/thunderbird_plugin_mail_to_event/issues/7 */
 }
 
 @media (prefers-color-scheme: dark) {
