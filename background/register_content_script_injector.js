@@ -12,9 +12,6 @@ let messageTabs = openTabs.filter(
     tab => ["mail", "messageDisplay"].includes(tab.type)
 );
 for (let messageTab of messageTabs) {
-    await messenger.scripting.insertCSS({
-        target: {tabId: messageTab.id},
-    })
     await messenger.scripting.executeScript({
         target: {tabId: messageTab.id},
         files: [
