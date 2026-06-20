@@ -50,8 +50,14 @@ const customExtractDateTimes = (text, options) => {
     return extractedDateTimes
 }
 
+// HTML emails often inline a <style> block whose CSS rules survive into the plain-text body
+// (e.g. "body { width: 100% }"). Those keywords drown out the real prose and flip franc's
+// language detection (an Epic Games receipt in French was detected as English). Drop the
+// "selector { ... }" blocks before detecting the language.
+const stripCssNoise = (text) => text.replace(/[^{}]*\{[^{}]*\}/g, ' ')
+
 const detectLang = (text) => {
-    return franc(text, {only: Object.keys(francLocaleToDateFnsLocale)})
+    return franc(stripCssNoise(text), {only: Object.keys(francLocaleToDateFnsLocale)})
 }
 
 export function findDates(mailSubject, mailContent, removeDuplicatesDates = true, thunderbirdTimezone = null) {
