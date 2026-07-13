@@ -15,5 +15,6 @@ npm run build
 npm install
 npm run bundle-dependencies
 npm run dev
+npm run lint
 ```
 
