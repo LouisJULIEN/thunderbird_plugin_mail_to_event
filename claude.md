@@ -28,7 +28,7 @@ Injected into every open mail tab as a **bundled content script**. Highlights de
 npm run bundle-plugin        # full build: dependencies + content script + zip
 npm run bundle-content-script # rebuilds highlight_dates.bundle.js only
 npm run dev                  # watch mode
-npm run start                # web-ext run (loads extension in Thunderbird)
+npm run lint                 # Thunderbird webext-linter (ATN review) on the built zip
 npm test                     # mocha tests in tests/
 ```
 
