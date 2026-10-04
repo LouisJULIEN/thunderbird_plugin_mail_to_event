@@ -12,7 +12,7 @@ npm run build
 ## Development
 
 ```shell
-npm install
+npm install --allow-git=root # `allow-git` because of thunderbird/webext-linter - see package.json
 npm run bundle-dependencies
 npm run dev
 npm run lint
