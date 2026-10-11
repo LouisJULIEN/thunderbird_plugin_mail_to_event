@@ -5,7 +5,7 @@ This plugin was inspired by how smartphones enable easy event creation of their 
 
 ## Create addon zip XPI file
 ```bash
-npm ci --omit=dev
+npm ci
 npm run build
 ```
 
