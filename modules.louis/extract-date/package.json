@@ -1,0 +1,20 @@
+{
+  "name": "@louis.jln/extract-date",
+  "version": "4.0.5",
+  "description": "Extracts date from an arbitrary text input.",
+  "author": "Louis JULIEN https://github.com/LouisJULIEN/extract-date",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LouisJULIEN/extract-date.git"
+  },
+  "homepage": "https://github.com/LouisJULIEN/extract-date",
+  "main": "./src/index.ts",
+  "dependencies": {
+    "cartesian": "^1.0.1",
+    "date-fns": "^2.9.0",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.27",
+    "relative-date-names": "^1.0.4"
+  }
+}

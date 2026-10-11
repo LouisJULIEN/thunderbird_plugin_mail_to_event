@@ -1,0 +1,17 @@
+{
+  "name": "@louis.jln/extract-time",
+  "version": "4.0.0",
+  "description": "Extracts time from an arbitrary text input.",
+  "author": "Gajus Kuizinas <gajus@gajus.com> (http://gajus.com)",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/louisJULIEN/extract-time.git"
+  },
+  "homepage": "https://github.com/LouisJULIEN/extract-time#readme",
+  "main": "./src/index.ts",
+  "dependencies": {
+    "cartesian": "^1.0.1",
+    "date-fns": "^4.1.0"
+  }
+}

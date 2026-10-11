@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@louis.jln/extract-date": "4.0.5",
-    "@louis.jln/extract-time": "4.0.0",
+    "@louis.jln/extract-date": "file:modules.louis/extract-date",
+    "@louis.jln/extract-time": "file:modules.louis/extract-time",
     "esbuild": "0.28.1",
     "franc": "^6.2.0"
   },
